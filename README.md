@@ -236,7 +236,7 @@ The key structural insight exploited throughout is that once the landing sequenc
 
 
 $$
-x_{π(l+1)} ≥ x_{π(l)} + s_{π(l), π(l+1)}   for l = 1, …, n−1
+x_{π(l+1)} ≥ x_{π(l)} + s_{π(l), π(l+1)}               for  l = 1, …, n−1
 $$
 
 
@@ -260,6 +260,7 @@ The nudge magnitude (0.005 per level) ensures smooth adaptation without instabil
 
 $$
 T ← 2.0 × T
+
 π ← π_best
 $$
 
@@ -371,7 +372,7 @@ All outputs are written relative to the working directory.
 
 | File | Content |
 |---|---|
-| `gantt_{instance}_{method}.png` | Gantt chart with time windows [r_j, d_j], target times δ_j (□), scheduled landing times x_j (○), and wake-vortex separation zones (orange shading) |
+| `gantt_{instance}_{method}.png` | Gantt chart with time windows $$[r_j, d_j]$$, target times $$δ_j (□)$$, scheduled landing times $$x_j (○)$$, and wake-vortex separation zones (orange shading) |
 | `convergence_{instance}.png` | Best-objective history per SA chain on a log scale; the chain achieving the global best is drawn with higher opacity |
 | `gap_summary.png` | Bar chart of percentage gap to known optimum across all instances |
 | `alt_solutions.png` | Counts of distinct near-optimal sequences found and heuristic seeds already at optimum, per instance |
@@ -417,7 +418,7 @@ If verification fails, `run_experiment` sets the reported objective to `inf` and
 
 **Known optima never bias computation.** Reference values from Zhang et al. (2020) appear only in final gap reporting and Optuna's tuning objective. They are never used as bounds, warm starts, or termination conditions inside any search routine.
 
-**Tight big-M values in Benders.** The Benders decomposition module (`alp_benders.py`) uses per-pair big-M values M_{jk} = d_{π(l+1)} − r_{π(l)} derived from actual time windows, rather than a single global constant. A global M renders all optimality cuts trivially satisfiable and prevents convergence.
+**Tight big-M values in Benders.** The Benders decomposition module (`alp_benders.py`) uses per-pair big-M values $$M_{jk} = d_{π(l+1)} − r_{π(l)}$$ derived from actual time windows, rather than a single global constant. A global M renders all optimality cuts trivially satisfiable and prevents convergence.
 
 **ProcessPoolExecutor with fork/spawn context.** Fork is used on Linux/macOS for low overhead; spawn is used on Windows for correctness. The context is set at import time via `_CTX`. If you encounter issues with multiprocessing on specific environments, set `N_CPU = 1` to disable parallelism and debug in single-process mode.
 
