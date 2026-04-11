@@ -246,7 +246,7 @@ The resulting LP has $3n$ variables $(x_j, E_j, T_j)$ and $O(n)$ constraints, co
 
 The SA chain adapts its own cooling rate after every temperature level based on the observed acceptance rate $\chi$:
 
-**Acceptance rate target:** $\chi^* = 0.20$. If $\chi > \chi^*$, the chain is too hot (accepting near-random moves); $\alpha$ is nudged downward. If $\chi < \chi^*$, the chain is freezing; $\alpha$ is nudged upward.
+**Acceptance rate target:** $$\chi^* = 0.20$$. If $$\chi > \chi^*$$, the chain is too hot (accepting near-random moves); $$\alpha$$ is nudged downward. If $$\chi < \chi^*$$, the chain is freezing; $$\alpha$$ is nudged upward.
 
 $$
 \alpha \leftarrow \operatorname{clip}\!\left(\alpha + \operatorname{sign}(\chi - \chi^*) \times 0.005,\; 0.80,\; 0.999\right)
