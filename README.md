@@ -28,18 +28,18 @@ Given a set J = {1, …, n} of aircraft, each characterised by:
 
 | Symbol | Meaning |
 |---|---|
-| r_j | Release (earliest landing) time |
-| δ_j | Target (preferred) landing time |
-| d_j | Deadline (latest landing) time |
-| s_jk | Minimum separation time required between j landing before k |
-| g_j | Cost per unit of earliness (landing before δ_j) |
-| h_j | Cost per unit of tardiness (landing after δ_j) |
+| $$r_j$$ | Release (earliest landing) time |
+| $$δ_j$$ | Target (preferred) landing time |
+| $$d_j$$ | Deadline (latest landing) time |
+| $$s_jk$$ | Minimum separation time required between j landing before k |
+| $$g_j$$ | Cost per unit of earliness (landing before δ_j) |
+| $$h_j$$ | Cost per unit of tardiness (landing after δ_j) |
 
 The objective is to find a landing sequence π and scheduled landing times x_j such that:
 
-- x_j ∈ [r_j, d_j] for all j (window constraints)
-- x_{π(l+1)} ≥ x_{π(l)} + s_{π(l), π(l+1)} for all consecutive pairs in π (separation constraints)
-- Σ_j (g_j · max(δ_j − x_j, 0) + h_j · max(x_j − δ_j, 0)) is minimised
+- $$x_j ∈ [r_j, d_j]$$ for all j (window constraints)
+- $$x_{π(l+1)} ≥ x_{π(l)} + s_{π(l), π(l+1)}$$ for all consecutive pairs in π (separation constraints)
+- $$Σ_j (g_j · max(δ_j − x_j, 0) + h_j · max(x_j − δ_j, 0))$$ is minimised
 
 The MILP is NP-hard in general. The pipeline exploits the two-stage structure: once a sequence π is fixed, all binary sequencing variables are determined and the timing subproblem reduces to an LP with 3n variables and O(n) constraints (Zhang et al., 2020).
 
@@ -172,7 +172,7 @@ alp_pipeline.py
 
 ### `ALPInstance`
 
-Dataclass holding all instance data. Constructed by `load_orlib` or `synthetic_instance`. The field `s_bar` (mean off-diagonal separation, computed in `__post_init__`) is used throughout as a normalisation constant. Do not modify `s_bar` manually; it is derived from `s` automatically.
+Dataclass holding all instance data. Constructed by `load_orlib` or `synthetic_instance`. The field `$$s_bar$$` (mean off-diagonal separation, computed in `__post_init__`) is used throughout as a normalisation constant. Do not modify `$$s_bar$$` manually; it is derived from `s` automatically.
 
 ### `load_orlib(path, name="")`
 
@@ -235,19 +235,23 @@ End-to-end runner for a single instance: runs MS-SA, verifies the result, export
 The key structural insight exploited throughout is that once the landing sequence π is fixed, the binary sequencing variables q_jk are fully determined. The MILP separation constraints reduce to a linear chain:
 
 ```
+$$
 x_{π(l+1)} ≥ x_{π(l)} + s_{π(l), π(l+1)}   for l = 1, …, n−1
+$$
 ```
 
-The resulting LP has 3n variables (x_j, E_j, T_j) and O(n) constraints, compared to O(n²) in the full MILP. HiGHS solves instances with n ≤ 50 in sub-millisecond time, making it practical to call the LP at every SA move.
+The resulting LP has 3n variables $$(x_j, E_j, T_j)$$ and O(n) constraints, compared to $$O(n²)$$ in the full MILP. HiGHS solves instances with n ≤ 50 in sub-millisecond time, making it practical to call the LP at every SA move.
 
 ### 7.2 Reactive SA (`run_sa`)
 
 The SA chain adapts its own cooling rate after every temperature level based on the observed acceptance rate χ:
 
-**Acceptance rate target:** χ* = 0.20. If χ > χ*, the chain is too hot (accepting near-random moves); α is nudged downward. If χ < χ*, the chain is freezing; α is nudged upward.
+**Acceptance rate target:** $$χ* = 0.20. If χ > χ*$$, the chain is too hot (accepting near-random moves); α is nudged downward. If χ < χ*, the chain is freezing; α is nudged upward.
 
 ```
+$$
 α ← clip(α + sign(χ − χ*) × 0.005,  0.80,  0.999)
+$$
 ```
 
 The nudge magnitude (0.005 per level) ensures smooth adaptation without instability. `p.alpha` in `SAParams` sets the initial cooling rate; the chain drifts away from it organically.
@@ -293,7 +297,9 @@ All six rules produce landing sequences by greedily selecting aircraft one at a 
 **MPDS priority index** (Zhang et al., 2020, Eq. 16):
 
 ```
+$$
 I_MPDS(j) = exp(−slack / K1) × exp(−s_kj / (K2 · s̄)) × exp(−r_wait / K3) × exp(−penalty / K4)
+$$
 ```
 
 where K1–K4 are instance-level scaling parameters derived from the distribution of target times, separation values, and cost weights.
@@ -308,9 +314,9 @@ where K1–K4 are instance-level scaling parameters derived from the distributio
 |---|---|---|
 | `alpha` | 0.99 | Initial geometric cooling rate α ∈ (0, 1) |
 | `N_iter` | 120 | Number of neighbour evaluations per temperature level |
-| `T_min` | 1e-4 | Temperature floor; chain exits when T < T_min |
-| `I_max` | 600 | Hard cap on the number of outer (temperature-level) iterations |
-| `M_stag` | 60 | Stagnation threshold: trigger reheat after this many non-improving levels |
+| `$$T_min$$` | 1e-4 | Temperature floor; chain exits when T < T_min |
+| `$$I_max$$` | 600 | Hard cap on the number of outer (temperature-level) iterations |
+| `$$M_stag$$` | 60 | Stagnation threshold: trigger reheat after this many non-improving levels |
 | `chi0` | 0.50 | Target initial acceptance probability used by `calibrate_T0` |
 
 `adaptive_params(n)` returns recommended values for each instance size tier. The `SA_full` override in `__main__` is appropriate for full benchmark runs.
@@ -390,14 +396,14 @@ Every solution is audited against nine constraint groups before the objective va
 
 | Group | Constraint checked | Count |
 |---|---|---|
-| C1 | Release dates: x_j ≥ r_j | n |
-| C2 | Deadlines: x_j ≤ d_j | n |
-| C3 | Separation chain: x_{π(l+1)} ≥ x_{π(l)} + s_{π(l),π(l+1)} | n−1 |
+| C1 | Release dates: $$x_j ≥ r_j$$ | n |
+| C2 | Deadlines: $$x_j ≤ d_j$$ | n |
+| C3 | Separation chain: $$x_{π(l+1)} ≥ x_{π(l)} + s_{π(l),π(l+1)}$$ | n−1 |
 | C4 | Permutation validity: distinct indices in [0, n−1] | n |
 | C5 | Greedy-pass consistency: O(n) forward pass matches LP times | n−1 |
-| C6 | Earliness non-negativity: E_j ≥ 0 | n |
-| C7 | Tardiness non-negativity: T_j ≥ 0 | n |
-| C8 | Objective cross-check: LP obj ≈ Σ(g_j E_j + h_j T_j) | 1 |
+| C6 | Earliness non-negativity: $$E_j ≥ 0$$ | n |
+| C7 | Tardiness non-negativity: $$T_j ≥ 0$$ | n |
+| C8 | Objective cross-check: $$LP obj ≈ Σ(g_j E_j + h_j T_j)$$ | 1 |
 | C9 | Independent LP re-solve: fresh HiGHS call from scratch | 1 |
 
 The audit never short-circuits — all groups are evaluated regardless of earlier failures. The C9 re-solve uses separately constructed LP matrices and tighter solver tolerances (1e-9) than the main solve path, making it a genuine independent cross-check rather than a cache hit.
