@@ -236,7 +236,8 @@ The key structural insight exploited throughout is that once the landing sequenc
 
 
 $$
-x_{π(l+1)} ≥ x_{π(l)} + s_{π(l), π(l+1)}               for  l = 1, …, n−1
+x_{π(l+1)} ≥ x_{π(l)} + s_{π(l), π(l+1)}               
+/for  l = 1, …, n−1
 $$
 
 
