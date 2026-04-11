@@ -261,7 +261,9 @@ The nudge magnitude (0.005 per level) ensures smooth adaptation without instabil
 
 $$
 T ← 2.0 × T
+$$
 
+$$
 π ← π_best
 $$
 
