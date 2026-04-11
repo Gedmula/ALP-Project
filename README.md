@@ -235,9 +235,7 @@ End-to-end runner for a single instance: runs MS-SA, verifies the result, export
 The key structural insight exploited throughout is that once the landing sequence π is fixed, the binary sequencing variables q_jk are fully determined. The MILP separation constraints reduce to a linear chain:
 
 ```
-$$
-x_{π(l+1)} ≥ x_{π(l)} + s_{π(l), π(l+1)}   for l = 1, …, n−1
-$$
+$$x_{π(l+1)} ≥ x_{π(l)} + s_{π(l), π(l+1)}   for l = 1, …, n−1$$
 ```
 
 The resulting LP has 3n variables $$(x_j, E_j, T_j)$$ and O(n) constraints, compared to $$O(n²)$$ in the full MILP. HiGHS solves instances with n ≤ 50 in sub-millisecond time, making it practical to call the LP at every SA move.
@@ -246,7 +244,7 @@ The resulting LP has 3n variables $$(x_j, E_j, T_j)$$ and O(n) constraints, comp
 
 The SA chain adapts its own cooling rate after every temperature level based on the observed acceptance rate χ:
 
-**Acceptance rate target:** $$χ* = 0.20. If χ > χ*$$, the chain is too hot (accepting near-random moves); α is nudged downward. If χ < χ*, the chain is freezing; α is nudged upward.
+**Acceptance rate target:** $$χ* = 0.20. If $$χ > χ*$$, the chain is too hot (accepting near-random moves); α is nudged downward. If χ < χ*, the chain is freezing; α is nudged upward.
 
 ```
 $$
