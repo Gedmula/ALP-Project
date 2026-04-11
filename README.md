@@ -264,7 +264,7 @@ T ← 2.0 × T
 $$
 
 $$
-π ← π_best
+π ← π_{best}
 $$
 
 Up to three reheats are permitted (`MAX_REHEATS = 3`). After the third, the chain exits. This replaces the hard stop of the original design with a controlled exploration burst from the known incumbent.
