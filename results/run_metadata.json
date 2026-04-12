@@ -1,0 +1,99 @@
+{
+  "timestamp": "2026-04-11 17:10:59",
+  "hostname": "EB276_Station1",
+  "python": "3.14.3 (tags/v3.14.3:323c59a, Feb  3 2026, 16:04:56) [MSC v.1944 64 bit (AMD64)]",
+  "n_cpu": 24,
+  "instances": [
+    {
+      "name": "airland1",
+      "n": 10,
+      "known_opt": 700,
+      "obj": 700.0,
+      "verified": true
+    },
+    {
+      "name": "airland2",
+      "n": 15,
+      "known_opt": 1480,
+      "obj": 1480.0,
+      "verified": true
+    },
+    {
+      "name": "airland3",
+      "n": 20,
+      "known_opt": 820,
+      "obj": 820.0,
+      "verified": true
+    },
+    {
+      "name": "airland4",
+      "n": 20,
+      "known_opt": 2520,
+      "obj": 2520.0,
+      "verified": true
+    },
+    {
+      "name": "airland5",
+      "n": 20,
+      "known_opt": 3100,
+      "obj": 3100.0,
+      "verified": true
+    },
+    {
+      "name": "airland6",
+      "n": 30,
+      "known_opt": 24442,
+      "obj": 24442.0,
+      "verified": true
+    },
+    {
+      "name": "airland7",
+      "n": 44,
+      "known_opt": 1550,
+      "obj": 1550.0,
+      "verified": true
+    },
+    {
+      "name": "airland8",
+      "n": 50,
+      "known_opt": 1950,
+      "obj": 1860.0,
+      "verified": true
+    },
+    {
+      "name": "airland9",
+      "n": 100,
+      "known_opt": 5611.7,
+      "obj": 5611.7,
+      "verified": true
+    },
+    {
+      "name": "airland10",
+      "n": 150,
+      "known_opt": 12640.42,
+      "obj": 12364.81,
+      "verified": true
+    },
+    {
+      "name": "airland11",
+      "n": 200,
+      "known_opt": 12462.18,
+      "obj": 12446.38,
+      "verified": true
+    },
+    {
+      "name": "airland12",
+      "n": 250,
+      "known_opt": 16629.1,
+      "obj": 16288.65,
+      "verified": true
+    },
+    {
+      "name": "airland13",
+      "n": 500,
+      "known_opt": 39287.52,
+      "obj": 42772.37,
+      "verified": true
+    }
+  ]
+}

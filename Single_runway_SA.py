@@ -323,15 +323,14 @@ def calibrate_T0(seq, inst, n_cal=150, chi0=0.50, seed=0):
 
 @dataclass
 class SAParams:
-    alpha:  float = 0.99
-    N_iter: int   = 120
-    T_min:  float = 1e-4
-    I_max:  int   = 600
-    M_stag: int   = 60
-    chi0:   float = 0.50
+    alpha:  float = 0.99        # cooling rate
+    N_iter: int   = 120         # iterations per temperature
+    T_min:  float = 1e-4        # minimum temperature
+    I_max:  int   = 600         # maximum number of iterations
+    M_stag: int   = 60          # maximum stagnation iterations
+    chi0:   float = 0.50        # initial acceptance probability for worse solutions (for T0 calibration)
 
-
-def run_sa(seq0, inst, p: SAParams, seed=0, T0=None):
+def run_sa_old(seq0, inst, p: SAParams, seed=0, T0=None):
     """
     Single SA chain.
 
@@ -393,6 +392,127 @@ def run_sa(seq0, inst, p: SAParams, seed=0, T0=None):
         'n_alt_seqs':  len(alt_set),
     }
 
+def run_sa(seq0, inst, p: SAParams, seed=0, T0=None):
+    """
+    Single SA chain with reactive temperature adaptation.
+
+    Reactive cooling
+    ────────────────
+    After each temperature level the actual acceptance rate χ is compared
+    to a target χ* = 0.20.  The cooling multiplier α is nudged by at most
+    ±ALPHA_STEP per level so the chain self-corrects without jumps:
+
+        α ← clip(α + sign(χ - χ*) × ALPHA_STEP,  ALPHA_LO, ALPHA_HI)
+
+    χ > χ* → chain is too hot (accepting bad moves freely) → cool faster.
+    χ < χ* → chain is freezing prematurely               → cool slower.
+
+    Reheating on stagnation
+    ───────────────────────
+    When M_stag consecutive levels pass without improvement, instead of
+    terminating the chain reheats:
+
+        T ← T_reheat × T_best_level   (default T_reheat = 2.0)
+
+    and restarts from the incumbent best.  At most MAX_REHEATS reheats are
+    allowed before the chain exits.  This trades a controlled exploration
+    burst for early termination.
+
+    Alternate-solution tracking
+    ───────────────────────────
+    Unchanged from the original: every sequence within _alt_tol of fb is
+    recorded; the set resets on a strict improvement.
+
+    Returns
+    -------
+    (best_seq, best_obj, stats_dict)
+    stats_dict keys: obj, time, t_best, history, init_obj, n_alt_seqs,
+                     alpha_history (α value at each outer iteration)
+    """
+    # ── Reactive-adaptation constants ────────────────────────────────
+    CHI_TARGET  = 0.20        # target acceptance rate
+    ALPHA_STEP  = 0.005       # max per-level nudge to α
+    ALPHA_LO    = 0.80        # hard floor on α
+    ALPHA_HI    = 0.999       # hard ceiling on α
+    MAX_REHEATS = 2           # maximum number of reheats before exit
+    T_REHEAT    = 2.0         # reheat multiplier applied to T at stagnation
+
+    rng   = random.Random(seed)
+    n     = inst.n
+    T     = T0 or calibrate_T0(seq0, inst, seed=seed, chi0=p.chi0)
+    alpha = p.alpha           # mutable local copy — adapted each level
+
+    pi    = seq0[:]
+    f     = evaluate(pi, inst)
+    pb, fb = pi[:], f
+    init_obj = f
+
+    _alt_tol = lambda fb_: max(0.5, abs(fb_) * 5e-5)
+
+    alt_set      = {tuple(pi)}
+    stag         = 0
+    n_reheats    = 0
+    history      = []
+    alpha_history = []
+    t_best       = 0.0
+    t0           = time.perf_counter()
+
+    for outer in range(p.I_max):
+        improved   = False
+        n_accepted = 0
+        n_tried    = 0
+
+        for _ in range(p.N_iter):
+            pi2 = neighbour(pi, rng, n)
+            if not is_feasible(pi2, inst):
+                continue
+            f2  = evaluate(pi2, inst)
+            n_tried += 1
+            dlt = f2 - f
+            if dlt <= 0 or rng.random() < math.exp(-dlt / max(T, 1e-15)):
+                pi, f = pi2, f2
+                n_accepted += 1
+            if f < fb - 1e-9:
+                pb, fb, improved = pi[:], f, True
+                t_best   = time.perf_counter() - t0
+                alt_set  = {tuple(pi)}
+            elif f <= fb + _alt_tol(fb) and len(alt_set) < _MAX_ALT_SEQS:
+                alt_set.add(tuple(pi))
+
+        # ── Reactive α update ─────────────────────────────────────────
+        chi = n_accepted / max(n_tried, 1)
+        if chi > CHI_TARGET:
+            alpha = max(ALPHA_LO, alpha - ALPHA_STEP)   # too hot  → cool faster
+        else:
+            alpha = min(ALPHA_HI, alpha + ALPHA_STEP)   # too cold → cool slower
+
+        T    *= alpha
+        stag  = 0 if improved else stag + 1
+        history.append(fb)
+        alpha_history.append(alpha)
+
+        if T < p.T_min:
+            break
+
+        # ── Stagnation → reheat or exit ───────────────────────────────
+        if stag >= p.M_stag:
+            if n_reheats >= MAX_REHEATS:
+                break
+            T          = T_REHEAT * T        # boost temperature
+            pi         = pb[:]               # restart from incumbent
+            f          = fb
+            stag       = 0
+            n_reheats += 1
+
+    return pb, fb, {
+        'obj':          fb,
+        'time':         time.perf_counter() - t0,
+        't_best':       t_best,
+        'history':      history,
+        'init_obj':     init_obj,
+        'n_alt_seqs':   len(alt_set),
+        'alpha_history': alpha_history,
+    }
 
 # ═══════════════════════════════════════════════════════════════════════════
 # 9.  ILS WRAPPER
@@ -414,6 +534,7 @@ def run_ils(seq0: List[int], inst: ALPInstance, p: SAParams,
     t_best_wall = st['t_best']
     init_obj    = st['init_obj']
     total_alt   = st['n_alt_seqs']
+    alpha_hist  = st.get('alpha_history', [])
 
     for r in range(n_restarts):
         pi_pert = _double_bridge(pi_best, rng)
@@ -427,6 +548,7 @@ def run_ils(seq0: List[int], inst: ALPInstance, p: SAParams,
             t_best_wall = (time.perf_counter() - t0
                            - st_r['time'] + st_r['t_best'])
             total_alt = st_r['n_alt_seqs']   # reset: new global best
+            alpha_hist = st_r.get('alpha_history', [])  # reset: new global best
 
     return pi_best, f_best, {
         'obj':        f_best,
@@ -436,6 +558,7 @@ def run_ils(seq0: List[int], inst: ALPInstance, p: SAParams,
         'all_hist':   all_hist,
         'init_obj':   init_obj,
         'n_alt_seqs': total_alt,
+        'alpha_history': alpha_hist,
     }
 
 
@@ -470,7 +593,8 @@ def _sa_worker(args):
             st.get('history',    []),
             st.get('t_best',     0.0),
             st.get('n_alt_seqs', 1),
-            st.get('init_obj',   fb))
+            st.get('init_obj',   fb),
+            st.get('alpha_history', []))
 
 
 def ms_sa(inst: ALPInstance, p: SAParams = None,
@@ -503,8 +627,8 @@ def ms_sa(inst: ALPInstance, p: SAParams = None,
                             total=len(tasks), desc="  SA chains",
                             disable=not _TQDM))
 
-    # results: list of (label, pb, fb, hist, t_best, n_alt, init_obj)
-    best_lbl, best_pi, best_f, best_hist, best_ttb, _, _ = min(results, key=lambda r: r[2])
+    # results: list of (label, pb, fb, hist, t_best, n_alt, init_obj, alpha_history)
+    best_lbl, best_pi, best_f, best_hist, best_ttb, _, _, best_alpha_hist = min(results, key=lambda r: r[2])
     wall = time.perf_counter() - t0
 
     # ── Heuristic pre-SA quality report ──────────────────────────────
@@ -641,27 +765,7 @@ def plot_gantt(seq: List[int], inst: ALPInstance,
 
         # Shaded blocked zone on successor's row
         ax.barh(y_k, width=sep, left=x1[j], height=0.52,
-                color='#e8721c', alpha=0.22, zorder=0, linewidth=0)
-
-        # Vertical boundary line at x_j + s_{j,k}  (earliest feasible for k)
-        ax.plot([x1[j] + sep, x1[j] + sep], [y_k - 0.26, y_k + 0.26],
-                color='#e8721c', linewidth=1.0, linestyle='-',
-                zorder=2, alpha=0.75)
-
-        # Constraint arc j → k  (small instances only — avoids visual clutter)
-        if n <= 20:
-            ax.annotate(
-                "", xy=(x1[j] + sep, y_k), xytext=(x1[j], y_j),
-                arrowprops=dict(
-                    arrowstyle="-|>",
-                    color='#c0470a',
-                    lw=0.85,
-                    alpha=0.50,
-                    mutation_scale=8,
-                    connectionstyle="arc3,rad=0.20",
-                ),
-                zorder=3,
-            )
+                color='#e8721c', alpha=0.45, zorder=0, linewidth=0)
 
     # ── Time windows, target times, scheduled landing times ───────────
     for j in range(n):
@@ -697,18 +801,16 @@ def plot_gantt(seq: List[int], inst: ALPInstance,
                        markersize=5, markerfacecolor='none', label='Target δ'),
             plt.Line2D([0], [0], marker='o', color='#1a6faf', lw=0,
                        markersize=5, markerfacecolor='none', label=slt_lbl),
-            mpatches.Patch(facecolor='#e8721c', alpha=0.35,
+            mpatches.Patch(facecolor='#e8721c', alpha=0.45,
                            label='Wake-vortex separation zone  '
                                  r'$[x_j,\; x_j + s_{jk}]$'),
-            plt.Line2D([0], [0], color='#e8721c', lw=1.2, alpha=0.75,
-                       label='Separation boundary  (earliest feasible for $k$)'),
         ],
         loc='lower right', fontsize=9, framealpha=0.85, edgecolor='#aaaaaa',
     )
     ax.set_title(inst.name, fontsize=11, pad=8)
     plt.tight_layout()
 
-    fname = (f"{save_dir}/gantt_{inst.name}"
+    fname = (f"{save_dir}/gantt/gantt_{inst.name}"
              f"_{method.replace('-', '_').replace(' ', '_')}.png")
     plt.savefig(fname, dpi=150, bbox_inches='tight')
     plt.close()
@@ -729,8 +831,8 @@ def plot_sa_convergence(all_histories: list, inst_name: str,
         if not hist or math.isinf(f_chain): continue
         is_best = abs(f_chain - best_f) < 1e-4
         ax.plot(hist,
-                linewidth=2.2 if is_best else 0.7,
-                alpha=1.0     if is_best else 0.38,
+                linewidth=0.7 if is_best else 0.5,
+                alpha=0.7     if is_best else 0.5,
                 linestyle='-' if is_best else '--',
                 color=palette[i % len(palette)],
                 label=f'{lbl} ({f_chain:.0f})')
@@ -739,7 +841,7 @@ def plot_sa_convergence(all_histories: list, inst_name: str,
     ax.set_title(f'SA Chain Convergence — {inst_name}', fontsize=11)
     ax.set_yscale('log'); ax.legend(fontsize=7, ncol=4, loc='upper right')
     ax.grid(alpha=0.22); plt.tight_layout()
-    fname = f"{save_dir}/convergence_{inst_name}.png"
+    fname = f"{save_dir}/convergence/convergence_{inst_name}.png"
     plt.savefig(fname, dpi=150, bbox_inches='tight'); plt.close()
     print(f"  Saved: {fname}")
 
@@ -797,6 +899,237 @@ def plot_alt_solutions(all_results: list, save_dir: str = "plots") -> None:
     ax.legend(fontsize=9); ax.grid(axis='y', alpha=0.22); plt.tight_layout()
     fname = f"{save_dir}/alt_solutions.png"
     plt.savefig(fname, dpi=150, bbox_inches='tight'); plt.close()
+    print(f"  Saved: {fname}")
+
+
+def plot_alpha_trajectory(all_histories: list, inst_name: str,
+                          save_dir: str = "plots") -> None:
+    """
+    Plot the per-chain reactive cooling-rate (α) over outer iterations.
+
+    For each SA chain, α starts at p.alpha and is nudged ±0.005 each level
+    based on the observed acceptance rate vs the 20 % target.  This plot
+    shows whether the adaptation mechanism is active and how different seeds
+    drive different thermal histories.
+
+    Data source
+    ───────────
+    all_histories : list of 8-tuples returned by ms_sa
+        index 0  label (str)
+        index 2  final objective (float)
+        index 7  alpha_history (List[float])  ← added by reactive run_sa
+    """
+    from pathlib import Path
+    Path(save_dir).mkdir(exist_ok=True)
+
+    finite  = [r for r in all_histories if not math.isinf(r[2])]
+    if not finite: return
+    best_f  = min(r[2] for r in finite)
+    palette = plt.cm.tab20.colors
+
+    fig, ax = plt.subplots(figsize=(11, 4))
+
+    # Reference lines
+    ax.axhline(0.999, color='#cccccc', linewidth=0.6, linestyle='--', zorder=0)
+    ax.axhline(0.80,  color='#cccccc', linewidth=0.6, linestyle='--', zorder=0)
+    ax.axhline(0.20,  color='#e8721c', linewidth=0.5, linestyle=':',  zorder=0,
+               label='χ* = 0.20  (acceptance target)')
+
+    plotted = 0
+    for i, r in enumerate(all_histories):
+        lbl, _, fb, _, _, _, _, alpha_hist = r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]
+        if not alpha_hist or math.isinf(fb):
+            continue
+        is_best = abs(fb - best_f) < 1e-4
+        ax.plot(range(1, len(alpha_hist) + 1), alpha_hist,
+                color    = palette[i % len(palette)],
+                linewidth= 1.0 if is_best else 0.4,
+                alpha    = 0.85 if is_best else 0.35,
+                linestyle= '-'  if is_best else '--',
+                label    = f'{lbl}' + (' ★' if is_best else ''))
+        plotted += 1
+
+    if plotted == 0:
+        plt.close(); return
+
+    ax.set_xlabel('Outer iteration (temperature level)', fontsize=10)
+    ax.set_ylabel('Cooling rate α', fontsize=10)
+    ax.set_title(f'Reactive α Trajectory — {inst_name}', fontsize=11)
+    ax.set_ylim(0.78, 1.002)
+    ax.legend(fontsize=7, ncol=4, loc='lower right', framealpha=0.50)
+    ax.grid(alpha=0.2)
+    plt.tight_layout()
+
+    fname = f"{save_dir}/alpha trajectory/alpha_trajectory_{inst_name}.png"
+    plt.savefig(fname, dpi=150, bbox_inches='tight')
+    plt.close()
+    print(f"  Saved: {fname}")
+
+
+def plot_seed_improvement(all_histories: list, inst_name: str,
+                          known_opt: float = None,
+                          save_dir: str = "plots") -> None:
+    """
+    Paired bar chart: initial heuristic objective vs. SA final objective per chain.
+
+    For each chain the improvement Δ = init_obj − final_obj quantifies how
+    much search effort was required beyond the dispatching rule alone.  A
+    chain with Δ ≈ 0 means its heuristic seed was already near-optimal; a
+    large Δ shows SA provided genuine improvement from that starting point.
+
+    Data source
+    ───────────
+    all_histories : list of 8-tuples returned by ms_sa
+        index 0  label (str)
+        index 2  final objective (float)
+        index 6  init_obj — objective before any SA (float)
+    """
+    from pathlib import Path
+    Path(save_dir).mkdir(exist_ok=True)
+
+    rows = [(r[0], r[6], r[2]) for r in all_histories
+            if not math.isinf(r[2]) and not math.isinf(r[6])]
+    if not rows: return
+
+    # Sort by init_obj descending so the worst seed is on the left
+    rows.sort(key=lambda x: -x[1])
+    labels   = [r[0]  for r in rows]
+    init_obj = [r[1]  for r in rows]
+    final_obj= [r[2]  for r in rows]
+    best_f   = min(final_obj)
+
+    x   = np.arange(len(labels))
+    w   = 0.38
+    fig, ax = plt.subplots(figsize=(max(9, len(labels) * 0.9), 5))
+
+    # Initial (open / hatched) bars
+    ax.bar(x - w / 2, init_obj,  w,
+           color='#aec6e8', edgecolor='#1a6faf', linewidth=0.8,
+           hatch='///', alpha=0.7, label='Heuristic seed (pre-SA)')
+
+    # Final (solid) bars
+    colors = ['#c0392b' if abs(f - best_f) < 1e-4 else '#1a6faf'
+              for f in final_obj]
+    bars = ax.bar(x + w / 2, final_obj, w,
+                  color=colors, alpha=0.85, label='SA final objective')
+
+    # Improvement arrows on chains that actually improved
+    for xi, (f_i, f_f) in enumerate(zip(init_obj, final_obj)):
+        delta = f_i - f_f
+        if delta > max(best_f * 5e-4, 0.5):
+            ax.annotate('',
+                xy    =(xi + w / 2, f_f  + (f_i - f_f) * 0.05),
+                xytext=(xi - w / 2, f_i  - (f_i - f_f) * 0.05),
+                arrowprops=dict(arrowstyle='->', color='#555555',
+                                lw=0.8, connectionstyle='arc3,rad=0.15'))
+
+    # Known optimum reference line
+    if known_opt is not None:
+        ax.axhline(known_opt, color='black', linewidth=0.9,
+                   linestyle='--', label=f'Known optimum ({known_opt})')
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels, rotation=20, ha='right', fontsize=9)
+    ax.set_ylabel('Objective value', fontsize=10)
+    ax.set_title(f'Seed Quality vs. SA Improvement — {inst_name}', fontsize=11)
+    ax.legend(fontsize=9, loc='upper right', framealpha=0.85)
+    ax.grid(axis='y', alpha=0.22)
+    plt.tight_layout()
+
+    fname = f"{save_dir}/seed improvement/seed_improvement_{inst_name}.png"
+    plt.savefig(fname, dpi=150, bbox_inches='tight')
+    plt.close()
+    print(f"  Saved: {fname}")
+
+
+def plot_penalty_profile(seq: List[int], inst: ALPInstance,
+                         landing_times: np.ndarray,
+                         method: str = "", obj: float = None,
+                         save_dir: str = "plots") -> None:
+    """
+    Stacked bar chart of per-aircraft weighted earliness and tardiness cost,
+    indexed by landing position in the final sequence.
+
+    Each bar is split into:
+      g_j · E_j  (blue)  — cost for landing before target δ_j
+      h_j · T_j  (red)   — cost for landing after  target δ_j
+
+    The sum of all bars equals the total schedule objective.  Aircraft with
+    zero penalty (landed exactly at δ_j) appear as empty slots, making the
+    distribution of cost concentration immediately visible.
+
+    A secondary scatter (grey diamonds) shows how far each scheduled landing
+    time x_j sits from its target δ_j (signed deviation, right y-axis), so
+    the cost magnitude can be interpreted alongside the timing deviation.
+
+    Parameters
+    ----------
+    seq           : final landing sequence
+    inst          : ALPInstance
+    landing_times : array of length n, x_j values from Stage-2 LP
+    method        : label string for title / filename
+    obj           : total objective (for subtitle annotation)
+    """
+    from pathlib import Path
+    Path(save_dir).mkdir(exist_ok=True)
+
+    n   = inst.n
+    x   = landing_times
+    pos = np.arange(1, n + 1)   # 1-indexed landing positions
+
+    early_pen = np.array([inst.g[j] * max(inst.delta[j] - x[j], 0.0) for j in seq])
+    late_pen  = np.array([inst.h[j] * max(x[j] - inst.delta[j], 0.0) for j in seq])
+    deviation = np.array([x[j] - inst.delta[j] for j in seq])   # signed, seconds
+
+    fig, ax1 = plt.subplots(figsize=(max(10, n * 0.28), 5))
+    ax2 = ax1.twinx()
+
+    # Stacked penalty bars
+    ax1.bar(pos, early_pen, color='#1a6faf', alpha=0.82,
+            label='Weighted earliness  $g_j E_j$')
+    ax1.bar(pos, late_pen,  bottom=early_pen, color='#c0392b', alpha=0.82,
+            label='Weighted tardiness  $h_j T_j$')
+
+    # Signed deviation scatter
+    ax2.scatter(pos, deviation, marker='D', s=18, color='#555555',
+                alpha=0.6, zorder=3, label='$x_j - \\delta_j$ (s)')
+    ax2.axhline(0, color='#888888', linewidth=0.6, linestyle=':')
+    ax2.set_ylabel('Deviation from target δ_j  (s)', fontsize=9,
+                   color='#555555')
+    ax2.tick_params(axis='y', labelcolor='#555555')
+
+    ax1.set_xlabel('Landing position in sequence', fontsize=10)
+    ax1.set_ylabel('Penalty cost', fontsize=10)
+    title = f'Per-Aircraft Penalty Profile — {inst.name}'
+    if method: title += f'  [{method}]'
+    if obj is not None: title += f'  (total = {obj:.2f})'
+    ax1.set_title(title, fontsize=11)
+
+    # Combined legend from both axes
+    h1, l1 = ax1.get_legend_handles_labels()
+    h2, l2 = ax2.get_legend_handles_labels()
+    ax1.legend(h1 + h2, l1 + l2, fontsize=9, loc='upper right', framealpha=0.85)
+
+    ax1.set_xlim(0, n + 1)
+    ax1.grid(axis='y', alpha=0.2)
+    ax1.set_axisbelow(True)
+
+    # Annotate aircraft index for the top-N most costly positions
+    total_pen = early_pen + late_pen
+    top_n     = min(5, int((total_pen > 0).sum()))
+    if top_n > 0:
+        threshold = np.sort(total_pen)[-top_n]
+        for l, (p_val, j) in enumerate(zip(total_pen, seq)):
+            if p_val >= threshold and p_val > 0:
+                ax1.text(pos[l], p_val + max(total_pen) * 0.01,
+                         f'A{j}', ha='center', va='bottom',
+                         fontsize=7, color='#333333')
+
+    plt.tight_layout()
+    tag = method.replace('-', '_').replace(' ', '_')
+    fname = f"{save_dir}/penalty profile/penalty_profile_{inst.name}_{tag}.png"
+    plt.savefig(fname, dpi=150, bbox_inches='tight')
+    plt.close()
     print(f"  Saved: {fname}")
 
 
@@ -1181,7 +1514,7 @@ def export_results(results_list: list,
         "total_alt_seqs", "n_init_optimal",
         "verified",
     ]
-    with open(summary_path, "w", newline="") as fh:
+    with open(summary_path, "w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=summary_fields)
         w.writeheader()
         for r in results_list:
@@ -1216,7 +1549,7 @@ def export_results(results_list: list,
         "earliness", "tardiness", "penalty",
         "g", "h",
     ]
-    with open(sched_path, "w", newline="") as fh:
+    with open(sched_path, "w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=sched_fields)
         w.writeheader()
         for r in results_list:
@@ -1256,7 +1589,7 @@ def export_results(results_list: list,
     # ── 3. verification.txt ───────────────────────────────────────────
     verif_path = out / "verification.txt"
     divider = "\n" + "─" * 70 + "\n"
-    with open(verif_path, "w") as fh:
+    with open(verif_path, "w", encoding="utf-8") as fh:
         fh.write(f"ALP Verification Report\n"
                  f"Generated : {ts}\n"
                  f"Instances : {len(results_list)}\n")
@@ -1293,7 +1626,7 @@ def export_results(results_list: list,
             for r in results_list
         ],
     }
-    with open(meta_path, "w") as fh:
+    with open(meta_path, "w", encoding="utf-8") as fh:
         json.dump(meta, fh, indent=2)
     print(f"  Saved: {meta_path}")
 
@@ -1368,6 +1701,12 @@ def run_experiment(inst: ALPInstance,
     # Plots
     plot_gantt(pi_sa, inst, method='MS-SA', obj=f_sa)
     plot_sa_convergence(sa_stats.get('all_histories', []), inst.name)
+    plot_alpha_trajectory(sa_stats.get('all_histories', []), inst.name)
+    plot_seed_improvement(sa_stats.get('all_histories', []), inst.name, known_opt=known_opt)
+
+    if vreport is not None and vreport.landing_times is not None:
+       plot_penalty_profile(pi_sa, inst, vreport.landing_times,
+           method='MS-SA', obj=f_sa)
 
     return result
 
@@ -1413,7 +1752,12 @@ if __name__ == '__main__':
         'airland13.txt': 39287.52,
     }
 
-    SA_full = SAParams(alpha=0.99, N_iter=250, T_min=1e-4, I_max=800, M_stag=100)
+    SA_full = SAParams(alpha=0.99,  # cooling rate
+                    N_iter=250,     # total iterations (including all ILS chains)
+                    T_min=1e-4,     # minimum temperature
+                    I_max=800,     # max iterations without improvement before termination
+                    M_stag=100      # stagnation threshold for adaptive parameter tuning
+                )
 
     print(f"\nSearching for OR Library files in:\n  {DATA_DIR.resolve()}\n")
     found, missing = [], []

@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-04-11 17:00:14",
+  "hostname": "EB276_Station1",
+  "python": "3.14.3 (tags/v3.14.3:323c59a, Feb  3 2026, 16:04:56) [MSC v.1944 64 bit (AMD64)]",
+  "n_cpu": 24,
+  "instances": [
+    {
+      "name": "airland11",
+      "n": 200,
+      "known_opt": 12462.18,
+      "obj": 12446.38,
+      "verified": true
+    }
+  ]
+}
