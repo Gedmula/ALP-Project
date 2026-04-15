@@ -1,9 +1,9 @@
 """
 Aircraft Landing Problem
 ==========================================================
-Target hardware : 32-core CPU
+Target hardware : multi-core CPU
 Algorithms      : MS-SA (parallel chains + ILS per chain)
-                  Stage-2 LP (HiGHS via SciPy) for timing
+                  Stage-2 LP (HiGHS via SciPy) 
 """
 
 # ═══════════════════════════════════════════════════════════════════════════
