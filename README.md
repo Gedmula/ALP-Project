@@ -1,6 +1,6 @@
 # Aircraft Landing Problem — Solver Pipeline
 
-Single-runway scheduling under wake-vortex separation constraints, formulated as **1 | r_j, s_jk, δ̄_j | Σ(g_j E_j + h_j T_j)** and solved via a two-stage decomposition: sequence optimisation by metaheuristic search, followed by exact timing optimisation via a linear program.
+Single-runway scheduling under wake-vortex separation constraints, formulated as **$$1 | r_j, s_jk, δ̄_j | Σ(g_j E_j + h_j T_j)$$** and solved via a two-stage decomposition: sequence optimisation by metaheuristic search, followed by exact timing optimisation via a linear program.
 
 ---
 
