@@ -1,14 +1,14 @@
 {
-  "timestamp": "2026-04-11 17:10:55",
-  "hostname": "EB276_Station1",
-  "python": "3.14.3 (tags/v3.14.3:323c59a, Feb  3 2026, 16:04:56) [MSC v.1944 64 bit (AMD64)]",
-  "n_cpu": 24,
+  "timestamp": "2026-04-15 23:13:43",
+  "hostname": "eb276-INTEL",
+  "python": "3.10.12 (main, Mar  3 2026, 11:56:32) [GCC 11.4.0]",
+  "n_cpu": 28,
   "instances": [
     {
       "name": "airland13",
       "n": 500,
       "known_opt": 39287.52,
-      "obj": 42772.37,
+      "obj": 37772.23,
       "verified": true
     }
   ]

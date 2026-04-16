@@ -1,5 +1,5 @@
 ALP Verification Report
-Generated : 2026-04-11 16:48:44
+Generated : 2026-04-15 22:17:05
 Instances : 1
 
 ──────────────────────────────────────────────────────────────────────
@@ -7,9 +7,9 @@ Instances : 1
   Verification — airland8   n=50
 ────────────────────────────────────────────────────────────────────
   Result         : ✓ PASS
-  Obj reported   : 1860.000000
-  Obj recomputed : 1860.000000  (Δ=0.00e+00)
-  Obj LP re-solve: 1860.000000  (Δ=0.00e+00)
+  Obj reported   : 1950.000000
+  Obj recomputed : 1950.000000  (Δ=0.00e+00)
+  Obj LP re-solve: 1950.000000  (Δ=0.00e+00)
   Tolerance      : 1e-04
   Violations     : 0
 ════════════════════════════════════════════════════════════════════

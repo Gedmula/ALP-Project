@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-04-11 17:10:59",
-  "hostname": "EB276_Station1",
-  "python": "3.14.3 (tags/v3.14.3:323c59a, Feb  3 2026, 16:04:56) [MSC v.1944 64 bit (AMD64)]",
-  "n_cpu": 24,
+  "timestamp": "2026-04-15 23:13:50",
+  "hostname": "eb276-INTEL",
+  "python": "3.10.12 (main, Mar  3 2026, 11:56:32) [GCC 11.4.0]",
+  "n_cpu": 28,
   "instances": [
     {
       "name": "airland1",
@@ -57,7 +57,7 @@
       "name": "airland8",
       "n": 50,
       "known_opt": 1950,
-      "obj": 1860.0,
+      "obj": 1950.0,
       "verified": true
     },
     {
@@ -78,21 +78,21 @@
       "name": "airland11",
       "n": 200,
       "known_opt": 12462.18,
-      "obj": 12446.38,
+      "obj": 12418.32,
       "verified": true
     },
     {
       "name": "airland12",
       "n": 250,
       "known_opt": 16629.1,
-      "obj": 16288.65,
+      "obj": 16249.6,
       "verified": true
     },
     {
       "name": "airland13",
       "n": 500,
       "known_opt": 39287.52,
-      "obj": 42772.37,
+      "obj": 37772.23,
       "verified": true
     }
   ]

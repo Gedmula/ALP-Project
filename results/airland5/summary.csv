@@ -1,2 +1,2 @@
 instance,n,known_opt,ms_sa_obj,gap_pct,wall_s,ttb_s,total_alt_seqs,n_init_optimal,verified
-airland5,20,3100.000000,3100.000000,0.0000,166.135,18.478,576,3,PASS
+airland5,20,3100.000000,3100.000000,0.0000,14.622,4.055,672,3,PASS
