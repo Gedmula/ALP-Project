@@ -40,7 +40,7 @@ Given a set J = {1, …, n} of aircraft, each characterised by:
 | $$g_j$$ | Cost per unit of earliness (landing before $$δ_j$$) |
 | $$h_j$$ | Cost per unit of tardiness (landing after $$δ_j$$) |
 
-The objective is to find a landing sequence π and scheduled landing times x_j such that:
+The objective is to find a landing sequence π and scheduled landing times $$x_j$$ such that:
 
 - $$x_j ∈ [r_j, d_j]$$ for all j (window constraints)
 - $$x_{π(l+1)} ≥ x_{π(l)} + s_{π(l), π(l+1)}$$ for all consecutive pairs in π (separation constraints)
