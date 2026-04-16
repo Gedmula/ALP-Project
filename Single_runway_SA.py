@@ -54,7 +54,7 @@ except ImportError:
     def tqdm(x, **kw): return x
 
 warnings.filterwarnings("ignore")
-N_CPU = os.cpu_count() - 4 or 1
+N_CPU = max(os.cpu_count() - 4, 1)
 
 import multiprocessing as _mp
 _CTX = _mp.get_context("spawn" if platform.system() == "Windows" else "fork")
