@@ -37,8 +37,8 @@ Given a set J = {1, …, n} of aircraft, each characterised by:
 | $$δ_j$$ | Target (preferred) landing time |
 | $$d_j$$ | Deadline (latest landing) time |
 | $$s_{jk}$$ | Minimum separation time required between j landing before k |
-| $$g_j$$ | Cost per unit of earliness (landing before δ_j) |
-| $$h_j$$ | Cost per unit of tardiness (landing after δ_j) |
+| $$g_j$$ | Cost per unit of earliness (landing before $$δ_j$$) |
+| $$h_j$$ | Cost per unit of tardiness (landing after $$δ_j$$) |
 
 The objective is to find a landing sequence π and scheduled landing times x_j such that:
 
