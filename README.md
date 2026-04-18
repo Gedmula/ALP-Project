@@ -1,6 +1,11 @@
 # Aircraft Landing Problem — Solver Pipeline
+## By George Duke and Ibrahim Oyeyinka
 
-Single-runway scheduling under wake-vortex separation constraints, formulated as **1 | r_j, s_jk, δ̄_j | Σ(g_j E_j + h_j T_j)** and solved via a two-stage decomposition: sequence optimisation by parallel multi-start SA with ILS, followed by exact timing optimisation via a linear program.
+Single-runway scheduling under wake-vortex separation constraints, formulated as 
+
+$$1 | r_j, s_{jk}, δ_{j} | Σ(g_j E_j + h_j T_j)$$
+
+Single-runway scheduling under wake-vortex separation constraints, formulated as **1 | r_j, s_jk, δ̄_j | Σ(g_j E_j + h_j T_j)** and solved via a two-stage decomposition: sequence optimisation by metaheuristic search, followed by exact timing optimisation via a linear program.
 
 ---
 
@@ -28,14 +33,14 @@ Given a set $J = \{1, \ldots, n\}$ of aircraft, each characterised by:
 
 | Symbol | Meaning |
 |---|---|
-| $r_j$ | Release (earliest landing) time |
-| $\delta_j$ | Target (preferred) landing time |
-| $d_j$ | Deadline (latest landing) time |
-| $s_{jk}$ | Minimum separation time required between $j$ landing before $k$ |
-| $g_j$ | Cost per unit of earliness (landing before $\delta_j$) |
-| $h_j$ | Cost per unit of tardiness (landing after $\delta_j$) |
+| $$r_j$$ | Release (earliest landing) time |
+| $$δ_j$$ | Target (preferred) landing time |
+| $$d_j$$ | Deadline (latest landing) time |
+| $$s_jk$$ | Minimum separation time required between j landing before k |
+| $$g_j$$ | Cost per unit of earliness (landing before δ_j) |
+| $$h_j$$ | Cost per unit of tardiness (landing after δ_j) |
 
-The objective is to find a landing sequence $\pi$ and scheduled landing times $x_j$ such that:
+The objective is to find a landing sequence π and scheduled landing times x_j such that:
 
 $$x_j \in [r_j,\; d_j] \qquad \forall j \in J$$
 
