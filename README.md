@@ -135,7 +135,7 @@ Download `airland1.txt` through `airland13.txt` and place them in `./data/` rela
 | airland5 | 3100 | Zhang et al. (2020) |
 | airland6 | 24442 | Zhang et al. (2020) |
 | airland7 | 1550 | Zhang et al. (2020) |
-| airland8 | 1950 | Beasley et al. (2000) — certified global optimum |
+| airland8 | 1950 | Beasley et al. (2000) |
 | airland9 | 5611.70 | Zhang et al. (2020) |
 | airland10 | 12640.42 | Zhang et al. (2020) |
 | airland11 | 12462.18 | Zhang et al. (2020) |
