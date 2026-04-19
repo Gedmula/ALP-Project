@@ -1651,7 +1651,7 @@ if __name__ == '__main__':
         'airland13.txt': 39287.52,
     }
 
-    SA_full = SAParams(alpha=0.99, N_iter=250, T_min=1e-4, I_max=800, M_stag=100)
+    SA_full = None #SAParams(alpha=0.99, N_iter=250, T_min=1e-4, I_max=800, M_stag=100)
 
     print(f"\nSearching for OR Library files in:\n  {DATA_DIR.resolve()}\n")
     found, missing = [], []
