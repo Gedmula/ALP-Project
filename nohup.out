@@ -1,0 +1,133 @@
+
+════════════════════════════════════════════════════════════════════════
+  ALP — DESIGN OF EXPERIMENTS
+  Experiments requested : [2, 3]
+  Workers               : 28  (all cores used)
+  Data dir              : /home/eb276/ALP-Project/data
+  Results dir           : /home/eb276/ALP-Project/doe_results
+════════════════════════════════════════════════════════════════════════
+
+Loading OR-Library instances...
+  [LOADED]  airland1      n=  10  opt=700.0
+  [LOADED]  airland2      n=  15  opt=1480.0
+  [LOADED]  airland3      n=  20  opt=820.0
+  [LOADED]  airland4      n=  20  opt=2520.0
+  [LOADED]  airland5      n=  20  opt=3100.0
+  [LOADED]  airland6      n=  30  opt=24442.0
+  [LOADED]  airland7      n=  44  opt=1550.0
+  [LOADED]  airland8      n=  50  opt=1950.0
+  [LOADED]  airland9      n= 100  opt=5611.7
+  [LOADED]  airland10     n= 150  opt=12640.42
+  [LOADED]  airland11     n= 200  opt=12462.18
+  [LOADED]  airland12     n= 250  opt=16629.1
+  [LOADED]  airland13     n= 500  opt=39287.52
+
+════════════════════════════════════════════════════════════════════════
+  EXP-2  ILS DEPTH STUDY  (n ≥ 50, 28 workers/call — already saturating all cores)
+  Instances: 6  |  n_ils levels: [0, 2, 4, 6]  |  Reps: 3
+════════════════════════════════════════════════════════════════════════
+
+  ── airland8  (n=50, opt=1950.0) ──
+   n_ils  Rep    Obj(feas)     Gap%  T_best(s)  Wall(s)
+  ────── ──── ──────────── ──────── ────────── ────────
+       0    1      1950.00    +0.00      40.37   148.49
+       0    2      1950.00    +0.00      29.96   125.18
+       0    3      1950.00    +0.00      46.92   119.82
+       2    1      1950.00    +0.00     147.69   300.13
+       2    2      1950.00    +0.00     187.01   300.13
+       2    3      1950.00    +0.00     103.85   300.19
+       4    1      1950.00    +0.00     151.77   300.33
+       4    2      1950.00    +0.00     196.19   300.32
+       4    3      1950.00    +0.00     109.36   300.43
+       6    1      1950.00    +0.00     167.18   300.34
+       6    2      1950.00    +0.00     222.07   300.35
+       6    3      1950.00    +0.00     121.96   300.31
+
+  ── airland9  (n=100, opt=5611.7) ──
+   n_ils  Rep    Obj(feas)     Gap%  T_best(s)  Wall(s)
+  ────── ──── ──────────── ──────── ────────── ────────
+       0    1      5611.70    +0.00      76.29   150.49
+       0    2      5611.70    +0.00      25.14   100.06
+       0    3      5618.66    +0.12      41.54   158.52
+       2    1      5611.70    +0.00      69.61   255.99
+       2    2      5611.70    +0.00      18.71   218.18
+       2    3      5618.66    +0.12      28.86   142.80
+       4    1      5611.70    +0.00      66.21   200.08
+       4    2      5611.70    +0.00      19.27   300.05
+       4    3      5611.99    +0.01     110.81   138.84
+       6    1      5611.70    +0.00      55.99   190.41
+       6    2      5611.70    +0.00      19.20   300.07
+       6    3      5611.99    +0.01     108.48   200.52
+
+  ── airland10  (n=150, opt=12640.42) ──
+   n_ils  Rep    Obj(feas)     Gap%  T_best(s)  Wall(s)
+  ────── ──── ──────────── ──────── ────────── ────────
+       0    1     12364.81    -2.18      77.31   137.73
+       0    2     12400.75    -1.90      59.46   114.89
+       0    3     12319.83    -2.54      75.39   159.80
+       2    1     12364.81    -2.18      79.24   193.31
+       2    2     12400.75    -1.90      61.87   167.25
+       2    3     12319.83    -2.54      74.78   146.82
+       4    1     12364.81    -2.18      77.06   199.30
+       4    2     12400.75    -1.90      61.44   193.98
+       4    3     12319.83    -2.54      78.00   155.00
+       6    1     12364.81    -2.18      99.77   241.61
+       6    2     12400.75    -1.90      65.13   289.09
+       6    3     12319.83    -2.54      91.97   170.64
+
+  ── airland11  (n=200, opt=12462.18) ──
+   n_ils  Rep    Obj(feas)     Gap%  T_best(s)  Wall(s)
+  ────── ──── ──────────── ──────── ────────── ────────
+       0    1     12418.32    -0.35     257.41   300.36
+       0    2     12418.32    -0.35     296.40   300.26
+       0    3     12418.32    -0.35     256.33   300.34
+       2    1     12426.42    -0.29     166.20   300.35
+       2    2     12418.32    -0.35     152.89   300.23
+       2    3     12418.32    -0.35     262.73   300.32
+       4    1     12418.32    -0.35     278.64   300.28
+       4    2     12418.32    -0.35     183.91   300.36
+       4    3     12418.32    -0.35     252.27   300.29
+       6    1     12418.32    -0.35     269.48   300.32
+       6    2     12418.32    -0.35     189.91   300.29
+       6    3     12418.32    -0.35     284.43   300.32
+
+  ── airland12  (n=250, opt=16629.1) ──
+   n_ils  Rep    Obj(feas)     Gap%  T_best(s)  Wall(s)
+  ────── ──── ──────────── ──────── ────────── ────────
+       0    1     16249.60    -2.28     252.19   300.26
+       0    2     16285.41    -2.07     270.00   300.39
+       0    3     16203.37    -2.56     270.52   300.37
+       2    1     16249.60    -2.28     250.73   300.32
+       2    2     16285.41    -2.07     279.67   300.38
+       2    3     16203.37    -2.56     274.31   300.41
+       4    1     16249.60    -2.28     258.11   300.29
+       4    2     16285.41    -2.07     278.02   300.37
+       4    3     16203.37    -2.56     280.67   300.37
+       6    1     16249.60    -2.28     273.91   300.39
+       6    2     16285.41    -2.07     289.80   300.47
+       6    3     16203.37    -2.56     290.35   300.40
+
+  ── airland13  (n=500, opt=39287.52) ──
+   n_ils  Rep    Obj(feas)     Gap%  T_best(s)  Wall(s)
+  ────── ──── ──────────── ──────── ────────── ────────
+       0    1     43131.11    +9.78     708.94   713.30
+Traceback (most recent call last):
+  File "/home/eb276/ALP-Project/DOE.py", line 1062, in <module>
+    main(run_exps=exps or None)
+  File "/home/eb276/ALP-Project/DOE.py", line 1034, in main
+    rec2 = run_ils_depth_study(instances, cfg)
+  File "/home/eb276/ALP-Project/DOE.py", line 565, in run_ils_depth_study
+    fb_feas, fb_semi, t_bf, t_bs = _ms_sa_seeded(
+  File "/home/eb276/ALP-Project/DOE.py", line 522, in _ms_sa_seeded
+    results = list(ex.map(_sa_worker, tasks))
+  File "/usr/lib/python3.10/concurrent/futures/process.py", line 575, in _chain_from_iterable_of_lists
+    for element in iterable:
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 621, in result_iterator
+    yield _result_or_cancel(fs.pop())
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 319, in _result_or_cancel
+    return fut.result(timeout)
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 458, in result
+    return self.__get_result()
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+concurrent.futures.process.BrokenProcessPool: A process in the process pool was terminated abruptly while the future was running or pending.

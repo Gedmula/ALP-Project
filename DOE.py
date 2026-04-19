@@ -497,6 +497,30 @@ def export_exp1(records: List[dict], out_dir: Path) -> None:
 # 4.  EXPERIMENT 2 — ILS DEPTH STUDY
 # ═══════════════════════════════════════════════════════════════════════════
 
+def _safe_n_workers(n: int, n_workers_max: int) -> int:
+    """
+    Scale down the worker count for large instances to avoid OOM.
+
+    For n aircraft, each LP call in _build_lp_matrices allocates a dense
+    matrix of shape (n(n-1)/2, 3n) in float64.  The memory cost per worker
+    is approximately:
+
+        bytes ≈ n(n-1)/2 × 3n × 8  =  12n³  (bytes, leading term)
+
+    Keeping total concurrent LP memory below ~12 GB (conservative for a
+    32-core workstation with ≥32 GB RAM):
+
+        n_workers ≤ 12 × 10⁹  /  (12 × n³)  =  10⁹ / n³
+
+    The table below maps this formula to a practical per-tier cap.
+    """
+    if n <= 100:  return n_workers_max
+    if n <= 200:  return min(n_workers_max, 12)
+    if n <= 300:  return min(n_workers_max,  6)
+    if n <= 400:  return min(n_workers_max,  3)
+    return min(n_workers_max, 2)   # n > 400  (airland13: n=500)
+
+
 def _ms_sa_seeded(inst: ALPInstance, p: SAParams, n_workers: int,
                   n_ils: int, rep: int, t_limit: float
                   ) -> Tuple[float, float, float, float]:
@@ -505,21 +529,34 @@ def _ms_sa_seeded(inst: ALPInstance, p: SAParams, n_workers: int,
 
     Each chain's seed is shifted by (rep * 1000) so that independent
     replications explore distinct trajectories from the same heuristic
-    starts.  This function already uses all n_workers cores internally via
+    starts.  This function already uses all workers internally via
     ProcessPoolExecutor, so the outer (n_ils × rep) loop is kept sequential
     to avoid nested pool contention.
 
+    Workers are scaled down for large instances via _safe_n_workers to
+    prevent OOM.  If the pool crashes anyway (e.g. on
+    an unusually memory-constrained node) the call falls back to sequential
+    execution so the experiment does not abort.
+
     Returns: (fb_feas, fb_semi, t_best_feas, t_best_semi)
     """
+    w           = _safe_n_workers(inst.n, n_workers)
     seed_offset = rep * 1000
-    starts      = _build_starts(inst, n_starts=n_workers)
+    starts      = _build_starts(inst, n_starts=w)
     t0          = time.perf_counter()
     t_deadline  = t0 + t_limit
     tasks       = [(lbl, seq, inst, p, sd + seed_offset, n_ils, t_deadline)
                    for lbl, seq, sd in starts]
 
-    with ProcessPoolExecutor(max_workers=n_workers, mp_context=_CTX) as ex:
-        results = list(ex.map(_sa_worker, tasks))
+    try:
+        with ProcessPoolExecutor(max_workers=w, mp_context=_CTX) as ex:
+            results = list(ex.map(_sa_worker, tasks))
+    except Exception as exc:
+        warnings.warn(
+            f"_ms_sa_seeded: pool failed for {inst.name} n_ils={n_ils} rep={rep} "
+            f"({type(exc).__name__}: {exc}).  Falling back to sequential execution."
+        )
+        results = [_sa_worker(t) for t in tasks]
 
     # Field layout: 0=lbl,1=pb_semi,2=fb_semi,3=pi_feas,4=fb_feas,
     #               5=hist,6=t_best_sa,7=t_best_feas,8=n_alt,9=init,10=alpha_hist
@@ -554,7 +591,8 @@ def run_ils_depth_study(
 
     for name, (inst, opt) in large.items():
         sa_p, _ = adaptive_params(inst.n)
-        print(f"\n  ── {name}  (n={inst.n}, opt={opt}) ──")
+        print(f"\n  ── {name}  (n={inst.n}, opt={opt})  "
+              f"workers={_safe_n_workers(inst.n, cfg.n_workers)} ──")
         print(f"  {'n_ils':>6} {'Rep':>4} {'Obj(feas)':>12} {'Gap%':>8}"
               f" {'T_best(s)':>10} {'Wall(s)':>8}")
         print(f"  {'─'*6} {'─'*4} {'─'*12} {'─'*8} {'─'*10} {'─'*8}")
@@ -1054,7 +1092,7 @@ def main(run_exps: Optional[List[int]] = None) -> None:
 if __name__ == "__main__":
     # ── Configure which experiments to run ──────────────────────────────
     # Set each flag to True or False.
-    RUN_EXP1 = False    # Heuristic Seeding Study
+    RUN_EXP1 = True    # Heuristic Seeding Study
     RUN_EXP2 = True    # ILS Depth Study  (n >= exp2_min_n only)
     RUN_EXP3 = True    # Parameter Sensitivity DOE  (2^4 factorial)
 
