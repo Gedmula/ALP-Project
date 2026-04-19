@@ -9,6 +9,8 @@ Three controlled experiments that import directly from Single_runway_SA.py.
          MDD, MPDS, ATC_k2, ATC_k4) on SA convergence quality and speed.
          Design : single SA chain per heuristic; R replications with distinct
                   seeds; all chains share identical SAParams and time budget.
+         Parallelism: all (heuristic × rep) chains per instance submitted to
+                  a single ProcessPoolExecutor of N_CPU workers.
          Metrics: initial/final objective (semi + fully-feasible), gap to
                   known optimum, time-to-best, convergence speed (outer
                   iterations to within 0.5% of chain final).
@@ -18,6 +20,9 @@ Three controlled experiments that import directly from Single_runway_SA.py.
          on larger instances where MS-SA is most strained.
          Design : full MS-SA with n_ils ∈ {0, 2, 4, 6}; R replications via
                   per-replication seed offset forwarded to every chain worker.
+         Parallelism: each MS-SA call already uses all N_CPU cores internally
+                  via its own ProcessPoolExecutor; the outer (n_ils × rep)
+                  loop remains sequential to avoid nested pool contention.
          Metrics: mean/std gap per (instance, n_ils), time-to-best.
 
   Exp-3  Parameter Sensitivity DOE
@@ -25,6 +30,8 @@ Three controlled experiments that import directly from Single_runway_SA.py.
          center-point replicate.  A single fixed heuristic seed (EDD) is
          used so parameter effects are not confounded with seeding effects.
          Design : 16 corner combinations + 1 center × R replications.
+         Parallelism: all (combo × rep) chains per instance submitted to
+                  a single ProcessPoolExecutor of N_CPU workers.
          Metrics: main effects and two-factor interactions on gap to optimum.
 
 Usage
@@ -46,14 +53,13 @@ Output
 
 import csv, math, os, time, warnings
 from collections import defaultdict
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from dataclasses import dataclass, field
 from itertools import product as iproduct
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
 import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
 import numpy as np
 
 from Single_runway_SA import (
@@ -63,6 +69,12 @@ from Single_runway_SA import (
     adaptive_params, _build_starts, _sa_worker, _CTX,
     N_CPU,
 )
+
+try:
+    from tqdm import tqdm as _tqdm
+    def _progress(it, **kw): return _tqdm(it, **kw)
+except ImportError:
+    def _progress(it, **kw): return it
 
 warnings.filterwarnings("ignore")
 
@@ -99,9 +111,8 @@ class DOEConfig:
     results_dir:           str   = "doe_results"
 
     # ── Experiment scope ────────────────────────────────────────────────────
-    # None → use all available instances; otherwise supply a list of names.
     exp1_instances:        Optional[List[str]] = None
-    exp2_min_n:            int   = 50       # Exp-2: only instances with n >= this
+    exp2_min_n:            int   = 50
     exp3_instances:        Optional[List[str]] = None
 
     # ── Replications ────────────────────────────────────────────────────────
@@ -110,7 +121,6 @@ class DOEConfig:
     exp3_reps:             int   = 2
 
     # ── Time budgets per run (seconds) ──────────────────────────────────────
-    # Exp-1 / Exp-3 run single chains; budgets scale with instance size.
     exp1_t_small:          float = 60.0     # n <= 20
     exp1_t_med:            float = 120.0    # 20 < n <= 50
     exp1_t_large:          float = 240.0    # n > 50
@@ -131,7 +141,6 @@ class DOEConfig:
     exp3_i_max_hi:         int   = 1200
     exp3_m_stag_lo:        int   = 30
     exp3_m_stag_hi:        int   = 180
-    # Center point (used for curvature check):
     exp3_center_alpha:     float = 0.980
     exp3_center_n_iter:    int   = 200
     exp3_center_i_max:     int   = 600
@@ -183,11 +192,10 @@ def gap_pct(f: float, opt: float) -> float:
 
 
 def _convergence_speed(history: List[float], final_obj: float,
-                        threshold: float = 0.005) -> int:
+                       threshold: float = 0.005) -> int:
     """
-    Return the outer-iteration index at which a convergence history first
-    reaches <= final_obj * (1 + threshold).  Used in Exp-1 to measure how
-    quickly each heuristic seed allows SA to converge.
+    Return the outer-iteration index at which the history first reaches
+    <= final_obj * (1 + threshold).
     """
     target = final_obj * (1.0 + threshold) + 1e-6
     for i, v in enumerate(history):
@@ -197,11 +205,7 @@ def _convergence_speed(history: List[float], final_obj: float,
 
 
 def _exp1_sa_params(n: int) -> SAParams:
-    """
-    Fixed SAParams for Exp-1 and Exp-3 single-chain runs.  Matched across
-    all treatments within each instance to isolate the factor under study.
-    Conservative I_max ensures runs stay within their time budget.
-    """
+    """Fixed SAParams for Exp-1 and Exp-3 single-chain runs."""
     if n <= 20:
         return SAParams(alpha=0.97,  N_iter=100, T_min=1e-4, I_max=400,  M_stag=60)
     if n <= 50:
@@ -219,6 +223,50 @@ def _write_csv(path: Path, rows: List[dict], fieldnames: List[str]) -> None:
 
 
 # ═══════════════════════════════════════════════════════════════════════════
+# 3.  EXPERIMENT 1 — PARALLEL WORKERS
+# ═══════════════════════════════════════════════════════════════════════════
+
+def _exp1_chain_worker(args: tuple) -> dict:
+    """
+    Spawn-safe worker for one (heuristic × replication) SA chain.
+
+    Computes init values and runs run_sa entirely inside the worker process
+    so that no shared state is required.  t_deadline is computed locally
+    after the process starts so that scheduling lag does not eat into the
+    actual search budget.
+
+    Args tuple layout:
+        (inst, seq0, p, seed, t_lim, name, h_name, rep, opt)
+    """
+    inst, seq0, p, seed, t_lim, name, h_name, rep, opt = args
+    init_semi  = evaluate_semi(seq0, inst)
+    init_feas  = evaluate(seq0, inst)
+    t_deadline = time.perf_counter() + t_lim
+    _, fb_semi, stats = run_sa(seq0, inst, p, seed=seed, t_deadline=t_deadline)
+    fb_feas  = stats.get("obj_feas",    float("inf"))
+    history  = stats.get("history",     [])
+    g        = gap_pct(fb_feas, opt)
+    return {
+        "instance":    name,
+        "n":           inst.n,
+        "known_opt":   opt,
+        "heuristic":   h_name,
+        "rep":         rep,
+        "seed":        seed,
+        "init_semi":   round(init_semi, 4),
+        "init_feas":   round(init_feas, 4) if not math.isinf(init_feas) else None,
+        "final_semi":  round(fb_semi,   4),
+        "final_feas":  round(fb_feas,   4) if not math.isinf(fb_feas)  else None,
+        "gap_pct":     round(g,         4) if not math.isnan(g)        else None,
+        "t_best_feas": round(stats.get("t_best_feas", 0.0), 4),
+        "t_best_semi": round(stats.get("t_best",      0.0), 4),
+        "wall_s":      round(stats.get("time",        0.0), 4),
+        "conv_itr":    _convergence_speed(history, fb_semi),
+        "history":     history,
+    }
+
+
+# ═══════════════════════════════════════════════════════════════════════════
 # 3.  EXPERIMENT 1 — HEURISTIC SEEDING STUDY
 # ═══════════════════════════════════════════════════════════════════════════
 
@@ -227,23 +275,26 @@ def run_heuristic_study(
     cfg: DOEConfig,
 ) -> List[dict]:
     """
-    Single SA chain for each (instance × heuristic × replication).
+    Parallel heuristic seeding study.
 
-    SAParams and time budget are held constant across all heuristics within
-    an instance so that any difference in outcomes is attributable solely to
-    the starting sequence.  Both semi-feasible and fully-feasible objectives
-    are recorded from run_sa's dual-track stats dict, consistent with the
-    main solver's accounting.
+    All (heuristic × replication) chains for a given instance are submitted
+    simultaneously to a ProcessPoolExecutor of cfg.n_workers workers.  With
+    6 heuristics × cfg.exp1_reps replications = 30 chains per instance, a
+    32-core machine runs all 30 chains concurrently — up to 30× faster than
+    the sequential version.
 
-    Returns a flat list of row dicts (one per run).  Convergence history
-    is stored in-memory under key 'history' and used only for plotting.
+    SAParams and time budget are held constant across all treatments within
+    an instance so that outcomes are attributable solely to the starting
+    sequence.
     """
     records: List[dict] = []
     inst_names = cfg.exp1_instances or list(instances.keys())
-    seeds = [cfg.seed_base + i * 17 for i in range(cfg.exp1_reps)]
+    seeds      = [cfg.seed_base + i * 17 for i in range(cfg.exp1_reps)]
 
+    n_chains = len(HEURISTICS) * cfg.exp1_reps
     print(f"\n{'═'*72}")
-    print(f"  EXP-1  HEURISTIC SEEDING STUDY")
+    print(f"  EXP-1  HEURISTIC SEEDING STUDY  ({cfg.n_workers} workers, "
+          f"{n_chains} chains/instance)")
     print(f"  Instances: {len(inst_names)}  |  Heuristics: {len(HEURISTICS)}"
           f"  |  Reps: {cfg.exp1_reps}")
     print(f"{'═'*72}")
@@ -255,54 +306,43 @@ def run_heuristic_study(
         p     = _exp1_sa_params(inst.n)
         t_lim = cfg.exp1_t_limit(inst.n)
 
-        print(f"\n  ── {name}  (n={inst.n}, opt={opt})  "
-              f"SAParams: α={p.alpha} N_iter={p.N_iter} ──")
-        print(f"  {'Heuristic':8s} {'Rep':>3} {'Init(semi)':>11} {'Init(feas)':>11}"
-              f" {'Final(feas)':>12} {'Gap%':>8} {'T_best(s)':>10} {'Conv_itr':>9}")
-        print(f"  {'─'*8} {'─'*3} {'─'*11} {'─'*11} {'─'*12} {'─'*8} {'─'*10} {'─'*9}")
-
+        # Build task list: one entry per (heuristic × replication)
+        tasks: List[tuple] = []
         for h_name, h_fn in HEURISTICS.items():
-            seq0      = h_fn(inst)
-            init_semi = evaluate_semi(seq0, inst)
-            init_feas = evaluate(seq0, inst)
-
+            seq0 = h_fn(inst)
             for rep, seed in enumerate(seeds):
-                t_deadline = time.perf_counter() + t_lim
-                pb, fb_semi, stats = run_sa(
-                    seq0, inst, p, seed=seed, t_deadline=t_deadline)
+                tasks.append((inst, seq0, p, seed, t_lim,
+                               name, h_name, rep + 1, opt))
 
-                fb_feas  = stats.get("obj_feas",    float("inf"))
-                t_best_f = stats.get("t_best_feas", 0.0)
-                t_best_s = stats.get("t_best",      0.0)
-                history  = stats.get("history",     [])
-                conv_itr = _convergence_speed(history, fb_semi)
-                g        = gap_pct(fb_feas, opt)
+        print(f"\n  ── {name}  (n={inst.n}, opt={opt})  "
+              f"SAParams: α={p.alpha} N_iter={p.N_iter} "
+              f"t_lim={t_lim:.0f}s ──")
+        print(f"  Submitting {len(tasks)} chains to {cfg.n_workers} workers...")
 
-                if cfg.verbose:
-                    fin_s = f"{fb_feas:.2f}" if not math.isinf(fb_feas) else "inf"
-                    g_s   = f"{g:+.2f}"      if not math.isnan(g)       else "N/A"
-                    i_f_s = f"{init_feas:.2f}" if not math.isinf(init_feas) else "inf"
-                    print(f"  {h_name:8s} {rep+1:>3d} {init_semi:>11.2f} {i_f_s:>11s}"
-                          f" {fin_s:>12s} {g_s:>8s} {t_best_f:>10.2f} {conv_itr:>9d}")
+        with ProcessPoolExecutor(max_workers=cfg.n_workers,
+                                 mp_context=_CTX) as ex:
+            batch = list(_progress(
+                ex.map(_exp1_chain_worker, tasks),
+                total=len(tasks), desc=f"  {name}", leave=False))
 
-                records.append({
-                    "instance":    name,
-                    "n":           inst.n,
-                    "known_opt":   opt,
-                    "heuristic":   h_name,
-                    "rep":         rep + 1,
-                    "seed":        seed,
-                    "init_semi":   round(init_semi,  4),
-                    "init_feas":   round(init_feas,  4) if not math.isinf(init_feas) else None,
-                    "final_semi":  round(fb_semi,    4),
-                    "final_feas":  round(fb_feas,    4) if not math.isinf(fb_feas)   else None,
-                    "gap_pct":     round(g,           4) if not math.isnan(g)         else None,
-                    "t_best_feas": round(t_best_f,   4),
-                    "t_best_semi": round(t_best_s,   4),
-                    "wall_s":      round(stats.get("time", 0.0), 4),
-                    "conv_itr":    conv_itr,
-                    "history":     history,   # in-memory only (not written to CSV)
-                })
+        # Sort for deterministic console output: heuristic → rep
+        batch.sort(key=lambda r: (r["heuristic"], r["rep"]))
+
+        if cfg.verbose:
+            print(f"  {'Heuristic':8s} {'Rep':>3} {'Init(semi)':>11}"
+                  f" {'Init(feas)':>11} {'Final(feas)':>12}"
+                  f" {'Gap%':>8} {'T_best(s)':>10} {'Conv_itr':>9}")
+            print(f"  {'─'*8} {'─'*3} {'─'*11} {'─'*11} {'─'*12}"
+                  f" {'─'*8} {'─'*10} {'─'*9}")
+            for r in batch:
+                fin_s = f"{r['final_feas']:.2f}" if r["final_feas"] is not None else "inf"
+                g_s   = f"{r['gap_pct']:+.2f}"   if r["gap_pct"]   is not None else "N/A"
+                i_f_s = f"{r['init_feas']:.2f}"  if r["init_feas"] is not None else "inf"
+                print(f"  {r['heuristic']:8s} {r['rep']:>3d} {r['init_semi']:>11.2f}"
+                      f" {i_f_s:>11s} {fin_s:>12s} {g_s:>8s}"
+                      f" {r['t_best_feas']:>10.2f} {r['conv_itr']:>9d}")
+
+        records.extend(batch)
 
     print(f"\n  Exp-1 complete — {len(records)} records collected.")
     return records
@@ -310,7 +350,7 @@ def run_heuristic_study(
 
 def _aggregate_exp1(records: List[dict]) -> Dict[str, Dict[str, dict]]:
     """
-    Aggregate Exp-1 records into a nested dict:
+    Aggregate Exp-1 records into:
         agg[instance][heuristic] = {mean_gap, std_gap, mean_conv_itr, ...}
     """
     bucket: Dict[str, Dict[str, List[dict]]] = defaultdict(lambda: defaultdict(list))
@@ -321,45 +361,45 @@ def _aggregate_exp1(records: List[dict]) -> Dict[str, Dict[str, dict]]:
     for inst_name, h_dict in bucket.items():
         agg[inst_name] = {}
         for h_name, rows in h_dict.items():
-            f_feas   = [r["final_feas"] for r in rows if r["final_feas"] is not None]
-            gaps     = [r["gap_pct"]    for r in rows if r["gap_pct"]    is not None]
-            convs    = [r["conv_itr"]   for r in rows]
-            i_feas   = [r["init_feas"]  for r in rows if r["init_feas"]  is not None]
+            f_feas = [r["final_feas"] for r in rows if r["final_feas"] is not None]
+            gaps   = [r["gap_pct"]    for r in rows if r["gap_pct"]    is not None]
+            convs  = [r["conv_itr"]   for r in rows]
+            i_feas = [r["init_feas"]  for r in rows if r["init_feas"]  is not None]
             agg[inst_name][h_name] = {
-                "n_feasible":       len(f_feas),
-                "mean_final_feas":  float(np.mean(f_feas))  if f_feas else float("inf"),
-                "std_final_feas":   float(np.std(f_feas))   if len(f_feas) > 1 else 0.0,
-                "mean_gap_pct":     float(np.mean(gaps))    if gaps  else float("nan"),
-                "std_gap_pct":      float(np.std(gaps))     if len(gaps) > 1 else 0.0,
-                "mean_init_feas":   float(np.mean(i_feas))  if i_feas else float("inf"),
-                "mean_conv_itr":    float(np.mean(convs)),
-                "std_conv_itr":     float(np.std(convs))    if len(convs) > 1 else 0.0,
+                "n_feasible":      len(f_feas),
+                "mean_final_feas": float(np.mean(f_feas)) if f_feas else float("inf"),
+                "std_final_feas":  float(np.std(f_feas))  if len(f_feas) > 1 else 0.0,
+                "mean_gap_pct":    float(np.mean(gaps))   if gaps  else float("nan"),
+                "std_gap_pct":     float(np.std(gaps))    if len(gaps) > 1 else 0.0,
+                "mean_init_feas":  float(np.mean(i_feas)) if i_feas else float("inf"),
+                "mean_conv_itr":   float(np.mean(convs)),
+                "std_conv_itr":    float(np.std(convs))   if len(convs) > 1 else 0.0,
             }
     return agg
 
 
 def plot_heuristic_study(records: List[dict], out_dir: Path) -> None:
-    """Three figures: (a) final-obj box plots, (b) convergence curves,
-    (c) initial vs final paired bars — one page per instance."""
-    agg = _aggregate_exp1(records)
+    """Three figures: (a) gap box plots, (b) convergence curves,
+    (c) initial vs final paired bars — one subplot grid per instance."""
+    agg       = _aggregate_exp1(records)
     instances = list(agg.keys())
     h_names   = list(HEURISTICS.keys())
     palette   = plt.cm.tab10.colors
 
     # ── (a) Gap box plots ────────────────────────────────────────────────
-    fig_rows = math.ceil(len(instances) / 3)
+    fig_rows  = math.ceil(len(instances) / 3)
     fig, axes = plt.subplots(fig_rows, min(3, len(instances)),
                              figsize=(5 * min(3, len(instances)), 4 * fig_rows),
                              squeeze=False)
     axes_flat = axes.flatten()
-    bucket: Dict[str, Dict[str, List]] = defaultdict(lambda: defaultdict(list))
+    gap_bucket: Dict[str, Dict[str, List]] = defaultdict(lambda: defaultdict(list))
     for r in records:
         if r["gap_pct"] is not None:
-            bucket[r["instance"]][r["heuristic"]].append(r["gap_pct"])
+            gap_bucket[r["instance"]][r["heuristic"]].append(r["gap_pct"])
 
     for ax_idx, name in enumerate(instances):
-        ax  = axes_flat[ax_idx]
-        data = [bucket[name].get(h, []) for h in h_names]
+        ax   = axes_flat[ax_idx]
+        data = [gap_bucket[name].get(h, []) for h in h_names]
         bp   = ax.boxplot(data, labels=h_names, patch_artist=True, widths=0.55)
         for patch, color in zip(bp["boxes"], palette):
             patch.set_facecolor(color); patch.set_alpha(0.75)
@@ -408,7 +448,6 @@ def plot_heuristic_study(records: List[dict], out_dir: Path) -> None:
         labels   = list(h_agg.keys())
         init_obj = [h_agg[h]["mean_init_feas"] for h in labels]
         fin_obj  = [h_agg[h]["mean_final_feas"] for h in labels]
-        # Filter out inf
         valid = [(l, i, f) for l, i, f in zip(labels, init_obj, fin_obj)
                  if not (math.isinf(i) or math.isinf(f))]
         if not valid: continue
@@ -419,10 +458,10 @@ def plot_heuristic_study(records: List[dict], out_dir: Path) -> None:
                linewidth=0.8, hatch="///", alpha=0.75, label="Heuristic seed (pre-SA)")
         ax.bar(x + w/2, fin_obj,  w, color="#1a6faf", alpha=0.85, label="SA final (feas)")
         ax.set_xticks(x); ax.set_xticklabels(labels, rotation=15, fontsize=9)
-        opt = OR_DATA.get(name)
-        if opt:
-            ax.axhline(opt, color="black", lw=0.9, ls="--",
-                       label=f"Known opt ({opt})")
+        opt_val = OR_DATA.get(name)
+        if opt_val:
+            ax.axhline(opt_val, color="black", lw=0.9, ls="--",
+                       label=f"Known opt ({opt_val})")
         ax.set_ylabel("Objective", fontsize=10)
         ax.set_title(f"Exp-1 Seed vs SA Final — {name}", fontsize=11)
         ax.legend(fontsize=8); ax.grid(axis="y", alpha=0.22)
@@ -433,21 +472,19 @@ def plot_heuristic_study(records: List[dict], out_dir: Path) -> None:
 
 
 def export_exp1(records: List[dict], out_dir: Path) -> None:
-    agg = _aggregate_exp1(records)
-    # Raw records
+    agg        = _aggregate_exp1(records)
     fields_raw = ["instance", "n", "known_opt", "heuristic", "rep", "seed",
                   "init_semi", "init_feas", "final_semi", "final_feas",
                   "gap_pct", "t_best_feas", "t_best_semi", "wall_s", "conv_itr"]
     _write_csv(out_dir / "records.csv",
                [{k: r.get(k) for k in fields_raw} for r in records],
                fields_raw)
-    # Summary
     rows = []
     for inst_name, h_dict in agg.items():
         for h_name, vals in h_dict.items():
             rows.append({"instance": inst_name, "heuristic": h_name, **{
                 k: (f"{v:.4f}" if isinstance(v, float) and not math.isnan(v)
-                    else ("nan" if math.isnan(v) else v))
+                    else ("nan" if isinstance(v, float) and math.isnan(v) else v))
                 for k, v in vals.items()}})
     _write_csv(out_dir / "summary.csv", rows,
                ["instance", "heuristic", "n_feasible",
@@ -464,12 +501,15 @@ def _ms_sa_seeded(inst: ALPInstance, p: SAParams, n_workers: int,
                   n_ils: int, rep: int, t_limit: float
                   ) -> Tuple[float, float, float, float]:
     """
-    Run a full MS-SA sweep with a replication-specific seed offset.
+    Full MS-SA with a replication-specific seed offset.
 
     Each chain's seed is shifted by (rep * 1000) so that independent
-    replications explore distinct random trajectories while starting from
-    the same heuristic-generated sequences.  Returns:
-        (fb_feas, fb_semi, t_best_feas, t_best_semi)
+    replications explore distinct trajectories from the same heuristic
+    starts.  This function already uses all n_workers cores internally via
+    ProcessPoolExecutor, so the outer (n_ils × rep) loop is kept sequential
+    to avoid nested pool contention.
+
+    Returns: (fb_feas, fb_semi, t_best_feas, t_best_semi)
     """
     seed_offset = rep * 1000
     starts      = _build_starts(inst, n_starts=n_workers)
@@ -481,11 +521,11 @@ def _ms_sa_seeded(inst: ALPInstance, p: SAParams, n_workers: int,
     with ProcessPoolExecutor(max_workers=n_workers, mp_context=_CTX) as ex:
         results = list(ex.map(_sa_worker, tasks))
 
-    # Field layout: 0=lbl, 1=pb_semi, 2=fb_semi, 3=pi_feas, 4=fb_feas,
-    #               5=hist, 6=t_best_sa, 7=t_best_feas, 8=n_alt, 9=init, 10=alpha_hist
+    # Field layout: 0=lbl,1=pb_semi,2=fb_semi,3=pi_feas,4=fb_feas,
+    #               5=hist,6=t_best_sa,7=t_best_feas,8=n_alt,9=init,10=alpha_hist
     feas = [r for r in results if not math.isinf(r[4])]
     if feas:
-        best     = min(feas, key=lambda r: r[4])
+        best = min(feas, key=lambda r: r[4])
         return best[4], best[2], best[7], best[6]
     best = min(results, key=lambda r: r[2])
     return float("inf"), best[2], float("inf"), best[6]
@@ -496,19 +536,18 @@ def run_ils_depth_study(
     cfg: DOEConfig,
 ) -> List[dict]:
     """
-    Experiment 2: ILS depth study on all instances with n >= cfg.exp2_min_n.
+    ILS depth study on all instances with n >= cfg.exp2_min_n.
 
-    For each (instance × n_ils × replication), runs the full parallel MS-SA
-    with the specified ILS restart count and collects gap and timing metrics.
-    The SAParams used are from adaptive_params(n), same as in the main
-    run_experiment function, to ensure the search quality reflects what the
-    production solver would actually use at each n_ils level.
+    Each _ms_sa_seeded call already saturates all cfg.n_workers cores
+    internally, so the outer (n_ils × rep) loop is sequential.  The
+    SAParams come from adaptive_params(n), matching the production solver.
     """
     records: List[dict] = []
     large = {k: v for k, v in instances.items() if v[0].n >= cfg.exp2_min_n}
 
     print(f"\n{'═'*72}")
-    print(f"  EXP-2  ILS DEPTH STUDY  (n ≥ {cfg.exp2_min_n})")
+    print(f"  EXP-2  ILS DEPTH STUDY  (n ≥ {cfg.exp2_min_n}, "
+          f"{cfg.n_workers} workers/call — already saturating all cores)")
     print(f"  Instances: {len(large)}  |  n_ils levels: {cfg.exp2_n_ils_levels}"
           f"  |  Reps: {cfg.exp2_reps}")
     print(f"{'═'*72}")
@@ -540,12 +579,12 @@ def run_ils_depth_study(
                     "known_opt":   opt,
                     "n_ils":       n_ils,
                     "rep":         rep + 1,
-                    "final_feas":  round(fb_feas,  4) if not math.isinf(fb_feas) else None,
-                    "final_semi":  round(fb_semi,  4),
-                    "gap_pct":     round(g,         4) if not math.isnan(g)       else None,
-                    "t_best_feas": round(t_bf,      4) if not math.isinf(t_bf)    else None,
-                    "t_best_semi": round(t_bs,      4),
-                    "wall_s":      round(wall,      4),
+                    "final_feas":  round(fb_feas, 4) if not math.isinf(fb_feas) else None,
+                    "final_semi":  round(fb_semi, 4),
+                    "gap_pct":     round(g,        4) if not math.isnan(g)       else None,
+                    "t_best_feas": round(t_bf,     4) if not math.isinf(t_bf)    else None,
+                    "t_best_semi": round(t_bs,     4),
+                    "wall_s":      round(wall,     4),
                 })
 
     print(f"\n  Exp-2 complete — {len(records)} records collected.")
@@ -553,13 +592,11 @@ def run_ils_depth_study(
 
 
 def plot_ils_depth_study(records: List[dict], out_dir: Path) -> None:
-    """
-    Two figures: (a) mean gap vs n_ils per instance (with ±1 std bands),
-                 (b) mean time-to-best vs n_ils.
-    """
-    instances = sorted({r["instance"] for r in records})
-    ils_levels = sorted({r["n_ils"] for r in records})
-    palette = plt.cm.tab10.colors
+    """(a) mean gap vs n_ils per instance with ±1 std bands,
+    (b) mean time-to-best vs n_ils."""
+    instances  = sorted({r["instance"] for r in records})
+    ils_levels = sorted({r["n_ils"]    for r in records})
+    palette    = plt.cm.tab10.colors
 
     def _collect(inst_name, metric):
         means, stds = [], []
@@ -567,11 +604,10 @@ def plot_ils_depth_study(records: List[dict], out_dir: Path) -> None:
             vals = [r[metric] for r in records
                     if r["instance"] == inst_name and r["n_ils"] == n_ils
                     and r[metric] is not None]
-            means.append(float(np.mean(vals))  if vals else float("nan"))
-            stds.append( float(np.std(vals))   if len(vals) > 1 else 0.0)
+            means.append(float(np.mean(vals)) if vals else float("nan"))
+            stds.append( float(np.std(vals))  if len(vals) > 1 else 0.0)
         return np.array(means), np.array(stds)
 
-    # ── (a) Gap vs n_ils ─────────────────────────────────────────────────
     fig, ax = plt.subplots(figsize=(9, 5))
     for ci, name in enumerate(instances):
         means, stds = _collect(name, "gap_pct")
@@ -580,8 +616,7 @@ def plot_ils_depth_study(records: List[dict], out_dir: Path) -> None:
         x = np.array(ils_levels)[valid]
         ax.plot(x, means[valid], marker="o", color=palette[ci % 10],
                 label=name, linewidth=1.8)
-        ax.fill_between(x,
-                        means[valid] - stds[valid],
+        ax.fill_between(x, means[valid] - stds[valid],
                         means[valid] + stds[valid],
                         color=palette[ci % 10], alpha=0.15)
     ax.axhline(0, color="black", lw=0.8, ls="--")
@@ -594,10 +629,9 @@ def plot_ils_depth_study(records: List[dict], out_dir: Path) -> None:
     plt.savefig(p, dpi=150, bbox_inches="tight"); plt.close()
     print(f"  Saved: {p}")
 
-    # ── (b) Time-to-best vs n_ils ────────────────────────────────────────
     fig, ax = plt.subplots(figsize=(9, 5))
     for ci, name in enumerate(instances):
-        means, stds = _collect(name, "t_best_feas")
+        means, _ = _collect(name, "t_best_feas")
         valid = ~np.isnan(means)
         if not valid.any(): continue
         x = np.array(ils_levels)[valid]
@@ -619,30 +653,72 @@ def export_exp2(records: List[dict], out_dir: Path) -> None:
               "t_best_feas", "t_best_semi", "wall_s"]
     _write_csv(out_dir / "records.csv", records, fields)
 
-    # Aggregated summary: mean / std per (instance, n_ils)
     instances  = sorted({r["instance"] for r in records})
     ils_levels = sorted({r["n_ils"]    for r in records})
-    summary = []
+    summary    = []
     for name in instances:
         for n_ils in ils_levels:
             rows = [r for r in records
                     if r["instance"] == name and r["n_ils"] == n_ils]
-            gaps = [r["gap_pct"] for r in rows if r["gap_pct"] is not None]
+            gaps = [r["gap_pct"]     for r in rows if r["gap_pct"]     is not None]
             ttbs = [r["t_best_feas"] for r in rows if r["t_best_feas"] is not None]
             summary.append({
-                "instance":       name,
-                "n":              rows[0]["n"] if rows else "",
-                "known_opt":      rows[0]["known_opt"] if rows else "",
-                "n_ils":          n_ils,
-                "n_reps":         len(rows),
-                "mean_gap_pct":   f"{np.mean(gaps):.4f}" if gaps else "nan",
-                "std_gap_pct":    f"{np.std(gaps):.4f}"  if len(gaps) > 1 else "0.0",
-                "mean_ttb_s":     f"{np.mean(ttbs):.3f}" if ttbs else "nan",
-                "std_ttb_s":      f"{np.std(ttbs):.3f}"  if len(ttbs) > 1 else "0.0",
+                "instance":     name,
+                "n":            rows[0]["n"]         if rows else "",
+                "known_opt":    rows[0]["known_opt"] if rows else "",
+                "n_ils":        n_ils,
+                "n_reps":       len(rows),
+                "mean_gap_pct": f"{np.mean(gaps):.4f}" if gaps else "nan",
+                "std_gap_pct":  f"{np.std(gaps):.4f}"  if len(gaps) > 1 else "0.0",
+                "mean_ttb_s":   f"{np.mean(ttbs):.3f}" if ttbs else "nan",
+                "std_ttb_s":    f"{np.std(ttbs):.3f}"  if len(ttbs) > 1 else "0.0",
             })
     _write_csv(out_dir / "summary.csv", summary,
                ["instance", "n", "known_opt", "n_ils", "n_reps",
                 "mean_gap_pct", "std_gap_pct", "mean_ttb_s", "std_ttb_s"])
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# 5.  EXPERIMENT 3 — PARALLEL WORKER
+# ═══════════════════════════════════════════════════════════════════════════
+
+def _exp3_chain_worker(args: tuple) -> dict:
+    """
+    Spawn-safe worker for one (combo × replication) SA chain in Exp-3.
+
+    t_deadline is computed locally after process start so scheduling lag
+    does not eat into the search budget.
+
+    Args tuple layout:
+        (inst, seq0, p, label, coded, seed, t_lim, name, opt, combo_id, rep)
+    """
+    inst, seq0, p, label, coded, seed, t_lim, name, opt, combo_id, rep = args
+    t_deadline = time.perf_counter() + t_lim
+    _, fb_semi, stats = run_sa(seq0, inst, p, seed=seed, t_deadline=t_deadline)
+    fb_feas = stats.get("obj_feas", float("inf"))
+    g       = gap_pct(fb_feas, opt)
+    return {
+        "instance":    name,
+        "n":           inst.n,
+        "known_opt":   opt,
+        "combo_id":    combo_id,
+        "combo_label": label,
+        "coded_alpha": coded[0],
+        "coded_Ni":    coded[1],
+        "coded_Imax":  coded[2],
+        "coded_Mstag": coded[3],
+        "alpha":       p.alpha,
+        "N_iter":      p.N_iter,
+        "I_max":       p.I_max,
+        "M_stag":      p.M_stag,
+        "rep":         rep,
+        "seed":        seed,
+        "final_semi":  round(fb_semi, 4),
+        "final_feas":  round(fb_feas, 4) if not math.isinf(fb_feas) else None,
+        "gap_pct":     round(g,        4) if not math.isnan(g)       else None,
+        "t_best_feas": round(stats.get("t_best_feas", 0.0), 4),
+        "wall_s":      round(stats.get("time",        0.0), 4),
+    }
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -661,7 +737,6 @@ def _build_factorial_design(cfg: DOEConfig) -> List[Tuple[SAParams, str, List[in
           cfg.exp3_i_max_lo, cfg.exp3_m_stag_lo)
     hi = (cfg.exp3_alpha_hi, cfg.exp3_n_iter_hi,
           cfg.exp3_i_max_hi, cfg.exp3_m_stag_hi)
-
     combos = []
     for bits in iproduct((-1, +1), repeat=4):
         vals = [h if b == +1 else l for b, l, h in zip(bits, lo, hi)]
@@ -673,8 +748,6 @@ def _build_factorial_design(cfg: DOEConfig) -> List[Tuple[SAParams, str, List[in
                  f"Im{'+' if bits[2]>0 else '-'}"
                  f"Ms{'+' if bits[3]>0 else '-'}")
         combos.append((p, label, list(bits)))
-
-    # Center point
     pc = SAParams(alpha=cfg.exp3_center_alpha, N_iter=cfg.exp3_center_n_iter,
                   T_min=1e-4, I_max=cfg.exp3_center_i_max,
                   M_stag=cfg.exp3_center_m_stag)
@@ -687,21 +760,25 @@ def run_parameter_doe(
     cfg: DOEConfig,
 ) -> List[dict]:
     """
-    Experiment 3: 2^4 full factorial parameter study.
+    Parallel 2^4 full factorial parameter study.
 
-    EDD is used as the fixed starting heuristic for all runs so that
-    parameter effects on SA performance are not confounded with seeding
-    quality.  Each (instance × combo × replication) run uses a single SA
-    chain via run_sa.  The response variable is gap to the known optimum
-    (or final_feas when no optimum is available).
+    All (combo × rep) chains for a given instance are submitted simultaneously
+    to a ProcessPoolExecutor of cfg.n_workers workers.  With 17 combos ×
+    cfg.exp3_reps replications = 34 chains per instance, a 32-core machine
+    runs them nearly concurrently — up to 32× faster than sequential.
+
+    EDD is the fixed starting heuristic to isolate parameter effects from
+    seeding effects.
     """
     records: List[dict] = []
     combos     = _build_factorial_design(cfg)
     inst_names = cfg.exp3_instances or list(instances.keys())
     seeds      = [cfg.seed_base + i * 13 for i in range(cfg.exp3_reps)]
 
+    n_chains = len(combos) * cfg.exp3_reps
     print(f"\n{'═'*72}")
-    print(f"  EXP-3  PARAMETER SENSITIVITY DOE  (2^4 + center)")
+    print(f"  EXP-3  PARAMETER SENSITIVITY DOE  (2^4 + center, "
+          f"{cfg.n_workers} workers, {n_chains} chains/instance)")
     print(f"  Instances: {len(inst_names)}  |  Combos: {len(combos)}"
           f"  |  Reps: {cfg.exp3_reps}  |  Seed heuristic: EDD")
     print(f"{'═'*72}")
@@ -715,50 +792,38 @@ def run_parameter_doe(
         if name not in instances:
             print(f"  ⚠  {name} not available — skipped"); continue
         inst, opt = instances[name]
-        t_lim  = cfg.exp3_t_limit(inst.n)
-        seq0   = gen_edd(inst)   # fixed seed heuristic
+        t_lim = cfg.exp3_t_limit(inst.n)
+        seq0  = gen_edd(inst)
 
-        print(f"\n  ── {name}  (n={inst.n}, opt={opt}, t_limit={t_lim:.0f}s) ──")
-        print(f"  {'Combo':20s} {'Rep':>3} {'Final(feas)':>12} {'Gap%':>8} {'Wall(s)':>8}")
-        print(f"  {'─'*20} {'─'*3} {'─'*12} {'─'*8} {'─'*8}")
-
+        # Build task list: one entry per (combo × replication)
+        tasks: List[tuple] = []
         for combo_id, (p, label, coded) in enumerate(combos):
             for rep, seed in enumerate(seeds):
-                t_deadline = time.perf_counter() + t_lim
-                pb, fb_semi, stats = run_sa(
-                    seq0, inst, p, seed=seed, t_deadline=t_deadline)
+                tasks.append((inst, seq0, p, label, coded, seed,
+                               t_lim, name, opt, combo_id, rep + 1))
 
-                fb_feas = stats.get("obj_feas", float("inf"))
-                g       = gap_pct(fb_feas, opt)
+        print(f"\n  ── {name}  (n={inst.n}, opt={opt}, t_limit={t_lim:.0f}s) ──")
+        print(f"  Submitting {len(tasks)} chains to {cfg.n_workers} workers...")
 
-                if cfg.verbose:
-                    f_s = f"{fb_feas:.2f}" if not math.isinf(fb_feas) else "inf"
-                    g_s = f"{g:+.2f}"      if not math.isnan(g)       else "N/A"
-                    print(f"  {label:20s} {rep+1:>3d} {f_s:>12s} {g_s:>8s}"
-                          f" {stats.get('time', 0.0):>8.2f}")
+        with ProcessPoolExecutor(max_workers=cfg.n_workers,
+                                 mp_context=_CTX) as ex:
+            batch = list(_progress(
+                ex.map(_exp3_chain_worker, tasks),
+                total=len(tasks), desc=f"  {name}", leave=False))
 
-                records.append({
-                    "instance":    name,
-                    "n":           inst.n,
-                    "known_opt":   opt,
-                    "combo_id":    combo_id,
-                    "combo_label": label,
-                    "coded_alpha": coded[0],
-                    "coded_Ni":    coded[1],
-                    "coded_Imax":  coded[2],
-                    "coded_Mstag": coded[3],
-                    "alpha":       p.alpha,
-                    "N_iter":      p.N_iter,
-                    "I_max":       p.I_max,
-                    "M_stag":      p.M_stag,
-                    "rep":         rep + 1,
-                    "seed":        seed,
-                    "final_semi":  round(fb_semi, 4),
-                    "final_feas":  round(fb_feas, 4) if not math.isinf(fb_feas) else None,
-                    "gap_pct":     round(g, 4)        if not math.isnan(g)       else None,
-                    "t_best_feas": round(stats.get("t_best_feas", 0.0), 4),
-                    "wall_s":      round(stats.get("time", 0.0), 4),
-                })
+        batch.sort(key=lambda r: (r["combo_id"], r["rep"]))
+
+        if cfg.verbose:
+            print(f"  {'Combo':20s} {'Rep':>3} {'Final(feas)':>12}"
+                  f" {'Gap%':>8} {'Wall(s)':>8}")
+            print(f"  {'─'*20} {'─'*3} {'─'*12} {'─'*8} {'─'*8}")
+            for r in batch:
+                f_s = f"{r['final_feas']:.2f}" if r["final_feas"] is not None else "inf"
+                g_s = f"{r['gap_pct']:+.2f}"   if r["gap_pct"]   is not None else "N/A"
+                print(f"  {r['combo_label']:20s} {r['rep']:>3d}"
+                      f" {f_s:>12s} {g_s:>8s} {r['wall_s']:>8.2f}")
+
+        records.extend(batch)
 
     print(f"\n  Exp-3 complete — {len(records)} records collected.")
     return records
@@ -768,17 +833,14 @@ def _compute_main_effects(records: List[dict]) -> Dict[str, Dict[str, float]]:
     """
     Compute 2^4 factorial main effects and two-factor interactions per instance.
 
-    Main effect of factor F:
-        ME(F) = mean(response | F=+1) − mean(response | F=−1)
-    Two-factor interaction AB:
-        INT(A,B) = 0.25 * sum_over_corners( coded_A * coded_B * response )
+    Main effect of F:   ME(F) = mean(y | F=+1) − mean(y | F=−1)
+    Interaction A×B:    mean(coded_A × coded_B × y) over all corner runs
+    Curvature:          center-point mean − corner mean
 
-    Excludes the center point (coded vector contains zeros) from main-effect
-    and interaction calculations; it is used separately to check for curvature.
-
-    Returns: effects[instance] = {factor: main_effect, ...}
+    Center point (coded = 0) is excluded from main-effect / interaction
+    calculations and used only for the curvature estimate.
     """
-    instances = sorted({r["instance"] for r in records})
+    instances  = sorted({r["instance"] for r in records})
     effects: Dict[str, Dict[str, float]] = {}
     coded_keys = ["coded_alpha", "coded_Ni", "coded_Imax", "coded_Mstag"]
 
@@ -786,62 +848,58 @@ def _compute_main_effects(records: List[dict]) -> Dict[str, Dict[str, float]]:
         rows = [r for r in records
                 if r["instance"] == name
                 and r["gap_pct"] is not None
-                and all(r[ck] != 0 for ck in coded_keys)]   # exclude center
-
+                and all(r[ck] != 0 for ck in coded_keys)]
         if not rows:
-            effects[name] = {}
-            continue
+            effects[name] = {}; continue
 
-        y = np.array([r["gap_pct"] for r in rows])
-        X = np.array([[r[ck] for ck in coded_keys] for r in rows])
-
+        y   = np.array([r["gap_pct"] for r in rows])
+        X   = np.array([[r[ck] for ck in coded_keys] for r in rows])
         eff: Dict[str, float] = {}
-        # Main effects
+
         for fi, fname in enumerate(FACTOR_LABELS):
-            hi = y[X[:, fi] == +1]
-            lo = y[X[:, fi] == -1]
+            hi = y[X[:, fi] == +1]; lo = y[X[:, fi] == -1]
             eff[fname] = float(np.mean(hi) - np.mean(lo)) if len(hi) and len(lo) else float("nan")
 
-        # Two-factor interactions
         for i in range(len(FACTOR_LABELS)):
             for j in range(i + 1, len(FACTOR_LABELS)):
-                key  = f"{FACTOR_LABELS[i]}×{FACTOR_LABELS[j]}"
-                eff[key] = float(np.mean(X[:, i] * X[:, j] * y))
+                eff[f"{FACTOR_LABELS[i]}×{FACTOR_LABELS[j]}"] = \
+                    float(np.mean(X[:, i] * X[:, j] * y))
 
-        # Curvature: center vs corner means
         corner_mean = float(np.mean(y))
         center_rows = [r for r in records
-                       if r["instance"] == name
-                       and r["gap_pct"] is not None
+                       if r["instance"] == name and r["gap_pct"] is not None
                        and all(r[ck] == 0 for ck in coded_keys)]
         if center_rows:
-            center_mean  = float(np.mean([r["gap_pct"] for r in center_rows]))
-            eff["curvature"] = center_mean - corner_mean
-
+            eff["curvature"] = (float(np.mean([r["gap_pct"] for r in center_rows]))
+                                - corner_mean)
         effects[name] = eff
 
     return effects
 
 
 def plot_parameter_doe(records: List[dict], out_dir: Path) -> None:
-    """
-    Three figures: (a) main effects plots, (b) factor importance bar chart,
-    (c) interaction matrix (top two factors per instance).
-    """
+    """(a) main effects plots, (b) factor importance bar chart,
+    (c) two-factor interaction bars."""
     effects   = _compute_main_effects(records)
     instances = sorted({r["instance"] for r in records})
     palette   = plt.cm.tab10.colors
 
-    # ── (a) Main effects plots ────────────────────────────────────────────
-    n_inst = len(instances)
+    # ── (a) Main effects ─────────────────────────────────────────────────
+    n_inst    = len(instances)
+    coded_keys = ["coded_alpha", "coded_Ni", "coded_Imax", "coded_Mstag"]
     fig, axes = plt.subplots(n_inst, len(FACTOR_LABELS),
                              figsize=(4 * len(FACTOR_LABELS), 3.5 * n_inst),
                              squeeze=False)
-    coded_keys = ["coded_alpha", "coded_Ni", "coded_Imax", "coded_Mstag"]
+    cfg_obj = DOEConfig()
+    lo_lbls = [cfg_obj.exp3_alpha_lo, cfg_obj.exp3_n_iter_lo,
+               cfg_obj.exp3_i_max_lo, cfg_obj.exp3_m_stag_lo]
+    hi_lbls = [cfg_obj.exp3_alpha_hi, cfg_obj.exp3_n_iter_hi,
+               cfg_obj.exp3_i_max_hi, cfg_obj.exp3_m_stag_hi]
 
     for ri, name in enumerate(instances):
-        for ci, (fname, ck) in enumerate(zip(FACTOR_LABELS, coded_keys)):
-            ax  = axes[ri][ci]
+        for ci, (fname, ck, lo_lbl, hi_lbl) in enumerate(
+                zip(FACTOR_LABELS, coded_keys, lo_lbls, hi_lbls)):
+            ax = axes[ri][ci]
             lo_vals = [r["gap_pct"] for r in records
                        if r["instance"] == name and r[ck] == -1
                        and r["gap_pct"] is not None]
@@ -851,22 +909,13 @@ def plot_parameter_doe(records: List[dict], out_dir: Path) -> None:
             if not lo_vals or not hi_vals:
                 ax.set_visible(False); continue
             lo_mean, hi_mean = np.mean(lo_vals), np.mean(hi_vals)
-            cfg_obj = DOEConfig()
-            lo_lbl = (cfg_obj.exp3_alpha_lo if fname == "alpha" else
-                      cfg_obj.exp3_n_iter_lo if fname == "N_iter" else
-                      cfg_obj.exp3_i_max_lo  if fname == "I_max"  else
-                      cfg_obj.exp3_m_stag_lo)
-            hi_lbl = (cfg_obj.exp3_alpha_hi if fname == "alpha" else
-                      cfg_obj.exp3_n_iter_hi if fname == "N_iter" else
-                      cfg_obj.exp3_i_max_hi  if fname == "I_max"  else
-                      cfg_obj.exp3_m_stag_hi)
             ax.plot(["Low", "High"], [lo_mean, hi_mean],
                     marker="o", color=palette[ri % 10], linewidth=2)
             ax.scatter(["Low", "High"], [lo_mean, hi_mean],
                        color=palette[ri % 10], s=60, zorder=3)
             ax.set_title(f"{name} — {fname}", fontsize=8)
             ax.set_ylabel("Mean gap (%)", fontsize=7)
-            ax.set_xticklabels([f"{lo_lbl}", f"{hi_lbl}"], fontsize=7)
+            ax.set_xticklabels([str(lo_lbl), str(hi_lbl)], fontsize=7)
             ax.axhline(0, color="gray", lw=0.6, ls=":")
             ax.grid(alpha=0.25)
 
@@ -876,13 +925,11 @@ def plot_parameter_doe(records: List[dict], out_dir: Path) -> None:
     plt.savefig(p, dpi=150, bbox_inches="tight"); plt.close()
     print(f"  Saved: {p}")
 
-    # ── (b) Factor importance (|main effect| per instance) ───────────────
+    # ── (b) Factor importance ─────────────────────────────────────────────
     fig, ax = plt.subplots(figsize=(10, max(4, n_inst * 0.9)))
-    y_pos   = np.arange(len(instances))
-    bar_w   = 0.18
+    y_pos   = np.arange(len(instances)); bar_w = 0.18
     for fi, fname in enumerate(FACTOR_LABELS):
-        me_vals = [abs(effects.get(name, {}).get(fname, 0.0))
-                   for name in instances]
+        me_vals = [abs(effects.get(n, {}).get(fname, 0.0)) for n in instances]
         ax.barh(y_pos + fi * bar_w, me_vals, bar_w,
                 label=fname, color=palette[fi], alpha=0.80)
     ax.set_yticks(y_pos + bar_w * 1.5)
@@ -895,18 +942,18 @@ def plot_parameter_doe(records: List[dict], out_dir: Path) -> None:
     plt.savefig(p, dpi=150, bbox_inches="tight"); plt.close()
     print(f"  Saved: {p}")
 
-    # ── (c) Interaction matrix (top two interactions per instance) ────────
-    int_keys = [f"{a}×{b}" for i, a in enumerate(FACTOR_LABELS)
-                for b in FACTOR_LABELS[i+1:]]
+    # ── (c) Interaction bars ──────────────────────────────────────────────
+    int_keys  = [f"{a}×{b}" for i, a in enumerate(FACTOR_LABELS)
+                 for b in FACTOR_LABELS[i+1:]]
     fig, axes = plt.subplots(1, max(1, n_inst),
                              figsize=(4.5 * n_inst, 4.5), squeeze=False)
     for ci, name in enumerate(instances):
         ax   = axes[0][ci]
         eff  = effects.get(name, {})
-        vals = [(k, eff[k]) for k in int_keys if k in eff]
+        vals = sorted([(k, eff[k]) for k in int_keys if k in eff],
+                      key=lambda x: abs(x[1]), reverse=True)
         if not vals:
             ax.set_visible(False); continue
-        vals.sort(key=lambda x: abs(x[1]), reverse=True)
         labels_i = [v[0] for v in vals]
         sizes    = [v[1] for v in vals]
         colors   = ["#c0392b" if s > 0 else "#1a6faf" for s in sizes]
@@ -937,9 +984,9 @@ def export_exp3(records: List[dict], out_dir: Path) -> None:
     for name, eff in effects.items():
         for fname, val in eff.items():
             me_rows.append({
-                "instance": name,
+                "instance":              name,
                 "factor_or_interaction": fname,
-                "effect": f"{val:.4f}" if not math.isnan(val) else "nan",
+                "effect":                f"{val:.4f}" if not math.isnan(val) else "nan",
             })
     _write_csv(out_dir / "main_effects.csv", me_rows,
                ["instance", "factor_or_interaction", "effect"])
@@ -958,23 +1005,22 @@ def main(run_exps: Optional[List[int]] = None) -> None:
     run_exps : list of int, optional
         Experiments to run (1, 2, and/or 3). None runs all three.
     """
-    cfg = DOEConfig()       # ← edit defaults here or subclass for custom runs
+    cfg      = DOEConfig()
     run_exps = set(run_exps or [1, 2, 3])
 
     print("\n" + "═" * 72)
     print("  ALP — DESIGN OF EXPERIMENTS")
-    print(f"  Experiments requested: {sorted(run_exps)}")
-    print(f"  Data dir   : {Path(cfg.data_dir).resolve()}")
-    print(f"  Results dir: {Path(cfg.results_dir).resolve()}")
+    print(f"  Experiments requested : {sorted(run_exps)}")
+    print(f"  Workers               : {cfg.n_workers}  (all cores used)")
+    print(f"  Data dir              : {Path(cfg.data_dir).resolve()}")
+    print(f"  Results dir           : {Path(cfg.results_dir).resolve()}")
     print("═" * 72)
 
-    # ── Load instances ───────────────────────────────────────────────────
     print("\nLoading OR-Library instances...")
     instances = load_instances(cfg)
     if not instances:
         print("  No instances found — check data_dir. Exiting."); return
 
-    # ── Experiment 1 ────────────────────────────────────────────────────
     if 1 in run_exps:
         out1 = Path(cfg.results_dir) / "exp1_heuristic"
         out1.mkdir(parents=True, exist_ok=True)
@@ -982,7 +1028,6 @@ def main(run_exps: Optional[List[int]] = None) -> None:
         export_exp1(rec1, out1)
         plot_heuristic_study(rec1, out1)
 
-    # ── Experiment 2 ────────────────────────────────────────────────────
     if 2 in run_exps:
         out2 = Path(cfg.results_dir) / "exp2_ils_depth"
         out2.mkdir(parents=True, exist_ok=True)
@@ -991,10 +1036,8 @@ def main(run_exps: Optional[List[int]] = None) -> None:
         if rec2:
             plot_ils_depth_study(rec2, out2)
         else:
-            print(f"  ⚠  No instances with n ≥ {cfg.exp2_min_n} found — "
-                  "Exp-2 produced no records.")
+            print(f"  ⚠  No instances with n ≥ {cfg.exp2_min_n} — Exp-2 produced no records.")
 
-    # ── Experiment 3 ────────────────────────────────────────────────────
     if 3 in run_exps:
         out3 = Path(cfg.results_dir) / "exp3_parameter"
         out3.mkdir(parents=True, exist_ok=True)
@@ -1011,7 +1054,7 @@ def main(run_exps: Optional[List[int]] = None) -> None:
 if __name__ == "__main__":
     # ── Configure which experiments to run ──────────────────────────────
     # Set each flag to True or False.
-    RUN_EXP1 = True    # Heuristic Seeding Study
+    RUN_EXP1 = False    # Heuristic Seeding Study
     RUN_EXP2 = True    # ILS Depth Study  (n >= exp2_min_n only)
     RUN_EXP3 = True    # Parameter Sensitivity DOE  (2^4 factorial)
 
