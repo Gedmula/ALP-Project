@@ -317,9 +317,12 @@ def run_heuristic_study(
         print(f"\n  ── {name}  (n={inst.n}, opt={opt})  "
               f"SAParams: α={p.alpha} N_iter={p.N_iter} "
               f"t_lim={t_lim:.0f}s ──")
-        print(f"  Submitting {len(tasks)} chains to {cfg.n_workers} workers...")
+        
+        n_w = _safe_n_workers(inst.n, cfg.n_workers)
 
-        with ProcessPoolExecutor(max_workers=cfg.n_workers,
+        print(f"  Submitting {len(tasks)} chains to {n_w} workers...")
+
+        with ProcessPoolExecutor(max_workers=n_w,
                                  mp_context=_CTX) as ex:
             batch = list(_progress(
                 ex.map(_exp1_chain_worker, tasks),
@@ -841,9 +844,11 @@ def run_parameter_doe(
                                t_lim, name, opt, combo_id, rep + 1))
 
         print(f"\n  ── {name}  (n={inst.n}, opt={opt}, t_limit={t_lim:.0f}s) ──")
-        print(f"  Submitting {len(tasks)} chains to {cfg.n_workers} workers...")
 
-        with ProcessPoolExecutor(max_workers=cfg.n_workers,
+        n_w = _safe_n_workers(inst.n, cfg.n_workers)
+        print(f"  Submitting {len(tasks)} chains to {n_w} workers...")
+
+        with ProcessPoolExecutor(max_workers=n_w,
                                  mp_context=_CTX) as ex:
             batch = list(_progress(
                 ex.map(_exp3_chain_worker, tasks),
