@@ -207,10 +207,14 @@ def _convergence_speed(history: List[float], final_obj: float,
 def _exp1_sa_params(n: int) -> SAParams:
     """Fixed SAParams for Exp-1 and Exp-3 single-chain runs."""
     if n <= 20:
-        return SAParams(alpha=0.97,  N_iter=100, T_min=1e-4, I_max=400,  M_stag=60)
-    if n <= 50:
-        return SAParams(alpha=0.98,  N_iter=150, T_min=1e-4, I_max=600,  M_stag=80)
-    return SAParams(alpha=0.995, N_iter=300, T_min=1e-5, I_max=1200, M_stag=120)
+        sa = SAParams(alpha=0.97,  N_iter=80,  T_min=1e-4, I_max=300,  M_stag=50,  chi0=0.50)
+    elif n <= 50:
+        sa = SAParams(alpha=0.98,  N_iter=150, T_min=1e-4, I_max=600,  M_stag=80,  chi0=0.50)
+    elif n <= 150:
+        sa = SAParams(alpha=0.995, N_iter=300, T_min=1e-5, I_max=1200, M_stag=120, chi0=0.40)
+    else:
+        sa = SAParams(alpha=0.997, N_iter=500, T_min=1e-6, I_max=2000, M_stag=200, chi0=0.35)
+    return sa
 
 
 def _write_csv(path: Path, rows: List[dict], fieldnames: List[str]) -> None:

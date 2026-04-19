@@ -500,4 +500,157 @@ Loading OR-Library instances...
 
   ── airland13  (n=500, opt=39287.52)  SAParams: α=0.995 N_iter=300 t_lim=240s ──
   Submitting 30 chains to 2 workers...
-  airland13:   0%|          | 0/30 [00:00<?, ?it/s]  airland13:   3%|▎         | 1/30 [04:02<1:56:58, 242.01s/it]  airland13:   7%|▋         | 2/30 [04:02<46:39, 99.97s/it]     airland13:  10%|█         | 3/30 [08:03<1:13:58, 164.39s/it]  airland13:  17%|█▋        | 5/30 [08:28<32:39, 78.37s/it]     airland13:  20%|██        | 6/30 [12:05<47:20, 118.35s/it]  airland13:  23%|██▎       | 7/30 [12:31<35:00, 91.35s/it]   airland13:  27%|██▋       | 8/30 [16:08<47:01, 128.25s/it]  airland13:  33%|███▎      | 10/30 [16:57<27:00, 81.04s/it]  airland13:  37%|███▋      | 11/30 [20:11<34:23, 108.59s/it]  airland13:  40%|████      | 12/30 [20:59<27:53, 92.97s/it]   airland13:  43%|████▎     | 13/30 [24:13<34:06, 120.41s/it]  airland13:  50%|█████     | 15/30 [25:24<20:51, 83.40s/it]   airland13:  70%|███████   | 21/30 [28:20<07:12, 48.07s/it]  airland13:  73%|███████▎  | 22/30 [29:27<06:45, 50.64s/it]  airland13:  77%|███████▋  | 23/30 [32:21<08:14, 70.58s/it]  airland13:  80%|████████  | 24/30 [32:54<06:21, 63.50s/it]
+  airland13:   0%|          | 0/30 [00:00<?, ?it/s]  airland13:   3%|▎         | 1/30 [04:02<1:56:58, 242.01s/it]  airland13:   7%|▋         | 2/30 [04:02<46:39, 99.97s/it]     airland13:  10%|█         | 3/30 [08:03<1:13:58, 164.39s/it]  airland13:  17%|█▋        | 5/30 [08:28<32:39, 78.37s/it]     airland13:  20%|██        | 6/30 [12:05<47:20, 118.35s/it]  airland13:  23%|██▎       | 7/30 [12:31<35:00, 91.35s/it]   airland13:  27%|██▋       | 8/30 [16:08<47:01, 128.25s/it]  airland13:  33%|███▎      | 10/30 [16:57<27:00, 81.04s/it]  airland13:  37%|███▋      | 11/30 [20:11<34:23, 108.59s/it]  airland13:  40%|████      | 12/30 [20:59<27:53, 92.97s/it]   airland13:  43%|████▎     | 13/30 [24:13<34:06, 120.41s/it]  airland13:  50%|█████     | 15/30 [25:24<20:51, 83.40s/it]   airland13:  70%|███████   | 21/30 [28:20<07:12, 48.07s/it]  airland13:  73%|███████▎  | 22/30 [29:27<06:45, 50.64s/it]  airland13:  77%|███████▋  | 23/30 [32:21<08:14, 70.58s/it]  airland13:  80%|████████  | 24/30 [32:54<06:21, 63.50s/it]  airland13:  83%|████████▎ | 25/30 [36:23<07:51, 94.24s/it]  airland13:  87%|████████▋ | 26/30 [36:54<05:18, 79.55s/it]  airland13:  90%|█████████ | 27/30 [40:23<05:35, 111.82s/it]  airland13:  93%|█████████▎| 28/30 [40:54<03:01, 90.65s/it]   airland13:  97%|█████████▋| 29/30 [44:25<02:03, 123.17s/it]                                                               Heuristic Rep  Init(semi)  Init(feas)  Final(feas)     Gap%  T_best(s)  Conv_itr
+  ──────── ─── ─────────── ─────────── ──────────── ──────── ────────── ─────────
+  ATC_k2     1    49949.60    49949.60     43908.30   +11.76     236.89       519
+  ATC_k2     2    49949.60    49949.60     43814.74   +11.52     239.21       520
+  ATC_k2     3    49949.60    49949.60     42736.55    +8.78     237.02       536
+  ATC_k2     4    49949.60    49949.60     43830.34   +11.56     193.91       436
+  ATC_k2     5    49949.60    49949.60     43473.97   +10.66     238.68       539
+  ATC_k4     1         inf         inf     48204.29   +22.70     237.33       530
+  ATC_k4     2         inf         inf     52682.17   +34.09     218.42       588
+  ATC_k4     3         inf         inf     46916.17   +19.42     240.17       509
+  ATC_k4     4         inf         inf     50020.24   +27.32     240.99       533
+  ATC_k4     5         inf         inf     55542.14   +41.37      36.12       170
+  EDD        1    47116.73    47116.73     39747.75    +1.17     236.45       528
+  EDD        2    47116.73    47116.73     40832.19    +3.93     239.12       510
+  EDD        3    47116.73    47116.73     40325.37    +2.64     235.30       517
+  EDD        4    47116.73    47116.73     47116.73   +19.93       0.00         0
+  EDD        5    47116.73    47116.73     40391.43    +2.81     232.74       487
+  ERD        1    91991.72    91991.72     69784.85   +77.63     238.78       298
+  ERD        2    91991.72    91991.72     67502.05   +71.82     239.38       269
+  ERD        3    91991.72    91991.72     68144.72   +73.45     239.47       281
+  ERD        4    91991.72    91991.72     91991.72  +134.15       0.00         0
+  ERD        5    91991.72    91991.72     73384.50   +86.79     238.68       266
+  MDD        1    46407.47    46407.47     40511.82    +3.12     239.56       538
+  MDD        2    46407.47    46407.47     41258.63    +5.02     232.77       471
+  MDD        3    46407.47    46407.47     41310.73    +5.15     239.53       529
+  MDD        4    46407.47    46407.47     46407.47   +18.12       0.00         0
+  MDD        5    46407.47    46407.47     41239.24    +4.97     233.36       443
+  MPDS       1         inf         inf          inf      N/A       0.00       360
+  MPDS       2         inf         inf          inf      N/A       0.00       360
+  MPDS       3         inf         inf          inf      N/A       0.00       360
+  MPDS       4         inf         inf          inf      N/A       0.00       360
+  MPDS       5         inf         inf          inf      N/A       0.00       360
+
+  Exp-1 complete — 390 records collected.
+  Saved: doe_results/exp1_heuristic/records.csv
+  Saved: doe_results/exp1_heuristic/summary.csv
+  Saved: doe_results/exp1_heuristic/exp1_gap_boxplots.png
+  Saved: doe_results/exp1_heuristic/exp1_convergence_airland1.png
+  Saved: doe_results/exp1_heuristic/exp1_convergence_airland2.png
+  Saved: doe_results/exp1_heuristic/exp1_convergence_airland3.png
+  Saved: doe_results/exp1_heuristic/exp1_convergence_airland4.png
+  Saved: doe_results/exp1_heuristic/exp1_convergence_airland5.png
+  Saved: doe_results/exp1_heuristic/exp1_convergence_airland6.png
+  Saved: doe_results/exp1_heuristic/exp1_convergence_airland7.png
+  Saved: doe_results/exp1_heuristic/exp1_convergence_airland8.png
+  Saved: doe_results/exp1_heuristic/exp1_convergence_airland9.png
+  Saved: doe_results/exp1_heuristic/exp1_convergence_airland10.png
+  Saved: doe_results/exp1_heuristic/exp1_convergence_airland11.png
+  Saved: doe_results/exp1_heuristic/exp1_convergence_airland12.png
+  Saved: doe_results/exp1_heuristic/exp1_convergence_airland13.png
+  Saved: doe_results/exp1_heuristic/exp1_seed_vs_final_airland1.png
+  Saved: doe_results/exp1_heuristic/exp1_seed_vs_final_airland2.png
+  Saved: doe_results/exp1_heuristic/exp1_seed_vs_final_airland3.png
+  Saved: doe_results/exp1_heuristic/exp1_seed_vs_final_airland4.png
+  Saved: doe_results/exp1_heuristic/exp1_seed_vs_final_airland5.png
+  Saved: doe_results/exp1_heuristic/exp1_seed_vs_final_airland6.png
+  Saved: doe_results/exp1_heuristic/exp1_seed_vs_final_airland7.png
+  Saved: doe_results/exp1_heuristic/exp1_seed_vs_final_airland8.png
+  Saved: doe_results/exp1_heuristic/exp1_seed_vs_final_airland9.png
+  Saved: doe_results/exp1_heuristic/exp1_seed_vs_final_airland10.png
+  Saved: doe_results/exp1_heuristic/exp1_seed_vs_final_airland11.png
+  Saved: doe_results/exp1_heuristic/exp1_seed_vs_final_airland12.png
+  Saved: doe_results/exp1_heuristic/exp1_seed_vs_final_airland13.png
+
+════════════════════════════════════════════════════════════════════════
+  EXP-2  ILS DEPTH STUDY  (n ≥ 50, 28 workers/call — already saturating all cores)
+  Instances: 6  |  n_ils levels: [0, 2, 4, 6]  |  Reps: 3
+════════════════════════════════════════════════════════════════════════
+
+  ── airland8  (n=50, opt=1950.0)  workers=28 ──
+   n_ils  Rep    Obj(feas)     Gap%  T_best(s)  Wall(s)
+  ────── ──── ──────────── ──────── ────────── ────────
+       0    1      1950.00    +0.00      28.94    88.75
+       0    2      1950.00    +0.00      20.54    94.01
+       0    3      1950.00    +0.00      32.25    82.31
+       2    1      1950.00    +0.00     124.29   247.19
+       2    2      1950.00    +0.00      95.94   247.44
+       2    3      1950.00    +0.00      87.11   230.28
+       4    1      1950.00    +0.00      69.14   300.17
+       4    2      1950.00    +0.00      95.39   300.17
+       4    3      1950.00    +0.00      90.60   300.15
+       6    1      1950.00    +0.00     118.72   300.18
+       6    2      1950.00    +0.00     163.30   300.17
+       6    3      1950.00    +0.00      90.97   300.19
+
+  ── airland9  (n=100, opt=5611.7)  workers=28 ──
+   n_ils  Rep    Obj(feas)     Gap%  T_best(s)  Wall(s)
+  ────── ──── ──────────── ──────── ────────── ────────
+       0    1      5611.70    +0.00      42.78    90.25
+       0    2      5611.70    +0.00      14.40    73.72
+       0    3      5618.66    +0.12      22.20   107.72
+       2    1      5611.70    +0.00      37.76   160.19
+       2    2      5611.70    +0.00      16.37   170.28
+       2    3      5618.66    +0.12      33.82   114.90
+       4    1      5611.70    +0.00      37.69   163.12
+       4    2      5611.70    +0.00      17.12   283.62
+       4    3      5611.99    +0.01     102.62   142.06
+       6    1      5611.70    +0.00      56.19   209.41
+       6    2      5611.70    +0.00      17.22   300.06
+       6    3      5611.99    +0.01     104.42   210.72
+
+  ── airland10  (n=150, opt=12640.42)  workers=12 ──
+   n_ils  Rep    Obj(feas)     Gap%  T_best(s)  Wall(s)
+  ────── ──── ──────────── ──────── ────────── ────────
+       0    1     12364.81    -2.18      74.84   106.59
+       0    2     12400.75    -1.90      57.00    97.69
+       0    3     12319.83    -2.54      72.93   138.03
+       2    1     12364.81    -2.18      75.60   187.17
+       2    2     12400.75    -1.90      57.17   162.02
+       2    3     12319.83    -2.54      72.76   144.24
+       4    1     12364.81    -2.18      74.77   190.09
+       4    2     12400.75    -1.90      57.23   170.92
+       4    3     12319.83    -2.54      74.15   149.28
+       6    1     12364.81    -2.18      74.50   235.49
+       6    2     12400.75    -1.90      56.99   284.66
+       6    3     12319.83    -2.54      74.85   152.47
+
+  ── airland11  (n=200, opt=12462.18)  workers=12 ──
+   n_ils  Rep    Obj(feas)     Gap%  T_best(s)  Wall(s)
+  ────── ──── ──────────── ──────── ────────── ────────
+       0    1     12418.32    -0.35     253.70   300.30
+       0    2     12418.32    -0.35     281.03   300.25
+       0    3     12418.32    -0.35     249.42   300.24
+       2    1     12418.32    -0.35     253.17   300.11
+       2    2     12418.32    -0.35     281.56   300.23
+       2    3     12418.32    -0.35     250.34   300.24
+       4    1     12418.32    -0.35     254.73   300.22
+       4    2     12418.32    -0.35     281.04   300.20
+       4    3     12418.32    -0.35     255.72   300.31
+       6    1     12418.32    -0.35     264.52   300.16
+       6    2     12418.32    -0.35     281.34   300.31
+       6    3     12418.32    -0.35     252.45   300.26
+
+  ── airland12  (n=250, opt=16629.1)  workers=6 ──
+   n_ils  Rep    Obj(feas)     Gap%  T_best(s)  Wall(s)
+  ────── ──── ──────────── ──────── ────────── ────────
+       0    1     16249.60    -2.28     233.16   300.34
+       0    2     16239.46    -2.34     288.01   300.32
+       0    3     16203.37    -2.56     254.26   300.23
+       2    1     16249.60    -2.28     228.05   300.38
+       2    2     16239.46    -2.34     288.96   300.34
+       2    3     16203.37    -2.56     249.20   300.38
+       4    1     16249.60    -2.28     233.29   300.29
+       4    2     16239.46    -2.34     288.33   300.37
+       4    3     16203.37    -2.56     254.51   300.21
+       6    1     16249.60    -2.28     233.35   300.26
+       6    2     16239.46    -2.34     287.89   300.35
+       6    3     16203.37    -2.56     254.23   300.28
+
+  ── airland13  (n=500, opt=39287.52)  workers=2 ──
+   n_ils  Rep    Obj(feas)     Gap%  T_best(s)  Wall(s)
+  ────── ──── ──────────── ──────── ────────── ────────
+       0    1     40388.51    +2.80     299.03   301.46
+       0    2     40113.55    +2.10     295.78   300.45
