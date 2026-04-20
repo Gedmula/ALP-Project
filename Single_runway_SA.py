@@ -189,6 +189,22 @@ def is_feasible(seq: List[int], inst: ALPInstance) -> bool:
     return True
 
 
+def _fmt_obj(f_feas: float, f_semi: float) -> str:
+    """Format an objective value for display.
+
+    Returns the plain value when the fully-feasible objective is finite.
+    Returns 'value (inf)' when only the semi-feasible (consecutive-only LP)
+    objective is available — signalling that a numeric estimate exists but
+    the schedule has not been confirmed feasible under all pairwise
+    separation constraints.
+    Returns 'inf' when no meaningful objective is available at all."""
+    if not math.isinf(f_feas):
+        return f"{f_feas:.2f}"
+    if not math.isinf(f_semi):
+        return f"{f_semi:.2f} (inf)"
+    return "inf"
+
+
 # ═══════════════════════════════════════════════════════════════════════════
 # 3.  STAGE-2 LP
 # ═══════════════════════════════════════════════════════════════════════════
@@ -403,11 +419,30 @@ def neighbour(seq, rng, n):
 # ═══════════════════════════════════════════════════════════════════════════
 
 def calibrate_T0(seq, inst, n_cal=150, chi0=0.50, seed=0):
-    """Calibrate initial temperature using evaluate_semi (consistent with
-    the acceptance criterion used inside run_sa)."""
+    """Calibrate initial temperature using evaluate_semi.
+
+    Infeasible starting sequences (evaluate_semi returns inf) are explicitly
+    supported: the neighbourhood is sampled to locate feasible solutions and
+    T0 is calibrated from their objective spread.  This matches the
+    temperature to the local feasible landscape rather than fixing an
+    arbitrary constant, which would either cause random-walk behaviour (too
+    hot) or freeze before escaping the infeasible region (too cold)."""
     rng = random.Random(seed)
     f0  = evaluate_semi(seq, inst)
-    if math.isinf(f0): return 100.0
+    if math.isinf(f0):
+        # Infeasible seed: sample neighbourhood to locate feasible solutions.
+        feas_vals = []
+        for _ in range(n_cal * 4):
+            fn = evaluate_semi(neighbour(seq, rng, inst.n), inst)
+            if not math.isinf(fn):
+                feas_vals.append(fn)
+            if len(feas_vals) >= max(8, n_cal // 4):
+                break
+        if not feas_vals:
+            return 100.0   # no feasible neighbours found; broad exploration
+        f_ref = float(np.mean(feas_vals))
+        dps   = [abs(v - f_ref) for v in feas_vals if abs(v - f_ref) > 1e-6]
+        return max(-np.mean(dps) / math.log(chi0 + 1e-12), 1e-3) if dps else max(f_ref * 0.01, 1.0)
     dps = [d for nb in (neighbour(seq, rng, inst.n) for _ in range(n_cal))
            if not math.isinf(fn := evaluate_semi(nb, inst))
            for d in ([fn - f0] if fn > f0 else [])]
@@ -792,25 +827,114 @@ def ms_sa(inst: ALPInstance, p: SAParams = None,
 
     print(f"\n  {n_init_optimal}/{len(results)} initial solutions already at best objective")
     print(f"  Total distinct near-optimal sequences found: {total_alt}")
-    print(f"  MS-SA → feasible={best_f:.2f}  semi={best_f_semi:.2f}"
+    _f_feas_log = best_f if has_feas else float('inf')
+    print(f"  MS-SA → {_fmt_obj(_f_feas_log, best_f_semi)}"
+          f"  semi={best_f_semi:.2f}"
           f"  (best start: {best_lbl})"
           f"  [wall: {wall:.1f}s  |  TTB(feas): {best_ttb:.1f}s]")
 
     return best_pi, best_f, {
         'wall_s':         wall,
-        't_best':         best_ttb,         # time to best FULLY-FEASIBLE
-        't_best_sa':      min(r[6] for r in results),  # time to best semi
+        't_best':         best_ttb,
+        't_best_sa':      min(r[6] for r in results),
         'history':        best_hist,
         'all_histories':  results,
         'n_init_optimal': n_init_optimal,
         'total_alt_seqs': total_alt,
         'best_f_semi':    best_f_semi,
+        'has_feas':       has_feas,    # True if any chain returned a fully-feasible solution
     }
 
 
 # ═══════════════════════════════════════════════════════════════════════════
 # 11.  ADAPTIVE PARAMETERS
 # ═══════════════════════════════════════════════════════════════════════════
+
+_DOE_TABLE: dict = {
+    #          alpha   N_iter  I_max   M_stag  n_ils
+    "airland1":  (0.995, 400,  1200,   180,    0),
+    "airland2":  (0.995, 400,  1200,   180,    0),
+    "airland3":  (0.995, 400,  1200,   180,    0),
+    "airland4":  (0.995, 400,  1200,   180,    0),
+    "airland5":  (0.995, 400,  1200,   180,    0),
+    "airland6":  (0.995, 400,  1200,   180,    0),
+    "airland7":  (0.995, 400,  1200,   180,    0),
+    "airland8":  (0.995, 400,  1200,   180,    0),
+    "airland9":  (0.995, 400,  1200,   180,    0),
+    "airland10": (0.995, 400,  1200,   180,    0),
+    "airland11": (0.950, 400,  1200,   180,    0),
+    "airland12": (0.995, 400,  1200,   180,    0),
+    "airland13": (0.950, 400,  1200,    30,    0),
+}
+
+
+def doe_params(n: int, name: str = "") -> Tuple[SAParams, int]:
+    """Return (SAParams, n_ils_restarts) calibrated from DOE experiments.
+
+    Lookup order
+    ────────────
+    1. Exact name match against _DOE_TABLE (OR-Library instances).
+    2. Size-based tier interpolated from DOE trends (unknown instances).
+
+    The size-based fallback generalises the table observations:
+      - α=0.995 is optimal for virtually all tested sizes; α=0.950 only
+        appears for the two largest instances (n=200, n=500).
+      - N_iter=400 and I_max=1200 were consistently best across all sizes.
+      - M_stag=180 is optimal for n ≤ 300; n=500 prefers M_stag=30
+        (faster stagnation detection at the scale where each LP call is
+        expensive and the landscape is flatter).
+      - n_ils=0 was selected for every instance where Exp-2 ran; the
+        fallback tiers preserve this for all sizes.
+
+    T_min is not a DOE factor and follows the same size-based assignment
+    as adaptive_params (1e-4 for n ≤ 100, 1e-5 for n ≤ 300, 1e-6 beyond).
+
+    Parameters
+    ----------
+    n    : number of aircraft in the instance.
+    name : instance name string, e.g. "airland8".  Empty string → fallback.
+
+    Returns
+    -------
+    (SAParams, n_ils)  — identical signature to adaptive_params.
+    """
+    # ── 1. Exact lookup ──────────────────────────────────────────────────
+    if name and name in _DOE_TABLE:
+        alpha, N_iter, I_max, M_stag, n_ils = _DOE_TABLE[name]
+        t_min = 1e-4 if n <= 100 else (1e-5 if n <= 300 else 1e-6)
+        return SAParams(alpha=alpha, N_iter=N_iter, T_min=t_min,
+                        I_max=I_max, M_stag=M_stag), n_ils
+
+    # ── 2. Size-based fallback (generalised DOE trends) ──────────────────
+    # Cooling rate: 0.995 up to n=150; 0.950 for larger instances where
+    # the DOE found that slower cooling (more exploration) is preferable.
+    if n <= 150:
+        alpha  = 0.995
+        M_stag = 180
+        n_ils  = 0
+    elif n <= 300:
+        alpha  = 0.995     # airland12 (n=250) preferred 0.995
+        M_stag = 180
+        n_ils  = 0
+    elif n <= 400:
+        # Interpolated: between airland12 (0.995) and airland13 (0.950)
+        alpha  = 0.975
+        M_stag = 60
+        n_ils  = 0
+    else:
+        alpha  = 0.950     # airland13 (n=500)
+        M_stag = 30
+        n_ils  = 0
+
+    # N_iter and I_max were uniformly best at their high levels across all
+    # instances and sizes in the DOE.
+    N_iter = 400
+    I_max  = 1200
+    t_min  = 1e-4 if n <= 100 else (1e-5 if n <= 300 else 1e-6)
+
+    return SAParams(alpha=alpha, N_iter=N_iter, T_min=t_min,
+                    I_max=I_max, M_stag=M_stag), n_ils
+
 
 def adaptive_params(n: int) -> Tuple[SAParams, int]:
     """Return (SAParams, n_ils_restarts) scaled to instance size n."""
@@ -1405,7 +1529,7 @@ def export_results(results_list: list, out_dir: str = "results") -> None:
     summary_path   = out / "summary.csv"
     summary_fields = [
         "instance", "n", "known_opt",
-        "ms_sa_obj", "gap_pct",
+        "ms_sa_obj", "ms_sa_obj_semi", "gap_pct",
         "wall_s", "ttb_s",
         "total_alt_seqs", "n_init_optimal",
         "verified",
@@ -1415,6 +1539,7 @@ def export_results(results_list: list, out_dir: str = "results") -> None:
         w.writeheader()
         for r in results_list:
             f_sa  = r["results"].get("MS-SA", (float("inf"),))[0]
+            f_semi = r.get("best_f_semi", float("inf"))
             opt   = r.get("opt")
             gap   = ((f_sa - opt) / opt * 100.0
                      if opt and not math.isinf(f_sa) else float("nan"))
@@ -1426,6 +1551,7 @@ def export_results(results_list: list, out_dir: str = "results") -> None:
                 "n":              r["n"],
                 "known_opt":      "" if opt is None else f"{opt:.6f}",
                 "ms_sa_obj":      "" if math.isinf(f_sa) else f"{f_sa:.6f}",
+                "ms_sa_obj_semi": "" if math.isinf(f_semi) else f"{f_semi:.6f}",
                 "gap_pct":        "" if math.isnan(gap) else f"{gap:.4f}",
                 "wall_s":         f"{wall:.3f}" if wall is not None else "",
                 "ttb_s":          f"{ttb:.3f}"  if not math.isnan(ttb) else "",
@@ -1527,6 +1653,7 @@ def run_experiment(inst: ALPInstance,
                    known_opt: float = None,
                    sa_p: SAParams = None,
                    n_workers: int = N_CPU,
+                   use_doe: bool = False,
                    t_limit: float = _INSTANCE_TIME_LIMIT) -> dict:
     """
     Run MS-SA on one instance and export results.
@@ -1539,12 +1666,21 @@ def run_experiment(inst: ALPInstance,
     t_limit (default 3600 s) is forwarded to ms_sa, which converts it to
     an absolute deadline shared across all parallel chains.
     """
-    sa_adapt, n_ils = adaptive_params(inst.n)
+    if use_doe:
+        sa_adapt, n_ils = doe_params(inst.n, inst.name)
+    else:
+        sa_adapt, n_ils = adaptive_params(inst.n)
+
     sa_p = sa_p if sa_p is not None else sa_adapt
 
     print(f"\n{'═'*70}")
     print(f"  Instance : {inst.name}   n={inst.n}   s̄={inst.s_bar:.0f}s")
     print(f"  CPU cores: {N_CPU}   ILS/chain: {n_ils}   t_limit: {t_limit:.0f}s")
+    param_src = "DOE" if use_doe else "adaptive"
+    print(f"  Params ({param_src}): α={sa_p.alpha}  N_iter={sa_p.N_iter}"
+        f"  T_min={sa_p.T_min:.0e}  I_max={sa_p.I_max}"
+        f"  M_stag={sa_p.M_stag}  chi0={sa_p.chi0}")
+    
     if known_opt: print(f"  Reference: {known_opt}")
     print(f"{'═'*70}")
 
@@ -1552,31 +1688,45 @@ def run_experiment(inst: ALPInstance,
     pi_sa, f_sa, sa_stats = ms_sa(inst, sa_p, n_workers=n_workers,
                                    n_ils=n_ils, t_limit=t_limit)
     wall          = time.perf_counter() - t0
-    t_best        = sa_stats.get('t_best', wall)      # time to best FEASIBLE
-    t_best_sa     = sa_stats.get('t_best_sa', wall)   # time to best SEMI
+    t_best        = sa_stats.get('t_best', wall)
+    t_best_sa     = sa_stats.get('t_best_sa', wall)
     best_f_semi   = sa_stats.get('best_f_semi', f_sa)
+    has_feas      = sa_stats.get('has_feas', True)
+
+    # When no fully-feasible chain was found, ms_sa returns the semi-feasible
+    # best as a fallback.  Recover the true fully-feasible status for display.
+    f_feas = f_sa if has_feas else float('inf')
+    f_disp = _fmt_obj(f_feas, best_f_semi)
 
     print(f"\n{'─'*70}")
-    print(f"  {'Method':<16} {'Obj (feas)':>12} {'Obj (semi)':>12} {'Gap':>9} "
+    print(f"  {'Method':<16} {'Obj':>18} {'Obj (semi)':>12} {'Gap':>9} "
           f"{'Wall(s)':>9} {'TTB(s)':>8} {'Alt seqs':>9}")
-    print(f"  {'─'*16} {'─'*12} {'─'*12} {'─'*9} {'─'*9} {'─'*8} {'─'*9}")
-    print(f"  {'MS-SA':<16} {f_sa:>12.2f} {best_f_semi:>12.2f} "
-          f"{_gap(f_sa, known_opt):>9} "
+    print(f"  {'─'*16} {'─'*18} {'─'*12} {'─'*9} {'─'*9} {'─'*8} {'─'*9}")
+    print(f"  {'MS-SA':<16} {f_disp:>18} {best_f_semi:>12.2f} "
+          f"{_gap(f_feas, known_opt):>9} "
           f"{wall:>9.2f} {t_best:>8.2f} "
           f"{sa_stats.get('total_alt_seqs', 0):>9}")
     print(f"{'═'*70}\n")
 
     # ── Verification (fully-feasible sequence only) ────────────────────
-    if pi_sa is None or math.isinf(f_sa):
-        print("  ✗ No fully-feasible solution found — skipping verification.")
-        passed = False
+    if pi_sa is None or not has_feas:
+        if not has_feas:
+            print(f"  ✗ No fully-feasible solution found in any chain.")
+            print(f"     Best semi-feasible: {best_f_semi:.2f} (inf) — "
+                  "schedule not verified.")
+        else:
+            print("  ✗ No solution returned — skipping verification.")
+        passed  = False
         vreport = None
+        f_sa    = float('inf')
     else:
         passed, f_verified = verify_all(pi_sa, inst, tol=1e-4, verbose=True,
                                         raise_on_fail=False)
         _, _, vreport = verify_schedule(pi_sa, inst)
         if not passed:
-            print(f"  ✗ Schedule FAILED verification — objective set to inf.")
+            print(f"  ✗ Schedule FAILED verification.")
+            print(f"     Reported: {_fmt_obj(float('inf'), best_f_semi)}"
+                  f"  (semi-feasible value retained for reference)")
             f_sa = float('inf')
         else:
             f_sa = f_verified
@@ -1584,10 +1734,12 @@ def run_experiment(inst: ALPInstance,
                 print(f"  ⚠  Verified obj {f_sa:.6f} < known reference {known_opt}.")
                 print(f"     This is a genuine new best — all constraints satisfied.")
 
+
     result = {
         'inst':           inst.name,
         'n':              inst.n,
         'results':        {'MS-SA': (f_sa, wall)},
+        'best_f_semi':    best_f_semi,      # semi-feasible best for display/export
         'opt':            known_opt,
         'ttb':            {'MS-SA': t_best},
         'total_alt_seqs': sa_stats.get('total_alt_seqs', 0),
@@ -1596,6 +1748,7 @@ def run_experiment(inst: ALPInstance,
         '_inst':          inst,
         '_vreport':       vreport,
     }
+
     export_results([result], out_dir=f"results/{inst.name}")
 
     plot_gantt(pi_sa, inst, method='MS-SA', obj=f_sa)
@@ -1651,6 +1804,7 @@ if __name__ == '__main__':
         'airland13.txt': 39287.52,
     }
 
+    use_doe = False
     SA_full = None #SAParams(alpha=0.99, N_iter=250, T_min=1e-4, I_max=800, M_stag=100)
 
     print(f"\nSearching for OR Library files in:\n  {DATA_DIR.resolve()}\n")
@@ -1684,6 +1838,7 @@ if __name__ == '__main__':
                 diagnose_instance(inst)
                 res  = run_experiment(inst, known_opt=opt, #sa_p=SA_full,
                                       n_workers=N_CPU,
+                                      use_doe=use_doe,
                                       t_limit=_INSTANCE_TIME_LIMIT)
                 all_results.append(res)
             except Exception as exc:
