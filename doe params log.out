@@ -1,0 +1,724 @@
+
+Searching for OR Library files in:
+  /home/eb276/ALP-Project/data
+
+  [FOUND]   airland1.txt
+  [FOUND]   airland2.txt
+  [FOUND]   airland3.txt
+  [FOUND]   airland4.txt
+  [FOUND]   airland5.txt
+  [FOUND]   airland6.txt
+  [FOUND]   airland7.txt
+  [FOUND]   airland8.txt
+  [FOUND]   airland9.txt
+  [FOUND]   airland10.txt
+  [FOUND]   airland11.txt
+  [FOUND]   airland12.txt
+  [FOUND]   airland13.txt
+
+Running 13 instance(s)...
+
+
+── Instance diagnostic: airland1  (n=10) ──
+   s̄ = 10.4 s   max_sep = 99999 s
+   delta range  : [98, 258] s  (interval ≈ 3 s)
+   window range : r=[89,195]  d=[510,744]
+   EDD     :     feasible   obj = 700.00
+   ERD     :     feasible   obj = 1280.00
+   MDD     :     feasible   obj = 700.00
+   MPDS    :     feasible   obj = 970.00
+   Random seq feasibility: 500/500 (100.0%)
+
+
+══════════════════════════════════════════════════════════════════════
+  Instance : airland1   n=10   s̄=10s
+  CPU cores: 28   ILS/chain: 0   t_limit: 3600s
+  Params (DOE): α=0.995  N_iter=400  T_min=1e-04  I_max=1200  M_stag=180  chi0=0.5
+  Reference: 700
+══════════════════════════════════════════════════════════════════════
+  MS-SA: 28 chains  |  28 workers  |  ILS/chain: 0  |  t_limit: 3600s
+
+  SA chains:   0%|          | 0/28 [00:00<?, ?it/s]  SA chains:   4%|▎         | 1/28 [02:29<1:07:12, 149.34s/it]  SA chains:  14%|█▍        | 4/28 [02:31<11:35, 28.96s/it]     SA chains:  21%|██▏       | 6/28 [02:35<06:16, 17.10s/it]  SA chains: 100%|██████████| 28/28 [02:35<00:00,  5.55s/it]
+
+  2/28 initial solutions already at best objective
+  Total distinct near-optimal sequences found: 56
+  MS-SA → 700.00  semi=700.00  (best start: MPDS)  [wall: 155.5s  |  TTB(feas): 8.8s]
+
+──────────────────────────────────────────────────────────────────────
+  Method                          Obj   Obj (semi)       Gap   Wall(s)   TTB(s)  Alt seqs
+  ──────────────── ────────────────── ──────────── ───────── ───────── ──────── ─────────
+  MS-SA                        700.00       700.00    +0.00%    155.48     8.81        56
+══════════════════════════════════════════════════════════════════════
+
+════════════════════════════════════════════════════════════════════
+  Verification — airland1   n=10
+────────────────────────────────────────────────────────────────────
+  Result         : ✓ PASS
+  Obj reported   : 700.000000
+  Obj recomputed : 700.000000  (Δ=0.00e+00)
+  Obj LP re-solve: 700.000000  (Δ=0.00e+00)
+  Tolerance      : 1e-04
+  Violations     : 0
+════════════════════════════════════════════════════════════════════
+  Saved: doe_results/airland1/summary.csv
+  Saved: doe_results/airland1/schedules.csv
+  Saved: doe_results/airland1/verification.txt
+  Saved: doe_results/airland1/run_metadata.json
+  Saved: doe_results/plots/gantt/gantt_airland1_MS_SA.png
+  Saved: doe_results/plots/convergence/convergence_airland1.png
+  Saved: doe_results/plots/alpha_trajectory/alpha_trajectory_airland1.png
+  Saved: doe_results/plots/seed_improvement/seed_improvement_airland1.png
+  Saved: doe_results/plots/penalty_profile/penalty_profile_airland1_MS_SA.png
+
+── Instance diagnostic: airland2  (n=15) ──
+   s̄ = 10.9 s   max_sep = 99999 s
+   delta range  : [93, 342] s  (interval ≈ 13 s)
+   window range : r=[84,276]  d=[501,837]
+   EDD     :     feasible   obj = 1500.00
+   ERD     :     feasible   obj = 1790.00
+   MDD     :     feasible   obj = 1500.00
+   MPDS    :     feasible   obj = 1500.00
+   Random seq feasibility: 500/500 (100.0%)
+
+
+══════════════════════════════════════════════════════════════════════
+  Instance : airland2   n=15   s̄=11s
+  CPU cores: 28   ILS/chain: 0   t_limit: 3600s
+  Params (DOE): α=0.995  N_iter=400  T_min=1e-04  I_max=1200  M_stag=180  chi0=0.5
+  Reference: 1480
+══════════════════════════════════════════════════════════════════════
+  MS-SA: 28 chains  |  28 workers  |  ILS/chain: 0  |  t_limit: 3600s
+  SA chains:   0%|          | 0/28 [00:00<?, ?it/s]  SA chains:   4%|▎         | 1/28 [02:52<1:17:25, 172.06s/it]  SA chains:   7%|▋         | 2/28 [02:55<31:32, 72.79s/it]     SA chains:  14%|█▍        | 4/28 [03:00<11:28, 28.69s/it]  SA chains: 100%|██████████| 28/28 [03:00<00:00,  6.44s/it]
+
+  2/28 initial solutions already at best objective
+  Total distinct near-optimal sequences found: 224
+  MS-SA → 1480.00  semi=1480.00  (best start: MPDS)  [wall: 180.4s  |  TTB(feas): 13.0s]
+
+──────────────────────────────────────────────────────────────────────
+  Method                          Obj   Obj (semi)       Gap   Wall(s)   TTB(s)  Alt seqs
+  ──────────────── ────────────────── ──────────── ───────── ───────── ──────── ─────────
+  MS-SA                       1480.00      1480.00    +0.00%    180.36    13.00       224
+══════════════════════════════════════════════════════════════════════
+
+════════════════════════════════════════════════════════════════════
+  Verification — airland2   n=15
+────────────────────────────────────────────────────────────────────
+  Result         : ✓ PASS
+  Obj reported   : 1480.000000
+  Obj recomputed : 1480.000000  (Δ=0.00e+00)
+  Obj LP re-solve: 1480.000000  (Δ=0.00e+00)
+  Tolerance      : 1e-04
+  Violations     : 0
+════════════════════════════════════════════════════════════════════
+  Saved: doe_results/airland2/summary.csv
+  Saved: doe_results/airland2/schedules.csv
+  Saved: doe_results/airland2/verification.txt
+  Saved: doe_results/airland2/run_metadata.json
+  Saved: doe_results/plots/gantt/gantt_airland2_MS_SA.png
+  Saved: doe_results/plots/convergence/convergence_airland2.png
+  Saved: doe_results/plots/alpha_trajectory/alpha_trajectory_airland2.png
+  Saved: doe_results/plots/seed_improvement/seed_improvement_airland2.png
+  Saved: doe_results/plots/penalty_profile/penalty_profile_airland2_MS_SA.png
+
+── Instance diagnostic: airland3  (n=20) ──
+   s̄ = 10.5 s   max_sep = 99999 s
+   delta range  : [82, 409] s  (interval ≈ 5 s)
+   window range : r=[75,310]  d=[486,967]
+   EDD     :     feasible   obj = 1730.00
+   ERD     :     feasible   obj = 1790.00
+   MDD     :     feasible   obj = 1730.00
+   MPDS    :     feasible   obj = 980.00
+   Random seq feasibility: 490/500 (98.0%)
+
+
+══════════════════════════════════════════════════════════════════════
+  Instance : airland3   n=20   s̄=10s
+  CPU cores: 28   ILS/chain: 0   t_limit: 3600s
+  Params (DOE): α=0.995  N_iter=400  T_min=1e-04  I_max=1200  M_stag=180  chi0=0.5
+  Reference: 820
+══════════════════════════════════════════════════════════════════════
+  MS-SA: 28 chains  |  28 workers  |  ILS/chain: 0  |  t_limit: 3600s
+  SA chains:   0%|          | 0/28 [00:00<?, ?it/s]  SA chains:   4%|▎         | 1/28 [03:23<1:31:31, 203.37s/it]  SA chains:  14%|█▍        | 4/28 [03:33<16:28, 41.17s/it]     SA chains: 100%|██████████| 28/28 [03:33<00:00,  7.62s/it]
+
+  2/28 initial solutions already at best objective
+  Total distinct near-optimal sequences found: 56
+  MS-SA → 820.00  semi=820.00  (best start: MPDS)  [wall: 213.4s  |  TTB(feas): 15.1s]
+
+──────────────────────────────────────────────────────────────────────
+  Method                          Obj   Obj (semi)       Gap   Wall(s)   TTB(s)  Alt seqs
+  ──────────────── ────────────────── ──────────── ───────── ───────── ──────── ─────────
+  MS-SA                        820.00       820.00    +0.00%    213.42    15.09        56
+══════════════════════════════════════════════════════════════════════
+
+════════════════════════════════════════════════════════════════════
+  Verification — airland3   n=20
+────────────────────────────────────────────────────────────────────
+  Result         : ✓ PASS
+  Obj reported   : 820.000000
+  Obj recomputed : 820.000000  (Δ=0.00e+00)
+  Obj LP re-solve: 820.000000  (Δ=0.00e+00)
+  Tolerance      : 1e-04
+  Violations     : 0
+════════════════════════════════════════════════════════════════════
+  Saved: doe_results/airland3/summary.csv
+  Saved: doe_results/airland3/schedules.csv
+  Saved: doe_results/airland3/verification.txt
+  Saved: doe_results/airland3/run_metadata.json
+  Saved: doe_results/plots/gantt/gantt_airland3_MS_SA.png
+  Saved: doe_results/plots/convergence/convergence_airland3.png
+  Saved: doe_results/plots/alpha_trajectory/alpha_trajectory_airland3.png
+  Saved: doe_results/plots/seed_improvement/seed_improvement_airland3.png
+  Saved: doe_results/plots/penalty_profile/penalty_profile_airland3_MS_SA.png
+
+── Instance diagnostic: airland4  (n=20) ──
+   s̄ = 10.7 s   max_sep = 99999 s
+   delta range  : [92, 357] s  (interval ≈ 14 s)
+   window range : r=[82,286]  d=[509,840]
+   EDD     :     feasible   obj = 2520.00
+   ERD     :     feasible   obj = 4890.00
+   MDD     :     feasible   obj = 2520.00
+   MPDS    :     feasible   obj = 8560.00
+   Random seq feasibility: 496/500 (99.2%)
+
+
+══════════════════════════════════════════════════════════════════════
+  Instance : airland4   n=20   s̄=11s
+  CPU cores: 28   ILS/chain: 0   t_limit: 3600s
+  Params (DOE): α=0.995  N_iter=400  T_min=1e-04  I_max=1200  M_stag=180  chi0=0.5
+  Reference: 2520
+══════════════════════════════════════════════════════════════════════
+  MS-SA: 28 chains  |  28 workers  |  ILS/chain: 0  |  t_limit: 3600s
+  SA chains:   0%|          | 0/28 [00:00<?, ?it/s]  SA chains:   4%|▎         | 1/28 [03:31<1:35:07, 211.39s/it]  SA chains:  39%|███▉      | 11/28 [03:35<04:01, 14.20s/it]    SA chains: 100%|██████████| 28/28 [03:35<00:00,  7.69s/it]
+
+  4/28 initial solutions already at best objective
+  Total distinct near-optimal sequences found: 448
+  MS-SA → 2520.00  semi=2520.00  (best start: MPDS)  [wall: 215.4s  |  TTB(feas): 15.8s]
+
+──────────────────────────────────────────────────────────────────────
+  Method                          Obj   Obj (semi)       Gap   Wall(s)   TTB(s)  Alt seqs
+  ──────────────── ────────────────── ──────────── ───────── ───────── ──────── ─────────
+  MS-SA                       2520.00      2520.00    +0.00%    215.41    15.78       448
+══════════════════════════════════════════════════════════════════════
+
+════════════════════════════════════════════════════════════════════
+  Verification — airland4   n=20
+────────────────────────────────────────────────────────────────────
+  Result         : ✓ PASS
+  Obj reported   : 2520.000000
+  Obj recomputed : 2520.000000  (Δ=0.00e+00)
+  Obj LP re-solve: 2520.000000  (Δ=0.00e+00)
+  Tolerance      : 1e-04
+  Violations     : 0
+════════════════════════════════════════════════════════════════════
+  Saved: doe_results/airland4/summary.csv
+  Saved: doe_results/airland4/schedules.csv
+  Saved: doe_results/airland4/verification.txt
+  Saved: doe_results/airland4/run_metadata.json
+  Saved: doe_results/plots/gantt/gantt_airland4_MS_SA.png
+  Saved: doe_results/plots/convergence/convergence_airland4.png
+  Saved: doe_results/plots/alpha_trajectory/alpha_trajectory_airland4.png
+  Saved: doe_results/plots/seed_improvement/seed_improvement_airland4.png
+  Saved: doe_results/plots/penalty_profile/penalty_profile_airland4_MS_SA.png
+
+── Instance diagnostic: airland5  (n=20) ──
+   s̄ = 10.7 s   max_sep = 99999 s
+   delta range  : [90, 393] s  (interval ≈ 1 s)
+   window range : r=[82,300]  d=[497,931]
+   EDD     :     feasible   obj = 5420.00
+   ERD     :     feasible   obj = 6470.00
+   MDD     :     feasible   obj = 3100.00
+   MPDS    :     feasible   obj = 9270.00
+   Random seq feasibility: 496/500 (99.2%)
+
+
+══════════════════════════════════════════════════════════════════════
+  Instance : airland5   n=20   s̄=11s
+  CPU cores: 28   ILS/chain: 0   t_limit: 3600s
+  Params (DOE): α=0.995  N_iter=400  T_min=1e-04  I_max=1200  M_stag=180  chi0=0.5
+  Reference: 3100
+══════════════════════════════════════════════════════════════════════
+  MS-SA: 28 chains  |  28 workers  |  ILS/chain: 0  |  t_limit: 3600s
+  SA chains:   0%|          | 0/28 [00:00<?, ?it/s]  SA chains:   4%|▎         | 1/28 [03:37<1:37:44, 217.21s/it]  SA chains:   7%|▋         | 2/28 [03:37<38:57, 89.90s/it]     SA chains:  64%|██████▍   | 18/28 [03:40<01:03,  6.36s/it]  SA chains: 100%|██████████| 28/28 [03:40<00:00,  7.87s/it]
+
+  3/28 initial solutions already at best objective
+  Total distinct near-optimal sequences found: 672
+  MS-SA → 3100.00  semi=3100.00  (best start: MPDS)  [wall: 220.4s  |  TTB(feas): 16.7s]
+
+──────────────────────────────────────────────────────────────────────
+  Method                          Obj   Obj (semi)       Gap   Wall(s)   TTB(s)  Alt seqs
+  ──────────────── ────────────────── ──────────── ───────── ───────── ──────── ─────────
+  MS-SA                       3100.00      3100.00    +0.00%    220.36    16.71       672
+══════════════════════════════════════════════════════════════════════
+
+════════════════════════════════════════════════════════════════════
+  Verification — airland5   n=20
+────────────────────────────────────────────────────────────────────
+  Result         : ✓ PASS
+  Obj reported   : 3100.000000
+  Obj recomputed : 3100.000000  (Δ=0.00e+00)
+  Obj LP re-solve: 3100.000000  (Δ=0.00e+00)
+  Tolerance      : 1e-04
+  Violations     : 0
+════════════════════════════════════════════════════════════════════
+  Saved: doe_results/airland5/summary.csv
+  Saved: doe_results/airland5/schedules.csv
+  Saved: doe_results/airland5/verification.txt
+  Saved: doe_results/airland5/run_metadata.json
+  Saved: doe_results/plots/gantt/gantt_airland5_MS_SA.png
+  Saved: doe_results/plots/convergence/convergence_airland5.png
+  Saved: doe_results/plots/alpha_trajectory/alpha_trajectory_airland5.png
+  Saved: doe_results/plots/seed_improvement/seed_improvement_airland5.png
+  Saved: doe_results/plots/penalty_profile/penalty_profile_airland5_MS_SA.png
+
+── Instance diagnostic: airland6  (n=30) ──
+   s̄ = 114.1 s   max_sep = 99999 s
+   delta range  : [0, 3091] s  (interval ≈ 107 s)
+   window range : r=[0,3091]  d=[0,3266]
+   EDD     :     feasible   obj = 24442.00
+   ERD     :     feasible   obj = 24442.00
+   MDD     : INFEASIBLE
+   MPDS    : INFEASIBLE
+   Random seq feasibility: 0/500 (0.0%)
+
+
+══════════════════════════════════════════════════════════════════════
+  Instance : airland6   n=30   s̄=114s
+  CPU cores: 28   ILS/chain: 0   t_limit: 3600s
+  Params (DOE): α=0.995  N_iter=400  T_min=1e-04  I_max=1200  M_stag=180  chi0=0.5
+  Reference: 24442
+══════════════════════════════════════════════════════════════════════
+  MS-SA: 28 chains  |  28 workers  |  ILS/chain: 0  |  t_limit: 3600s
+  SA chains:   0%|          | 0/28 [00:00<?, ?it/s]  SA chains:   4%|▎         | 1/28 [00:01<00:33,  1.26s/it]  SA chains:  50%|█████     | 14/28 [00:01<00:01, 13.76it/s]  SA chains:  79%|███████▊  | 22/28 [00:01<00:00, 21.28it/s]  SA chains: 100%|██████████| 28/28 [00:01<00:00, 18.64it/s]
+
+  2/28 initial solutions already at best objective
+  Total distinct near-optimal sequences found: 4
+  MS-SA → 24442.00  semi=24442.00  (best start: EDD)  [wall: 1.6s  |  TTB(feas): 0.0s]
+
+──────────────────────────────────────────────────────────────────────
+  Method                          Obj   Obj (semi)       Gap   Wall(s)   TTB(s)  Alt seqs
+  ──────────────── ────────────────── ──────────── ───────── ───────── ──────── ─────────
+  MS-SA                      24442.00     24442.00    +0.00%      1.59     0.00         4
+══════════════════════════════════════════════════════════════════════
+
+════════════════════════════════════════════════════════════════════
+  Verification — airland6   n=30
+────────────────────────────────────────────────────────────────────
+  Result         : ✓ PASS
+  Obj reported   : 24442.000000
+  Obj recomputed : 24442.000000  (Δ=0.00e+00)
+  Obj LP re-solve: 24442.000000  (Δ=0.00e+00)
+  Tolerance      : 1e-04
+  Violations     : 0
+════════════════════════════════════════════════════════════════════
+  Saved: doe_results/airland6/summary.csv
+  Saved: doe_results/airland6/schedules.csv
+  Saved: doe_results/airland6/verification.txt
+  Saved: doe_results/airland6/run_metadata.json
+  Saved: doe_results/plots/gantt/gantt_airland6_MS_SA.png
+  Saved: doe_results/plots/convergence/convergence_airland6.png
+  Saved: doe_results/plots/alpha_trajectory/alpha_trajectory_airland6.png
+  Saved: doe_results/plots/seed_improvement/seed_improvement_airland6.png
+  Saved: doe_results/plots/penalty_profile/penalty_profile_airland6_MS_SA.png
+
+── Instance diagnostic: airland7  (n=44) ──
+   s̄ = 112.6 s   max_sep = 99999 s
+   delta range  : [0, 4927] s  (interval ≈ 115 s)
+   window range : r=[0,4802]  d=[0,5052]
+   EDD     :     feasible   obj = 1550.00
+   ERD     :     feasible   obj = 1550.00
+   MDD     :     feasible   obj = 1550.00
+   MPDS    : INFEASIBLE
+   Random seq feasibility: 0/500 (0.0%)
+
+
+══════════════════════════════════════════════════════════════════════
+  Instance : airland7   n=44   s̄=113s
+  CPU cores: 28   ILS/chain: 0   t_limit: 3600s
+  Params (DOE): α=0.995  N_iter=400  T_min=1e-04  I_max=1200  M_stag=180  chi0=0.5
+  Reference: 1550
+══════════════════════════════════════════════════════════════════════
+  MS-SA: 28 chains  |  28 workers  |  ILS/chain: 0  |  t_limit: 3600s
+  SA chains:   0%|          | 0/28 [00:00<?, ?it/s]  SA chains:   4%|▎         | 1/28 [00:00<00:25,  1.07it/s]  SA chains:   7%|▋         | 2/28 [00:01<00:19,  1.30it/s]  SA chains:  29%|██▊       | 8/28 [00:01<00:03,  5.56it/s]  SA chains: 100%|██████████| 28/28 [00:01<00:00, 14.25it/s]
+
+  3/28 initial solutions already at best objective
+  Total distinct near-optimal sequences found: 5
+  MS-SA → 1550.00  semi=1550.00  (best start: EDD)  [wall: 2.1s  |  TTB(feas): 0.0s]
+
+──────────────────────────────────────────────────────────────────────
+  Method                          Obj   Obj (semi)       Gap   Wall(s)   TTB(s)  Alt seqs
+  ──────────────── ────────────────── ──────────── ───────── ───────── ──────── ─────────
+  MS-SA                       1550.00      1550.00    +0.00%      2.05     0.00         5
+══════════════════════════════════════════════════════════════════════
+
+════════════════════════════════════════════════════════════════════
+  Verification — airland7   n=44
+────────────────────────────────────────────────────────────────────
+  Result         : ✓ PASS
+  Obj reported   : 1550.000000
+  Obj recomputed : 1550.000000  (Δ=0.00e+00)
+  Obj LP re-solve: 1550.000000  (Δ=0.00e+00)
+  Tolerance      : 1e-04
+  Violations     : 0
+════════════════════════════════════════════════════════════════════
+  Saved: doe_results/airland7/summary.csv
+  Saved: doe_results/airland7/schedules.csv
+  Saved: doe_results/airland7/verification.txt
+  Saved: doe_results/airland7/run_metadata.json
+  Saved: doe_results/plots/gantt/gantt_airland7_MS_SA.png
+  Saved: doe_results/plots/convergence/convergence_airland7.png
+  Saved: doe_results/plots/alpha_trajectory/alpha_trajectory_airland7.png
+  Saved: doe_results/plots/seed_improvement/seed_improvement_airland7.png
+  Saved: doe_results/plots/penalty_profile/penalty_profile_airland7_MS_SA.png
+
+── Instance diagnostic: airland8  (n=50) ──
+   s̄ = 8.8 s   max_sep = 99999 s
+   delta range  : [82, 763] s  (interval ≈ 5 s)
+   window range : r=[75,579]  d=[486,1231]
+   EDD     :     feasible   obj = 2480.00
+   ERD     :     feasible   obj = 18915.00
+   MDD     :     feasible   obj = 2480.00
+   MPDS    : INFEASIBLE
+   Random seq feasibility: 0/500 (0.0%)
+
+
+══════════════════════════════════════════════════════════════════════
+  Instance : airland8   n=50   s̄=9s
+  CPU cores: 28   ILS/chain: 0   t_limit: 3600s
+  Params (DOE): α=0.995  N_iter=400  T_min=1e-04  I_max=1200  M_stag=180  chi0=0.5
+  Reference: 1950
+══════════════════════════════════════════════════════════════════════
+  MS-SA: 28 chains  |  28 workers  |  ILS/chain: 0  |  t_limit: 3600s
+  SA chains:   0%|          | 0/28 [00:00<?, ?it/s]  SA chains:   4%|▎         | 1/28 [05:48<2:36:48, 348.46s/it]  SA chains:  11%|█         | 3/28 [06:13<41:34, 99.77s/it]     SA chains:  14%|█▍        | 4/28 [06:32<28:42, 71.77s/it]  SA chains:  25%|██▌       | 7/28 [07:40<14:52, 42.48s/it]  SA chains:  68%|██████▊   | 19/28 [08:16<01:46, 11.89s/it]  SA chains: 100%|██████████| 28/28 [08:16<00:00, 17.72s/it]
+
+  0/28 initial solutions already at best objective
+  Total distinct near-optimal sequences found: 40
+  MS-SA → 1950.00  semi=1860.00  (best start: EDD)  [wall: 496.2s  |  TTB(feas): 37.2s]
+
+──────────────────────────────────────────────────────────────────────
+  Method                          Obj   Obj (semi)       Gap   Wall(s)   TTB(s)  Alt seqs
+  ──────────────── ────────────────── ──────────── ───────── ───────── ──────── ─────────
+  MS-SA                       1950.00      1860.00    +0.00%    496.16    37.22        40
+══════════════════════════════════════════════════════════════════════
+
+════════════════════════════════════════════════════════════════════
+  Verification — airland8   n=50
+────────────────────────────────────────────────────────────────────
+  Result         : ✓ PASS
+  Obj reported   : 1950.000000
+  Obj recomputed : 1950.000000  (Δ=0.00e+00)
+  Obj LP re-solve: 1950.000000  (Δ=0.00e+00)
+  Tolerance      : 1e-04
+  Violations     : 0
+════════════════════════════════════════════════════════════════════
+  Saved: doe_results/airland8/summary.csv
+  Saved: doe_results/airland8/schedules.csv
+  Saved: doe_results/airland8/verification.txt
+  Saved: doe_results/airland8/run_metadata.json
+  Saved: doe_results/plots/gantt/gantt_airland8_MS_SA.png
+  Saved: doe_results/plots/convergence/convergence_airland8.png
+  Saved: doe_results/plots/alpha_trajectory/alpha_trajectory_airland8.png
+  Saved: doe_results/plots/seed_improvement/seed_improvement_airland8.png
+  Saved: doe_results/plots/penalty_profile/penalty_profile_airland8_MS_SA.png
+
+── Instance diagnostic: airland9  (n=100) ──
+   s̄ = 86.1 s   max_sep = 135 s
+   delta range  : [908, 12691] s  (interval ≈ 119 s)
+   window range : r=[601,12323]  d=[2401,14123]
+   EDD     :     feasible   obj = 7310.18
+   ERD     :     feasible   obj = 17602.63
+   MDD     :     feasible   obj = 7142.52
+   MPDS    : INFEASIBLE
+   Random seq feasibility: 0/500 (0.0%)
+
+
+══════════════════════════════════════════════════════════════════════
+  Instance : airland9   n=100   s̄=86s
+  CPU cores: 28   ILS/chain: 0   t_limit: 3600s
+  Params (DOE): α=0.995  N_iter=400  T_min=1e-04  I_max=1200  M_stag=180  chi0=0.5
+  Reference: 5611.7
+══════════════════════════════════════════════════════════════════════
+  MS-SA: 28 chains  |  28 workers  |  ILS/chain: 0  |  t_limit: 3600s
+  SA chains:   0%|          | 0/28 [00:00<?, ?it/s]  SA chains:   4%|▎         | 1/28 [00:02<01:10,  2.63s/it]  SA chains:   7%|▋         | 2/28 [01:48<27:29, 63.46s/it]  SA chains:  11%|█         | 3/28 [02:23<21:03, 50.55s/it]  SA chains:  71%|███████▏  | 20/28 [02:45<00:42,  5.34s/it]  SA chains: 100%|██████████| 28/28 [02:45<00:00,  5.91s/it]
+
+  0/28 initial solutions already at best objective
+  Total distinct near-optimal sequences found: 3
+  MS-SA → 5611.70  semi=5611.70  (best start: MDD)  [wall: 165.4s  |  TTB(feas): 119.6s]
+
+──────────────────────────────────────────────────────────────────────
+  Method                          Obj   Obj (semi)       Gap   Wall(s)   TTB(s)  Alt seqs
+  ──────────────── ────────────────── ──────────── ───────── ───────── ──────── ─────────
+  MS-SA                       5611.70      5611.70    +0.00%    165.46   119.59         3
+══════════════════════════════════════════════════════════════════════
+
+════════════════════════════════════════════════════════════════════
+  Verification — airland9   n=100
+────────────────────────────────────────────────────────────────────
+  Result         : ✓ PASS
+  Obj reported   : 5611.700000
+  Obj recomputed : 5611.700000  (Δ=1.82e-12)
+  Obj LP re-solve: 5611.700000  (Δ=0.00e+00)
+  Tolerance      : 1e-04
+  Violations     : 0
+════════════════════════════════════════════════════════════════════
+  Saved: doe_results/airland9/summary.csv
+  Saved: doe_results/airland9/schedules.csv
+  Saved: doe_results/airland9/verification.txt
+  Saved: doe_results/airland9/run_metadata.json
+  Saved: doe_results/plots/gantt/gantt_airland9_MS_SA.png
+  Saved: doe_results/plots/convergence/convergence_airland9.png
+  Saved: doe_results/plots/alpha_trajectory/alpha_trajectory_airland9.png
+  Saved: doe_results/plots/seed_improvement/seed_improvement_airland9.png
+  Saved: doe_results/plots/penalty_profile/penalty_profile_airland9_MS_SA.png
+
+── Instance diagnostic: airland10  (n=150) ──
+   s̄ = 86.3 s   max_sep = 135 s
+   delta range  : [1068, 19331] s  (interval ≈ 121 s)
+   window range : r=[601,19015]  d=[2401,20815]
+   EDD     :     feasible   obj = 20142.41
+   ERD     :     feasible   obj = 27201.83
+   MDD     :     feasible   obj = 19691.52
+   MPDS    : INFEASIBLE
+   Random seq feasibility: 0/500 (0.0%)
+
+
+══════════════════════════════════════════════════════════════════════
+  Instance : airland10   n=150   s̄=86s
+  CPU cores: 28   ILS/chain: 0   t_limit: 3600s
+  Params (DOE): α=0.995  N_iter=400  T_min=1e-05  I_max=1200  M_stag=180  chi0=0.5
+  Reference: 12640.42
+══════════════════════════════════════════════════════════════════════
+  MS-SA: 28 chains  |  28 workers  |  ILS/chain: 0  |  t_limit: 3600s
+  SA chains:   0%|          | 0/28 [00:00<?, ?it/s]  SA chains:   4%|▎         | 1/28 [00:02<01:14,  2.77s/it]  SA chains:   7%|▋         | 2/28 [02:39<40:19, 93.06s/it]  SA chains:  11%|█         | 3/28 [02:59<24:56, 59.86s/it]  SA chains:  18%|█▊        | 5/28 [03:19<12:10, 31.76s/it]  SA chains: 100%|██████████| 28/28 [03:19<00:00,  7.14s/it]
+
+  0/28 initial solutions already at best objective
+  Total distinct near-optimal sequences found: 1
+  MS-SA → 12310.70  semi=12310.70  (best start: MDD)  [wall: 199.9s  |  TTB(feas): 90.7s]
+
+──────────────────────────────────────────────────────────────────────
+  Method                          Obj   Obj (semi)       Gap   Wall(s)   TTB(s)  Alt seqs
+  ──────────────── ────────────────── ──────────── ───────── ───────── ──────── ─────────
+  MS-SA                      12310.70     12310.70    -2.61%    199.95    90.66         1
+══════════════════════════════════════════════════════════════════════
+
+════════════════════════════════════════════════════════════════════
+  Verification — airland10   n=150
+────────────────────────────────────────────────────────────────────
+  Result         : ✓ PASS
+  Obj reported   : 12310.700000
+  Obj recomputed : 12310.700000  (Δ=1.82e-12)
+  Obj LP re-solve: 12310.700000  (Δ=0.00e+00)
+  Tolerance      : 1e-04
+  Violations     : 0
+════════════════════════════════════════════════════════════════════
+  ⚠  Verified obj 12310.700000 < known reference 12640.42.
+     This is a genuine new best — all constraints satisfied.
+  Saved: doe_results/airland10/summary.csv
+  Saved: doe_results/airland10/schedules.csv
+  Saved: doe_results/airland10/verification.txt
+  Saved: doe_results/airland10/run_metadata.json
+  Saved: doe_results/plots/gantt/gantt_airland10_MS_SA.png
+  Saved: doe_results/plots/convergence/convergence_airland10.png
+  Saved: doe_results/plots/alpha_trajectory/alpha_trajectory_airland10.png
+  Saved: doe_results/plots/seed_improvement/seed_improvement_airland10.png
+  Saved: doe_results/plots/penalty_profile/penalty_profile_airland10_MS_SA.png
+
+── Instance diagnostic: airland11  (n=200) ──
+   s̄ = 85.2 s   max_sep = 135 s
+   delta range  : [1073, 24265] s  (interval ≈ 116 s)
+   window range : r=[601,23999]  d=[2401,25799]
+   EDD     :     feasible   obj = 15018.84
+   ERD     :     feasible   obj = 33405.36
+   MDD     :     feasible   obj = 15072.61
+   MPDS    : INFEASIBLE
+   Random seq feasibility: 0/500 (0.0%)
+
+
+══════════════════════════════════════════════════════════════════════
+  Instance : airland11   n=200   s̄=85s
+  CPU cores: 28   ILS/chain: 0   t_limit: 3600s
+  Params (DOE): α=0.95  N_iter=400  T_min=1e-05  I_max=1200  M_stag=180  chi0=0.5
+  Reference: 12462.18
+══════════════════════════════════════════════════════════════════════
+  MS-SA: 28 chains  |  28 workers  |  ILS/chain: 0  |  t_limit: 3600s
+  SA chains:   0%|          | 0/28 [00:00<?, ?it/s]  SA chains:   4%|▎         | 1/28 [00:03<01:32,  3.43s/it]  SA chains:   7%|▋         | 2/28 [03:34<54:32, 125.85s/it]  SA chains:  18%|█▊        | 5/28 [03:40<14:13, 37.12s/it]   SA chains:  21%|██▏       | 6/28 [04:04<12:22, 33.73s/it]  SA chains:  79%|███████▊  | 22/28 [04:19<00:34,  5.72s/it]  SA chains: 100%|██████████| 28/28 [04:19<00:00,  9.25s/it]
+
+  0/28 initial solutions already at best objective
+  Total distinct near-optimal sequences found: 1
+  MS-SA → 12418.32  semi=12418.32  (best start: ATC_k2)  [wall: 259.1s  |  TTB(feas): 185.0s]
+
+──────────────────────────────────────────────────────────────────────
+  Method                          Obj   Obj (semi)       Gap   Wall(s)   TTB(s)  Alt seqs
+  ──────────────── ────────────────── ──────────── ───────── ───────── ──────── ─────────
+  MS-SA                      12418.32     12418.32    -0.35%    259.20   185.02         1
+══════════════════════════════════════════════════════════════════════
+
+════════════════════════════════════════════════════════════════════
+  Verification — airland11   n=200
+────────────────────────────────────────────────────────────────────
+  Result         : ✓ PASS
+  Obj reported   : 12418.320000
+  Obj recomputed : 12418.320000  (Δ=9.09e-12)
+  Obj LP re-solve: 12418.320000  (Δ=0.00e+00)
+  Tolerance      : 1e-04
+  Violations     : 0
+════════════════════════════════════════════════════════════════════
+  ⚠  Verified obj 12418.320000 < known reference 12462.18.
+     This is a genuine new best — all constraints satisfied.
+  Saved: doe_results/airland11/summary.csv
+  Saved: doe_results/airland11/schedules.csv
+  Saved: doe_results/airland11/verification.txt
+  Saved: doe_results/airland11/run_metadata.json
+  Saved: doe_results/plots/gantt/gantt_airland11_MS_SA.png
+  Saved: doe_results/plots/convergence/convergence_airland11.png
+  Saved: doe_results/plots/alpha_trajectory/alpha_trajectory_airland11.png
+  Saved: doe_results/plots/seed_improvement/seed_improvement_airland11.png
+  Saved: doe_results/plots/penalty_profile/penalty_profile_airland11_MS_SA.png
+
+── Instance diagnostic: airland12  (n=250) ──
+   s̄ = 84.8 s   max_sep = 135 s
+   delta range  : [925, 29338] s  (interval ≈ 113 s)
+   window range : r=[601,28829]  d=[2401,30629]
+   EDD     :     feasible   obj = 20145.60
+   ERD     :     feasible   obj = 43351.63
+   MDD     :     feasible   obj = 19777.31
+   MPDS    : INFEASIBLE
+   Random seq feasibility: 0/500 (0.0%)
+
+
+══════════════════════════════════════════════════════════════════════
+  Instance : airland12   n=250   s̄=85s
+  CPU cores: 28   ILS/chain: 0   t_limit: 3600s
+  Params (DOE): α=0.995  N_iter=400  T_min=1e-05  I_max=1200  M_stag=180  chi0=0.5
+  Reference: 16629.1
+══════════════════════════════════════════════════════════════════════
+  MS-SA: 28 chains  |  28 workers  |  ILS/chain: 0  |  t_limit: 3600s
+  SA chains:   0%|          | 0/28 [00:00<?, ?it/s]  SA chains:   4%|▎         | 1/28 [00:03<01:32,  3.42s/it]  SA chains:   7%|▋         | 2/28 [04:26<1:07:44, 156.33s/it]  SA chains:  11%|█         | 3/28 [04:52<40:20, 96.82s/it]     SA chains:  14%|█▍        | 4/28 [05:16<27:09, 67.90s/it]  SA chains:  57%|█████▋    | 16/28 [05:33<02:00, 10.02s/it]  SA chains: 100%|██████████| 28/28 [05:33<00:00, 11.93s/it]
+
+  0/28 initial solutions already at best objective
+  Total distinct near-optimal sequences found: 1
+  MS-SA → 16245.32  semi=16245.32  (best start: ATC_k2)  [wall: 334.1s  |  TTB(feas): 209.2s]
+
+──────────────────────────────────────────────────────────────────────
+  Method                          Obj   Obj (semi)       Gap   Wall(s)   TTB(s)  Alt seqs
+  ──────────────── ────────────────── ──────────── ───────── ───────── ──────── ─────────
+  MS-SA                      16245.32     16245.32    -2.31%    334.17   209.18         1
+══════════════════════════════════════════════════════════════════════
+
+════════════════════════════════════════════════════════════════════
+  Verification — airland12   n=250
+────────────────────────────────────────────────────────────────────
+  Result         : ✓ PASS
+  Obj reported   : 16245.320000
+  Obj recomputed : 16245.320000  (Δ=0.00e+00)
+  Obj LP re-solve: 16245.320000  (Δ=0.00e+00)
+  Tolerance      : 1e-04
+  Violations     : 0
+════════════════════════════════════════════════════════════════════
+  ⚠  Verified obj 16245.320000 < known reference 16629.1.
+     This is a genuine new best — all constraints satisfied.
+  Saved: doe_results/airland12/summary.csv
+  Saved: doe_results/airland12/schedules.csv
+  Saved: doe_results/airland12/verification.txt
+  Saved: doe_results/airland12/run_metadata.json
+  Saved: doe_results/plots/gantt/gantt_airland12_MS_SA.png
+  Saved: doe_results/plots/convergence/convergence_airland12.png
+  Saved: doe_results/plots/alpha_trajectory/alpha_trajectory_airland12.png
+  Saved: doe_results/plots/seed_improvement/seed_improvement_airland12.png
+  Saved: doe_results/plots/penalty_profile/penalty_profile_airland12_MS_SA.png
+
+── Instance diagnostic: airland13  (n=500) ──
+   s̄ = 84.3 s   max_sep = 135 s
+   delta range  : [709, 54788] s  (interval ≈ 108 s)
+   window range : r=[601,54583]  d=[2401,56383]
+   EDD     :     feasible   obj = 47116.73
+   ERD     :     feasible   obj = 91991.72
+   MDD     :     feasible   obj = 46407.47
+   MPDS    : INFEASIBLE
+   Random seq feasibility: 0/500 (0.0%)
+
+
+══════════════════════════════════════════════════════════════════════
+  Instance : airland13   n=500   s̄=84s
+  CPU cores: 28   ILS/chain: 0   t_limit: 3600s
+  Params (DOE): α=0.95  N_iter=400  T_min=1e-06  I_max=1200  M_stag=30  chi0=0.5
+  Reference: 39287.52
+══════════════════════════════════════════════════════════════════════
+  MS-SA: 28 chains  |  3 workers  |  ILS/chain: 0  |  t_limit: 3600s
+  SA chains:   0%|          | 0/28 [00:00<?, ?it/s]  SA chains:   4%|▎         | 1/28 [00:00<00:08,  3.13it/s]  SA chains:   7%|▋         | 2/28 [06:55<1:45:52, 244.34s/it]  SA chains:  18%|█▊        | 5/28 [10:17<45:04, 117.58s/it]    SA chains: 100%|██████████| 28/28 [10:17<00:00, 22.05s/it]
+
+  0/28 initial solutions already at best objective
+  Total distinct near-optimal sequences found: 1
+  MS-SA → 38928.96  semi=38928.96  (best start: EDD)  [wall: 617.5s  |  TTB(feas): 402.5s]
+
+──────────────────────────────────────────────────────────────────────
+  Method                          Obj   Obj (semi)       Gap   Wall(s)   TTB(s)  Alt seqs
+  ──────────────── ────────────────── ──────────── ───────── ───────── ──────── ─────────
+  MS-SA                      38928.96     38928.96    -0.91%    617.79   402.49         1
+══════════════════════════════════════════════════════════════════════
+
+════════════════════════════════════════════════════════════════════
+  Verification — airland13   n=500
+────────────────────────────────────────────────────────────────────
+  Result         : ✓ PASS
+  Obj reported   : 38928.960000
+  Obj recomputed : 38928.960000  (Δ=7.28e-12)
+  Obj LP re-solve: 38928.960000  (Δ=0.00e+00)
+  Tolerance      : 1e-04
+  Violations     : 0
+════════════════════════════════════════════════════════════════════
+  ⚠  Verified obj 38928.960000 < known reference 39287.52.
+     This is a genuine new best — all constraints satisfied.
+  Saved: doe_results/airland13/summary.csv
+  Saved: doe_results/airland13/schedules.csv
+  Saved: doe_results/airland13/verification.txt
+  Saved: doe_results/airland13/run_metadata.json
+  Saved: doe_results/plots/gantt/gantt_airland13_MS_SA.png
+  Saved: doe_results/plots/convergence/convergence_airland13.png
+  Saved: doe_results/plots/alpha_trajectory/alpha_trajectory_airland13.png
+  Saved: doe_results/plots/seed_improvement/seed_improvement_airland13.png
+  Saved: doe_results/plots/penalty_profile/penalty_profile_airland13_MS_SA.png
+
+══════════════════════════════════════════════════════════════════════
+  AGGREGATE RESULTS
+  Instance           n       Gap   TTB(s)   Alt seqs  Inits@opt
+  ────────────────────────────────────────────────────────────
+  airland1          10    +0.00%      8.8         56          2
+  airland2          15    +0.00%     13.0        224          2
+  airland3          20    +0.00%     15.1         56          2
+  airland4          20    +0.00%     15.8        448          4
+  airland5          20    +0.00%     16.7        672          3
+  airland6          30    +0.00%      0.0          4          2
+  airland7          44    +0.00%      0.0          5          3
+  airland8          50    +0.00%     37.2         40          0
+  airland9         100    +0.00%    119.6          3          0
+  airland10        150    -2.61%     90.7          1          0
+  airland11        200    -0.35%    185.0          1          0
+  airland12        250    -2.31%    209.2          1          0
+  airland13        500    -0.91%    402.5          1          0
+══════════════════════════════════════════════════════════════════════
+
+  Running post-benchmark full constraint audit...
+    airland1      : ✓ PASS
+    airland2      : ✓ PASS
+    airland3      : ✓ PASS
+    airland4      : ✓ PASS
+    airland5      : ✓ PASS
+    airland6      : ✓ PASS
+    airland7      : ✓ PASS
+    airland8      : ✓ PASS
+    airland9      : ✓ PASS
+    airland10     : ✓ PASS
+    airland11     : ✓ PASS
+    airland12     : ✓ PASS
+    airland13     : ✓ PASS
+
+  Audit complete: 13/13 passed.
+
+  Saved: doe_results/plots/gap_summary.png
+  Saved: doe_results/plots/alt_solutions.png
+
+  Exporting consolidated results...
+  Saved: doe_results/summary.csv
+  Saved: doe_results/schedules.csv
+  Saved: doe_results/verification.txt
+  Saved: doe_results/run_metadata.json

@@ -1,2 +1,2 @@
-instance,n,known_opt,ms_sa_obj,gap_pct,wall_s,ttb_s,total_alt_seqs,n_init_optimal,verified
-airland3,20,820.000000,820.000000,0.0000,13.692,2.280,56,2,PASS
+instance,n,known_opt,ms_sa_obj,ms_sa_obj_semi,gap_pct,wall_s,ttb_s,total_alt_seqs,n_init_optimal,verified
+airland3,20,820.000000,820.000000,820.000000,0.0000,14.048,3.851,56,2,PASS

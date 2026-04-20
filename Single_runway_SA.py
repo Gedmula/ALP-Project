@@ -784,10 +784,12 @@ def ms_sa(inst: ALPInstance, p: SAParams = None,
     t_deadline = t0 + t_limit
     tasks      = [(lbl, seq, inst, p, sd, n_ils, t_deadline)
                   for lbl, seq, sd in starts]
+    
+    w          = _safe_n_workers(inst.n, n_workers)
 
-    print(f"  MS-SA: {len(tasks)} chains  |  {n_workers} workers  "
+    print(f"  MS-SA: {len(tasks)} chains  |  {w} workers  "
           f"|  ILS/chain: {n_ils}  |  t_limit: {t_limit:.0f}s")
-    with ProcessPoolExecutor(max_workers=n_workers, mp_context=_CTX) as ex:
+    with ProcessPoolExecutor(max_workers=w, mp_context=_CTX) as ex:
         results = list(tqdm(ex.map(_sa_worker, tasks),
                             total=len(tasks), desc="  SA chains",
                             disable=not _TQDM))
@@ -953,6 +955,30 @@ def adaptive_params(n: int) -> Tuple[SAParams, int]:
     return sa, n_ils
 
 
+def _safe_n_workers(n: int, n_workers_max: int) -> int:
+    """
+    Scale down the worker count for large instances to avoid OOM.
+
+    For n aircraft, each LP call in _build_lp_matrices allocates a dense
+    matrix of shape (n(n-1)/2, 3n) in float64.  The memory cost per worker
+    is approximately:
+
+        bytes ≈ n(n-1)/2 × 3n × 8  =  12n³  (bytes, leading term)
+
+    Keeping total concurrent LP memory below ~12 GB (conservative for a
+    32-core workstation with ≥32 GB RAM):
+
+        n_workers ≤ 12 × 10⁹  /  (12 × n³)  =  10⁹ / n³
+
+    The table below maps this formula to a practical per-tier cap.
+    """
+    if n  <= 250:  return n_workers_max
+    #if n <= 200:  return min(n_workers_max, 12)
+    #if n <= 300:  return min(n_workers_max,  6)
+    #if n <= 400:  return min(n_workers_max,  3)
+    return min(n_workers_max, 3)   # n > 400  (airland13: n=500)
+
+
 # ═══════════════════════════════════════════════════════════════════════════
 # 12.  HYPERPARAMETER TUNING
 # ═══════════════════════════════════════════════════════════════════════════
@@ -1038,6 +1064,8 @@ def plot_gantt(seq: List[int], inst: ALPInstance,
     ], loc='lower right', fontsize=9, framealpha=0.85, edgecolor='#aaaaaa')
     ax.set_title(inst.name, fontsize=11, pad=8)
     plt.tight_layout()
+    # Create folder if it doesn't exist and save with a filename that encodes the instance
+    Path(f"{save_dir}/gantt").mkdir(exist_ok=True)
     fname = (f"{save_dir}/gantt/gantt_{inst.name}"
              f"_{method.replace('-','_').replace(' ','_')}.png")
     plt.savefig(fname, dpi=150, bbox_inches='tight'); plt.close()
@@ -1073,6 +1101,8 @@ def plot_sa_convergence(all_histories: list, inst_name: str,
     ax.set_title(f'SA Chain Convergence — {inst_name}', fontsize=11)
     ax.set_yscale('log'); ax.legend(fontsize=7, ncol=4, loc='upper right')
     ax.grid(alpha=0.22); plt.tight_layout()
+    
+    Path(f"{save_dir}/convergence").mkdir(exist_ok=True)
     fname = f"{save_dir}/convergence/convergence_{inst_name}.png"
     plt.savefig(fname, dpi=150, bbox_inches='tight'); plt.close()
     print(f"  Saved: {fname}")
@@ -1104,6 +1134,8 @@ def plot_gap_summary(all_results: list, save_dir: str = "plots") -> None:
     ax.set_title('MS-SA Optimality Gap', fontsize=10)
     ax.set_xticklabels(names, rotation=15, ha='right')
     ax.grid(axis='y', alpha=0.22); plt.tight_layout()
+    
+
     fname = f"{save_dir}/gap_summary.png"
     plt.savefig(fname, dpi=150, bbox_inches='tight'); plt.close()
     print(f"  Saved: {fname}")
@@ -1124,6 +1156,7 @@ def plot_alt_solutions(all_results: list, save_dir: str = "plots") -> None:
     ax.set_ylabel('Count', fontsize=10)
     ax.set_title('Solution Degeneracy — Alternate Optimal Schedules', fontsize=10)
     ax.legend(fontsize=9); ax.grid(axis='y', alpha=0.22); plt.tight_layout()
+    
     fname = f"{save_dir}/alt_solutions.png"
     plt.savefig(fname, dpi=150, bbox_inches='tight'); plt.close()
     print(f"  Saved: {fname}")
@@ -1172,7 +1205,9 @@ def plot_alpha_trajectory(all_histories: list, inst_name: str,
     ax.set_ylim(0.78, 1.002)
     ax.legend(fontsize=7, ncol=4, loc='lower right', framealpha=0.50)
     ax.grid(alpha=0.2); plt.tight_layout()
-    fname = f"{save_dir}/alpha trajectory/alpha_trajectory_{inst_name}.png"
+    
+    Path(f"{save_dir}/alpha_trajectory").mkdir(exist_ok=True)
+    fname = f"{save_dir}/alpha_trajectory/alpha_trajectory_{inst_name}.png"
     plt.savefig(fname, dpi=150, bbox_inches='tight'); plt.close()
     print(f"  Saved: {fname}")
 
@@ -1220,7 +1255,8 @@ def plot_seed_improvement(all_histories: list, inst_name: str,
     ax.set_title(f'Seed Quality vs. SA Improvement — {inst_name}', fontsize=11)
     ax.legend(fontsize=9, loc='upper right', framealpha=0.85)
     ax.grid(axis='y', alpha=0.22); plt.tight_layout()
-    fname = f"{save_dir}/seed improvement/seed_improvement_{inst_name}.png"
+    Path(f"{save_dir}/seed_improvement").mkdir(exist_ok=True)
+    fname = f"{save_dir}/seed_improvement/seed_improvement_{inst_name}.png"
     plt.savefig(fname, dpi=150, bbox_inches='tight'); plt.close()
     print(f"  Saved: {fname}")
 
@@ -1272,7 +1308,8 @@ def plot_penalty_profile(seq: List[int], inst: ALPInstance,
                          f'A{j}', ha='center', va='bottom', fontsize=7, color='#333333')
     plt.tight_layout()
     tag = method.replace('-', '_').replace(' ', '_')
-    fname = f"{save_dir}/penalty profile/penalty_profile_{inst.name}_{tag}.png"
+    Path(f"{save_dir}/penalty_profile").mkdir(exist_ok=True)
+    fname = f"{save_dir}/penalty_profile/penalty_profile_{inst.name}_{tag}.png"
     plt.savefig(fname, dpi=150, bbox_inches='tight'); plt.close()
     print(f"  Saved: {fname}")
 
@@ -1654,6 +1691,8 @@ def run_experiment(inst: ALPInstance,
                    sa_p: SAParams = None,
                    n_workers: int = N_CPU,
                    use_doe: bool = False,
+                   out_dir: str = "results",
+                   save_dir: str = "plots",
                    t_limit: float = _INSTANCE_TIME_LIMIT) -> dict:
     """
     Run MS-SA on one instance and export results.
@@ -1749,16 +1788,17 @@ def run_experiment(inst: ALPInstance,
         '_vreport':       vreport,
     }
 
-    export_results([result], out_dir=f"results/{inst.name}")
-
-    plot_gantt(pi_sa, inst, method='MS-SA', obj=f_sa)
-    plot_sa_convergence(sa_stats.get('all_histories', []), inst.name)
-    plot_alpha_trajectory(sa_stats.get('all_histories', []), inst.name)
-    plot_seed_improvement(sa_stats.get('all_histories', []), inst.name, known_opt=known_opt)
+    export_results([result], out_dir=out_dir)
+    
+    Path(save_dir).mkdir(parents=True, exist_ok=True)
+    plot_gantt(pi_sa, inst, method='MS-SA', obj=f_sa, save_dir=save_dir)
+    plot_sa_convergence(sa_stats.get('all_histories', []), inst.name, save_dir=save_dir)
+    plot_alpha_trajectory(sa_stats.get('all_histories', []), inst.name, save_dir=save_dir)
+    plot_seed_improvement(sa_stats.get('all_histories', []), inst.name, known_opt=known_opt, save_dir=save_dir)
 
     if vreport is not None and vreport.landing_times is not None:
         plot_penalty_profile(pi_sa, inst, vreport.landing_times,
-                             method='MS-SA', obj=f_sa)
+                             method='MS-SA', obj=f_sa, save_dir=save_dir)
     return result
 
 
@@ -1804,7 +1844,9 @@ if __name__ == '__main__':
         'airland13.txt': 39287.52,
     }
 
-    use_doe = False
+    use_doe = False  # Set to False to use adaptive parameters instead of DOE-tuned parameters
+    out_dir = "doe_results" if use_doe else "adaptive_results"
+    save_dir =f"{out_dir}/plots"
     SA_full = None #SAParams(alpha=0.99, N_iter=250, T_min=1e-4, I_max=800, M_stag=100)
 
     print(f"\nSearching for OR Library files in:\n  {DATA_DIR.resolve()}\n")
@@ -1839,6 +1881,8 @@ if __name__ == '__main__':
                 res  = run_experiment(inst, known_opt=opt, #sa_p=SA_full,
                                       n_workers=N_CPU,
                                       use_doe=use_doe,
+                                      out_dir=f"{out_dir}/{name}",
+                                      save_dir=save_dir,
                                       t_limit=_INSTANCE_TIME_LIMIT)
                 all_results.append(res)
             except Exception as exc:
@@ -1871,10 +1915,10 @@ if __name__ == '__main__':
                 if ok: audit_pass += 1
             print(f"\n  Audit complete: {audit_pass}/{len(all_results)} passed.\n")
 
-            plot_gap_summary(all_results)
-            plot_alt_solutions(all_results)
+            plot_gap_summary(all_results, save_dir=save_dir)
+            plot_alt_solutions(all_results, save_dir=save_dir)
             print("\n  Exporting consolidated results...")
-            export_results(all_results, out_dir="results")
+            export_results(all_results, out_dir=out_dir)
 
     else:
         print("No OR Library files found — running synthetic demo.\n")

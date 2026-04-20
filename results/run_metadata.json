@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-15 23:13:50",
+  "timestamp": "2026-04-20 14:48:44",
   "hostname": "eb276-INTEL",
   "python": "3.10.12 (main, Mar  3 2026, 11:56:32) [GCC 11.4.0]",
   "n_cpu": 28,
@@ -86,13 +86,6 @@
       "n": 250,
       "known_opt": 16629.1,
       "obj": 16249.6,
-      "verified": true
-    },
-    {
-      "name": "airland13",
-      "n": 500,
-      "known_opt": 39287.52,
-      "obj": 37772.23,
       "verified": true
     }
   ]
