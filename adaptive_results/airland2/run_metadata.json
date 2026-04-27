@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-04-20 16:37:31",
+  "hostname": "eb276-INTEL",
+  "python": "3.10.12 (main, Mar  3 2026, 11:56:32) [GCC 11.4.0]",
+  "n_cpu": 28,
+  "instances": [
+    {
+      "name": "airland2",
+      "n": 15,
+      "known_opt": 1480,
+      "obj": 1480.0,
+      "verified": true
+    }
+  ]
+}
