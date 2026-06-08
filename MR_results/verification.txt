@@ -1,0 +1,1614 @@
+MR-ALP Solver — FEASIBILITY VERIFICATION REPORT
+Generated: 2026-06-07 20:43:46
+
+========================================================================
+  AIRLAND1  |  n=10  |  m=2
+========================================================================
+  SA+VND+PR LP         : 90.000000
+  Reference / BKS      : 90.0
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 0.018
+  Seed LP eval (s)     : 0.009
+  Best seed LP at (s)  : 0.001
+  SA dispatch at (s)   : 0.028
+  Total time-to-best   : 0.001 s
+  Total runtime (s)    : 5.94
+  Seed portfolio (11 heuristics evaluated):
+    FCFS         raw=4000.000000  LP=90.000000  [SELECTED]
+    EDD          raw=3990.000000  LP=90.000000  [SELECTED]
+    TC-RBI       raw=3990.000000  LP=90.000000  [SELECTED]
+    CAF          raw=4000.000000  LP=90.000000
+    MPDS         raw=4000.000000  LP=90.000000
+    GRASP-3      raw=3800.000000  LP=180.000000  [SELECTED]
+    GRASP-7      raw=3800.000000  LP=180.000000
+    WEDD         raw=3920.000000  LP=190.000000
+    ATC          raw=3920.000000  LP=190.000000
+    ATCS         raw=3920.000000  LP=190.000000
+    WCC          raw=3920.000000  LP=190.000000
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.001s  @0.001s  LP=90.0000
+    EDD           construct=0.000s  lp_eval=0.001s  @0.002s  LP=90.0000
+    WEDD          construct=0.000s  lp_eval=0.001s  @0.004s  LP=190.0000
+    ATC           construct=0.000s  lp_eval=0.001s  @0.005s  LP=190.0000
+    ATCS          construct=0.000s  lp_eval=0.001s  @0.006s  LP=190.0000
+    TC-RBI        construct=0.011s  lp_eval=0.001s  @0.018s  LP=90.0000
+    CAF           construct=0.001s  lp_eval=0.001s  @0.020s  LP=90.0000
+    WCC           construct=0.000s  lp_eval=0.001s  @0.021s  LP=190.0000
+    GRASP-3       construct=0.001s  lp_eval=0.001s  @0.022s  LP=180.0000
+    GRASP-7       construct=0.001s  lp_eval=0.001s  @0.024s  LP=180.0000
+    MPDS          construct=0.003s  lp_eval=0.001s  @0.028s  LP=90.0000
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.001s  LP=90.000000
+    t=   0.028s  LP=90.000000
+
+========================================================================
+  AIRLAND1  |  n=10  |  m=3
+========================================================================
+  SA+VND+PR LP         : 0.000000
+  Reference / BKS      : 0.0
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 0.012
+  Seed LP eval (s)     : 0.009
+  Best seed LP at (s)  : 0.001
+  SA dispatch at (s)   : 0.022
+  Total time-to-best   : 0.001 s
+  Total runtime (s)    : 5.25
+  Seed portfolio (11 heuristics evaluated):
+    FCFS         raw=4130.000000  LP=0.000000  [SELECTED]
+    EDD          raw=4090.000000  LP=0.000000
+    WEDD         raw=4070.000000  LP=0.000000
+    ATC          raw=4070.000000  LP=0.000000
+    ATCS         raw=4070.000000  LP=0.000000
+    TC-RBI       raw=4130.000000  LP=0.000000  [SELECTED]
+    CAF          raw=4090.000000  LP=0.000000  [SELECTED]
+    WCC          raw=4070.000000  LP=0.000000
+    GRASP-3      raw=4070.000000  LP=0.000000  [SELECTED]
+    GRASP-7      raw=4100.000000  LP=0.000000
+    MPDS         raw=4070.000000  LP=0.000000
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.001s  @0.001s  LP=0.0000
+    EDD           construct=0.000s  lp_eval=0.001s  @0.002s  LP=0.0000
+    WEDD          construct=0.000s  lp_eval=0.001s  @0.003s  LP=0.0000
+    ATC           construct=0.000s  lp_eval=0.001s  @0.005s  LP=0.0000
+    ATCS          construct=0.000s  lp_eval=0.001s  @0.006s  LP=0.0000
+    TC-RBI        construct=0.004s  lp_eval=0.001s  @0.011s  LP=0.0000
+    CAF           construct=0.001s  lp_eval=0.001s  @0.013s  LP=0.0000
+    WCC           construct=0.000s  lp_eval=0.001s  @0.014s  LP=0.0000
+    GRASP-3       construct=0.001s  lp_eval=0.001s  @0.015s  LP=0.0000
+    GRASP-7       construct=0.001s  lp_eval=0.001s  @0.017s  LP=0.0000
+    MPDS          construct=0.004s  lp_eval=0.001s  @0.022s  LP=0.0000
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.001s  LP=0.000000
+    t=   0.022s  LP=0.000000
+
+========================================================================
+  AIRLAND10  |  n=150  |  m=2
+========================================================================
+  SA+VND+PR LP         : 1155.900000
+  Reference / BKS      : 1143.7
+  Gap to BKS           : 1.07%
+  Sequence feasible    : YES
+  Seed construct (s)   : 4.177
+  Seed LP eval (s)     : 0.097
+  Best seed LP at (s)  : 1.801
+  SA dispatch at (s)   : 4.296
+  Total time-to-best   : 114.123 s
+  Total runtime (s)    : 116.08
+  Seed portfolio (11 heuristics evaluated):
+    TC-RBI       raw=57583.910000  LP=1279.780000  [SELECTED]
+    CAF          raw=56201.520000  LP=1442.790000  [SELECTED]
+    GRASP-7      raw=58234.940000  LP=1456.050000  [SELECTED]
+    GRASP-3      raw=57132.430000  LP=1466.290000  [SELECTED]
+    MPDS         raw=57751.780000  LP=1493.120000
+    EDD          raw=56371.670000  LP=1501.740000
+    ATC          raw=59212.720000  LP=2647.610000
+    ATCS         raw=58736.490000  LP=2730.930000
+    FCFS         raw=72256.090000  LP=11035.150000
+    WCC          raw=118266.550000  LP=108579.690000
+    WEDD         raw=inf  LP=inf
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.008s  @0.010s  LP=11035.1500
+    EDD           construct=0.000s  lp_eval=0.008s  @0.020s  LP=1501.7400
+    WEDD          construct=0.001s  lp_eval=0.004s  @0.027s  LP=inf
+    ATC           construct=0.006s  lp_eval=0.008s  @0.043s  LP=2647.6100
+    ATCS          construct=0.008s  lp_eval=0.008s  @0.060s  LP=2730.9300
+    TC-RBI        construct=1.725s  lp_eval=0.013s  @1.801s  LP=1279.7800
+    CAF           construct=0.079s  lp_eval=0.014s  @1.897s  LP=1442.7900
+    WCC           construct=0.379s  lp_eval=0.012s  @2.291s  LP=108579.6900
+    GRASP-3       construct=0.027s  lp_eval=0.007s  @2.326s  LP=1466.2900
+    GRASP-7       construct=0.029s  lp_eval=0.008s  @2.365s  LP=1456.0500
+    MPDS          construct=1.921s  lp_eval=0.008s  @4.295s  LP=1493.1200
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.010s  LP=11035.150000
+    t=   0.020s  LP=1501.740000
+    t=   1.801s  LP=1279.780000
+    t=   4.296s  LP=1442.790000
+    t=   5.335s  LP=1330.450000
+    t=   5.579s  LP=1272.290000
+    t=   5.819s  LP=1260.550000
+    t=   5.948s  LP=1244.350000
+    t=   9.095s  LP=1211.660000
+    t=  10.167s  LP=1185.740000
+    t=  33.778s  LP=1182.360000
+    t=  34.907s  LP=1166.160000
+    t= 114.123s  LP=1155.900000
+
+========================================================================
+  AIRLAND10  |  n=150  |  m=3
+========================================================================
+  SA+VND+PR LP         : 205.210000
+  Reference / BKS      : 205.21
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 3.808
+  Seed LP eval (s)     : 0.062
+  Best seed LP at (s)  : 1.587
+  SA dispatch at (s)   : 3.884
+  Total time-to-best   : 79.548 s
+  Total runtime (s)    : 80.68
+  Seed portfolio (11 heuristics evaluated):
+    TC-RBI       raw=63588.380000  LP=258.460000  [SELECTED]
+    EDD          raw=64598.700000  LP=327.860000  [SELECTED]
+    CAF          raw=66534.770000  LP=350.660000  [SELECTED]
+    GRASP-3      raw=63660.810000  LP=352.450000  [SELECTED]
+    MPDS         raw=62792.740000  LP=354.470000
+    GRASP-7      raw=63402.220000  LP=360.130000
+    ATCS         raw=67469.300000  LP=1166.150000
+    ATC          raw=67495.590000  LP=1173.850000
+    FCFS         raw=73332.790000  LP=5564.070000
+    WCC          raw=117536.150000  LP=101838.990000
+    WEDD         raw=inf  LP=inf
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.006s  @0.007s  LP=5564.0700
+    EDD           construct=0.000s  lp_eval=0.006s  @0.014s  LP=327.8600
+    WEDD          construct=0.001s  lp_eval=0.003s  @0.020s  LP=inf
+    ATC           construct=0.006s  lp_eval=0.005s  @0.032s  LP=1173.8500
+    ATCS          construct=0.008s  lp_eval=0.005s  @0.046s  LP=1166.1500
+    TC-RBI        construct=1.534s  lp_eval=0.006s  @1.587s  LP=258.4600
+    CAF           construct=0.035s  lp_eval=0.006s  @1.629s  LP=350.6600
+    WCC           construct=0.186s  lp_eval=0.010s  @1.827s  LP=101838.9900
+    GRASP-3       construct=0.033s  lp_eval=0.005s  @1.866s  LP=352.4500
+    GRASP-7       construct=0.035s  lp_eval=0.005s  @1.907s  LP=360.1300
+    MPDS          construct=1.970s  lp_eval=0.006s  @3.884s  LP=354.4700
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.007s  LP=5564.070000
+    t=   0.014s  LP=327.860000
+    t=   1.587s  LP=258.460000
+    t=   3.884s  LP=350.660000
+    t=   4.324s  LP=305.760000
+    t=   4.455s  LP=251.320000
+    t=   4.592s  LP=240.240000
+    t=   4.731s  LP=232.780000
+    t=   4.867s  LP=227.460000
+    t=   6.639s  LP=222.180000
+    t=  12.417s  LP=215.140000
+    t=  13.821s  LP=209.860000
+    t=  79.548s  LP=205.210000
+
+========================================================================
+  AIRLAND10  |  n=150  |  m=4
+========================================================================
+  SA+VND+PR LP         : 34.220000
+  Reference / BKS      : 34.22
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 7.674
+  Seed LP eval (s)     : 0.074
+  Best seed LP at (s)  : 5.078
+  SA dispatch at (s)   : 7.765
+  Total time-to-best   : 5.078 s
+  Total runtime (s)    : 55.70
+  Seed portfolio (11 heuristics evaluated):
+    TC-RBI       raw=67102.970000  LP=34.220000  [SELECTED]
+    EDD          raw=69760.360000  LP=42.640000  [SELECTED]
+    MPDS         raw=66350.940000  LP=48.220000  [SELECTED]
+    CAF          raw=66720.450000  LP=53.420000  [SELECTED]
+    GRASP-3      raw=66792.650000  LP=77.020000
+    GRASP-7      raw=67454.790000  LP=106.780000
+    ATCS         raw=71312.590000  LP=495.920000
+    ATC          raw=71291.770000  LP=511.290000
+    FCFS         raw=73465.570000  LP=3224.430000
+    WCC          raw=110212.410000  LP=90525.870000
+    WEDD         raw=inf  LP=inf
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.001s  lp_eval=0.008s  @0.011s  LP=3224.4300
+    EDD           construct=0.000s  lp_eval=0.008s  @0.021s  LP=42.6400
+    WEDD          construct=0.002s  lp_eval=0.005s  @0.029s  LP=inf
+    ATC           construct=0.011s  lp_eval=0.007s  @0.049s  LP=511.2900
+    ATCS          construct=0.015s  lp_eval=0.007s  @0.072s  LP=495.9200
+    TC-RBI        construct=4.996s  lp_eval=0.008s  @5.078s  LP=34.2200
+    CAF           construct=0.119s  lp_eval=0.008s  @5.207s  LP=53.4200
+    WCC           construct=0.286s  lp_eval=0.010s  @5.505s  LP=90525.8700
+    GRASP-3       construct=0.040s  lp_eval=0.004s  @5.549s  LP=77.0200
+    GRASP-7       construct=0.042s  lp_eval=0.004s  @5.596s  LP=106.7800
+    MPDS          construct=2.164s  lp_eval=0.004s  @7.765s  LP=48.2200
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.011s  LP=3224.430000
+    t=   0.021s  LP=42.640000
+    t=   5.078s  LP=34.220000
+    t=   7.765s  LP=34.220000
+
+========================================================================
+  AIRLAND10  |  n=150  |  m=5
+========================================================================
+  SA+VND+PR LP         : 0.000000
+  Reference / BKS      : 0.0
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 5.005
+  Seed LP eval (s)     : 0.047
+  Best seed LP at (s)  : 0.009
+  SA dispatch at (s)   : 5.062
+  Total time-to-best   : 0.009 s
+  Total runtime (s)    : 43.93
+  Seed portfolio (11 heuristics evaluated):
+    EDD          raw=71183.420000  LP=0.000000  [SELECTED]
+    TC-RBI       raw=67062.630000  LP=0.000000  [SELECTED]
+    CAF          raw=69580.680000  LP=0.000000  [SELECTED]
+    GRASP-7      raw=69617.700000  LP=0.000000  [SELECTED]
+    MPDS         raw=68526.370000  LP=0.000000
+    GRASP-3      raw=69693.690000  LP=5.200000
+    ATCS         raw=72448.590000  LP=197.780000
+    ATC          raw=72508.500000  LP=277.100000
+    FCFS         raw=73465.570000  LP=1444.250000
+    WCC          raw=115865.840000  LP=97541.960000
+    WEDD         raw=inf  LP=inf
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.004s  @0.005s  LP=1444.2500
+    EDD           construct=0.000s  lp_eval=0.004s  @0.009s  LP=0.0000
+    WEDD          construct=0.001s  lp_eval=0.002s  @0.013s  LP=inf
+    ATC           construct=0.006s  lp_eval=0.004s  @0.023s  LP=277.1000
+    ATCS          construct=0.007s  lp_eval=0.004s  @0.035s  LP=197.7800
+    TC-RBI        construct=1.753s  lp_eval=0.004s  @1.793s  LP=0.0000
+    CAF           construct=0.046s  lp_eval=0.004s  @1.843s  LP=0.0000
+    WCC           construct=0.190s  lp_eval=0.011s  @2.046s  LP=97541.9600
+    GRASP-3       construct=0.044s  lp_eval=0.004s  @2.095s  LP=5.2000
+    GRASP-7       construct=0.046s  lp_eval=0.004s  @2.145s  LP=0.0000
+    MPDS          construct=2.912s  lp_eval=0.004s  @5.062s  LP=0.0000
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.005s  LP=1444.250000
+    t=   0.009s  LP=0.000000
+    t=   5.062s  LP=0.000000
+
+========================================================================
+  AIRLAND11  |  n=200  |  m=2
+========================================================================
+  SA+VND+PR LP         : 1356.260000
+  Reference / BKS      : 1330.91
+  Gap to BKS           : 1.90%
+  Sequence feasible    : YES
+  Seed construct (s)   : 3.961
+  Seed LP eval (s)     : 0.163
+  Best seed LP at (s)  : 3.062
+  SA dispatch at (s)   : 4.164
+  Total time-to-best   : 188.041 s
+  Total runtime (s)    : 189.32
+  Seed portfolio (10 heuristics evaluated):
+    CAF          raw=78790.710000  LP=1485.980000  [SELECTED]
+    TC-RBI       raw=80462.490000  LP=1544.870000  [SELECTED]
+    GRASP-3      raw=79661.790000  LP=1571.100000  [SELECTED]
+    GRASP-7      raw=78415.430000  LP=1623.670000  [SELECTED]
+    EDD          raw=81813.590000  LP=1742.690000
+    ATC          raw=84019.650000  LP=3241.980000
+    ATCS         raw=83150.280000  LP=3295.140000
+    FCFS         raw=99235.980000  LP=13629.310000
+    WCC          raw=176440.760000  LP=170314.860000
+    WEDD         raw=inf  LP=inf
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.013s  @0.017s  LP=13629.3100
+    EDD           construct=0.000s  lp_eval=0.013s  @0.032s  LP=1742.6900
+    WEDD          construct=0.002s  lp_eval=0.007s  @0.045s  LP=inf
+    ATC           construct=0.011s  lp_eval=0.012s  @0.071s  LP=3241.9800
+    ATCS          construct=0.014s  lp_eval=0.012s  @0.100s  LP=3295.1400
+    TC-RBI        construct=2.889s  lp_eval=0.012s  @3.004s  LP=1544.8700
+    CAF           construct=0.042s  lp_eval=0.013s  @3.062s  LP=1485.9800
+    WCC           construct=0.795s  lp_eval=0.038s  @3.905s  LP=170314.8600
+    GRASP-3       construct=0.099s  lp_eval=0.021s  @4.030s  LP=1571.1000
+    GRASP-7       construct=0.108s  lp_eval=0.021s  @4.164s  LP=1623.6700
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.017s  LP=13629.310000
+    t=   0.032s  LP=1742.690000
+    t=   3.004s  LP=1544.870000
+    t=   3.062s  LP=1485.980000
+    t=   4.164s  LP=1544.870000
+    t=   4.876s  LP=1537.820000
+    t=   5.671s  LP=1485.880000
+    t=   7.283s  LP=1466.640000
+    t=  10.107s  LP=1454.270000
+    t=  86.607s  LP=1423.200000
+    t= 103.570s  LP=1409.270000
+    t= 108.124s  LP=1404.600000
+    t= 114.238s  LP=1399.300000
+    t= 121.426s  LP=1380.590000
+    t= 134.874s  LP=1359.380000
+    t= 188.041s  LP=1356.260000
+
+========================================================================
+  AIRLAND11  |  n=200  |  m=3
+========================================================================
+  SA+VND+PR LP         : 253.070000
+  Reference / BKS      : 253.07
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 3.526
+  Seed LP eval (s)     : 0.100
+  Best seed LP at (s)  : 2.715
+  SA dispatch at (s)   : 3.651
+  Total time-to-best   : 70.392 s
+  Total runtime (s)    : 108.00
+  Seed portfolio (10 heuristics evaluated):
+    TC-RBI       raw=92649.000000  LP=316.070000  [SELECTED]
+    EDD          raw=93264.650000  LP=344.550000  [SELECTED]
+    CAF          raw=90890.040000  LP=362.060000  [SELECTED]
+    GRASP-7      raw=89779.190000  LP=387.790000  [SELECTED]
+    GRASP-3      raw=90334.850000  LP=419.130000
+    ATCS         raw=95589.650000  LP=1862.770000
+    ATC          raw=96535.770000  LP=1942.310000
+    FCFS         raw=101372.920000  LP=7425.460000
+    WCC          raw=175366.820000  LP=167721.780000
+    WEDD         raw=inf  LP=inf
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.009s  @0.012s  LP=7425.4600
+    EDD           construct=0.000s  lp_eval=0.009s  @0.022s  LP=344.5500
+    WEDD          construct=0.002s  lp_eval=0.005s  @0.031s  LP=inf
+    ATC           construct=0.011s  lp_eval=0.008s  @0.052s  LP=1942.3100
+    ATCS          construct=0.013s  lp_eval=0.008s  @0.076s  LP=1862.7700
+    TC-RBI        construct=2.629s  lp_eval=0.009s  @2.715s  LP=316.0700
+    CAF           construct=0.052s  lp_eval=0.009s  @2.778s  LP=362.0600
+    WCC           construct=0.712s  lp_eval=0.022s  @3.517s  LP=167721.7800
+    GRASP-3       construct=0.049s  lp_eval=0.009s  @3.576s  LP=419.1300
+    GRASP-7       construct=0.058s  lp_eval=0.013s  @3.651s  LP=387.7900
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.012s  LP=7425.460000
+    t=   0.022s  LP=344.550000
+    t=   2.715s  LP=316.070000
+    t=   3.651s  LP=316.070000
+    t=   4.426s  LP=288.980000
+    t=   6.011s  LP=272.340000
+    t=  13.256s  LP=270.290000
+    t=  13.410s  LP=258.770000
+    t=  14.494s  LP=255.740000
+    t=  68.491s  LP=253.720000
+    t=  70.392s  LP=253.070000
+
+========================================================================
+  AIRLAND11  |  n=200  |  m=4
+========================================================================
+  SA+VND+PR LP         : 54.530000
+  Reference / BKS      : 54.53
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 3.857
+  Seed LP eval (s)     : 0.078
+  Best seed LP at (s)  : 0.018
+  SA dispatch at (s)   : 3.954
+  Total time-to-best   : 0.018 s
+  Total runtime (s)    : 57.25
+  Seed portfolio (10 heuristics evaluated):
+    EDD          raw=98049.970000  LP=54.530000  [SELECTED]
+    TC-RBI       raw=93843.930000  LP=54.530000  [SELECTED]
+    CAF          raw=92800.370000  LP=70.860000  [SELECTED]
+    GRASP-7      raw=95082.940000  LP=74.330000  [SELECTED]
+    GRASP-3      raw=93485.880000  LP=74.410000
+    ATC          raw=99780.850000  LP=595.060000
+    ATCS         raw=99710.640000  LP=766.870000
+    FCFS         raw=101929.690000  LP=3813.750000
+    WCC          raw=171103.210000  LP=163404.580000
+    WEDD         raw=inf  LP=inf
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.007s  @0.009s  LP=3813.7500
+    EDD           construct=0.000s  lp_eval=0.007s  @0.018s  LP=54.5300
+    WEDD          construct=0.001s  lp_eval=0.004s  @0.025s  LP=inf
+    ATC           construct=0.010s  lp_eval=0.007s  @0.043s  LP=595.0600
+    ATCS          construct=0.013s  lp_eval=0.006s  @0.064s  LP=766.8700
+    TC-RBI        construct=3.043s  lp_eval=0.007s  @3.115s  LP=54.5300
+    CAF           construct=0.059s  lp_eval=0.007s  @3.182s  LP=70.8600
+    WCC           construct=0.614s  lp_eval=0.021s  @3.821s  LP=163404.5800
+    GRASP-3       construct=0.057s  lp_eval=0.006s  @3.886s  LP=74.4100
+    GRASP-7       construct=0.060s  lp_eval=0.007s  @3.954s  LP=74.3300
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.009s  LP=3813.750000
+    t=   0.018s  LP=54.530000
+    t=   3.954s  LP=54.530000
+
+========================================================================
+  AIRLAND11  |  n=200  |  m=5
+========================================================================
+  SA+VND+PR LP         : 0.000000
+  Reference / BKS      : 0.0
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 3.642
+  Seed LP eval (s)     : 0.068
+  Best seed LP at (s)  : 0.014
+  SA dispatch at (s)   : 3.725
+  Total time-to-best   : 0.014 s
+  Total runtime (s)    : 61.25
+  Seed portfolio (10 heuristics evaluated):
+    EDD          raw=100807.500000  LP=0.000000  [SELECTED]
+    TC-RBI       raw=96344.160000  LP=0.000000  [SELECTED]
+    GRASP-3      raw=97278.770000  LP=0.000000  [SELECTED]
+    GRASP-7      raw=96458.930000  LP=0.000000  [SELECTED]
+    CAF          raw=96442.070000  LP=1.730000
+    ATCS         raw=101519.530000  LP=72.010000
+    ATC          raw=101880.100000  LP=220.800000
+    FCFS         raw=102139.690000  LP=1650.370000
+    WCC          raw=169279.780000  LP=160384.570000
+    WEDD         raw=inf  LP=inf
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.006s  @0.007s  LP=1650.3700
+    EDD           construct=0.000s  lp_eval=0.006s  @0.014s  LP=0.0000
+    WEDD          construct=0.001s  lp_eval=0.003s  @0.020s  LP=inf
+    ATC           construct=0.010s  lp_eval=0.005s  @0.037s  LP=220.8000
+    ATCS          construct=0.013s  lp_eval=0.005s  @0.056s  LP=72.0100
+    TC-RBI        construct=2.845s  lp_eval=0.006s  @2.908s  LP=0.0000
+    CAF           construct=0.066s  lp_eval=0.006s  @2.981s  LP=1.7300
+    WCC           construct=0.576s  lp_eval=0.020s  @3.580s  LP=160384.5700
+    GRASP-3       construct=0.064s  lp_eval=0.006s  @3.651s  LP=0.0000
+    GRASP-7       construct=0.067s  lp_eval=0.005s  @3.725s  LP=0.0000
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.007s  LP=1650.370000
+    t=   0.014s  LP=0.000000
+    t=   3.725s  LP=0.000000
+
+========================================================================
+  AIRLAND12  |  n=250  |  m=2
+========================================================================
+  SA+VND+PR LP         : 1783.650000
+  Reference / BKS      : 1695.62
+  Gap to BKS           : 5.19%
+  Sequence feasible    : YES
+  Seed construct (s)   : 12.418
+  Seed LP eval (s)     : 0.279
+  Best seed LP at (s)  : 0.098
+  SA dispatch at (s)   : 12.767
+  Total time-to-best   : 196.442 s
+  Total runtime (s)    : 223.55
+  Seed portfolio (10 heuristics evaluated):
+    EDD          raw=94258.470000  LP=2067.390000  [SELECTED]
+    CAF          raw=94389.400000  LP=2118.410000  [SELECTED]
+    TC-RBI       raw=93911.390000  LP=2167.130000  [SELECTED]
+    GRASP-3      raw=91379.470000  LP=2177.460000  [SELECTED]
+    GRASP-7      raw=92848.470000  LP=2315.880000
+    ATCS         raw=97249.260000  LP=4791.280000
+    ATC          raw=96431.790000  LP=5025.030000
+    FCFS         raw=121422.040000  LP=19294.090000
+    WCC          raw=216467.340000  LP=205816.420000
+    WEDD         raw=inf  LP=inf
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.001s  lp_eval=0.039s  @0.050s  LP=19294.0900
+    EDD           construct=0.000s  lp_eval=0.038s  @0.098s  LP=2067.3900
+    WEDD          construct=0.007s  lp_eval=0.021s  @0.136s  LP=inf
+    ATC           construct=0.032s  lp_eval=0.034s  @0.211s  LP=5025.0300
+    ATCS          construct=0.043s  lp_eval=0.035s  @0.297s  LP=4791.2800
+    TC-RBI        construct=10.945s  lp_eval=0.020s  @11.267s  LP=2167.1300
+    CAF           construct=0.059s  lp_eval=0.021s  @11.351s  LP=2118.4100
+    WCC           construct=1.213s  lp_eval=0.033s  @12.604s  LP=205816.4200
+    GRASP-3       construct=0.056s  lp_eval=0.018s  @12.683s  LP=2177.4600
+    GRASP-7       construct=0.061s  lp_eval=0.018s  @12.767s  LP=2315.8800
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.050s  LP=19294.090000
+    t=   0.098s  LP=2067.390000
+    t=  12.767s  LP=2177.460000
+    t=  14.331s  LP=2033.640000
+    t=  14.754s  LP=2011.160000
+    t=  15.350s  LP=1960.590000
+    t=  16.678s  LP=1918.320000
+    t=  19.149s  LP=1909.210000
+    t=  21.336s  LP=1900.710000
+    t=  65.329s  LP=1897.590000
+    t=  65.733s  LP=1837.130000
+    t= 144.722s  LP=1816.670000
+    t= 172.564s  LP=1804.180000
+    t= 196.442s  LP=1783.650000
+
+========================================================================
+  AIRLAND12  |  n=250  |  m=3
+========================================================================
+  SA+VND+PR LP         : 228.890000
+  Reference / BKS      : 221.97
+  Gap to BKS           : 3.12%
+  Sequence feasible    : YES
+  Seed construct (s)   : 5.692
+  Seed LP eval (s)     : 0.147
+  Best seed LP at (s)  : 4.470
+  SA dispatch at (s)   : 5.874
+  Total time-to-best   : 141.119 s
+  Total runtime (s)    : 143.88
+  Seed portfolio (10 heuristics evaluated):
+    TC-RBI       raw=105508.770000  LP=271.600000  [SELECTED]
+    CAF          raw=104616.810000  LP=272.890000  [SELECTED]
+    GRASP-3      raw=103489.650000  LP=289.110000  [SELECTED]
+    GRASP-7      raw=106229.950000  LP=325.860000  [SELECTED]
+    EDD          raw=109317.140000  LP=363.230000
+    ATC          raw=113541.160000  LP=1855.090000
+    ATCS         raw=113913.940000  LP=1946.850000
+    FCFS         raw=123573.760000  LP=10641.770000
+    WCC          raw=203945.260000  LP=190947.220000
+    WEDD         raw=inf  LP=inf
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.014s  @0.017s  LP=10641.7700
+    EDD           construct=0.000s  lp_eval=0.013s  @0.034s  LP=363.2300
+    WEDD          construct=0.003s  lp_eval=0.007s  @0.047s  LP=inf
+    ATC           construct=0.016s  lp_eval=0.013s  @0.078s  LP=1855.0900
+    ATCS          construct=0.021s  lp_eval=0.013s  @0.115s  LP=1946.8500
+    TC-RBI        construct=4.335s  lp_eval=0.016s  @4.470s  LP=271.6000
+    CAF           construct=0.074s  lp_eval=0.014s  @4.561s  LP=272.8900
+    WCC           construct=1.103s  lp_eval=0.032s  @5.702s  LP=190947.2200
+    GRASP-3       construct=0.067s  lp_eval=0.013s  @5.785s  LP=289.1100
+    GRASP-7       construct=0.073s  lp_eval=0.013s  @5.873s  LP=325.8600
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.017s  LP=10641.770000
+    t=   0.034s  LP=363.230000
+    t=   4.470s  LP=271.600000
+    t=   5.874s  LP=271.600000
+    t=   6.787s  LP=233.240000
+    t= 141.119s  LP=228.890000
+
+========================================================================
+  AIRLAND12  |  n=250  |  m=4
+========================================================================
+  SA+VND+PR LP         : 2.440000
+  Reference / BKS      : 2.44
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 6.152
+  Seed LP eval (s)     : 0.131
+  Best seed LP at (s)  : 4.710
+  SA dispatch at (s)   : 6.313
+  Total time-to-best   : 33.433 s
+  Total runtime (s)    : 104.91
+  Seed portfolio (10 heuristics evaluated):
+    TC-RBI       raw=111317.130000  LP=3.490000  [SELECTED]
+    EDD          raw=118134.500000  LP=10.520000  [SELECTED]
+    CAF          raw=111567.730000  LP=13.990000  [SELECTED]
+    GRASP-3      raw=112142.060000  LP=13.990000  [SELECTED]
+    GRASP-7      raw=110425.480000  LP=45.870000
+    ATCS         raw=119685.180000  LP=920.400000
+    ATC          raw=119257.210000  LP=1027.810000
+    FCFS         raw=123933.460000  LP=3997.020000
+    WCC          raw=197605.910000  LP=176995.700000
+    WEDD         raw=inf  LP=inf
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.001s  lp_eval=0.013s  @0.017s  LP=3997.0200
+    EDD           construct=0.000s  lp_eval=0.013s  @0.033s  LP=10.5200
+    WEDD          construct=0.003s  lp_eval=0.007s  @0.046s  LP=inf
+    ATC           construct=0.020s  lp_eval=0.012s  @0.081s  LP=1027.8100
+    ATCS          construct=0.026s  lp_eval=0.012s  @0.122s  LP=920.4000
+    TC-RBI        construct=4.576s  lp_eval=0.011s  @4.710s  LP=3.4900
+    CAF           construct=0.103s  lp_eval=0.014s  @4.830s  LP=13.9900
+    WCC           construct=1.264s  lp_eval=0.030s  @6.130s  LP=176995.7000
+    GRASP-3       construct=0.077s  lp_eval=0.009s  @6.219s  LP=13.9900
+    GRASP-7       construct=0.083s  lp_eval=0.009s  @6.313s  LP=45.8700
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.017s  LP=3997.020000
+    t=   0.033s  LP=10.520000
+    t=   4.710s  LP=3.490000
+    t=   6.313s  LP=3.490000
+    t=  33.433s  LP=2.440000
+
+========================================================================
+  AIRLAND12  |  n=250  |  m=5
+========================================================================
+  SA+VND+PR LP         : 0.000000
+  Reference / BKS      : 0.0
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 15.155
+  Seed LP eval (s)     : 0.148
+  Best seed LP at (s)  : 0.022
+  SA dispatch at (s)   : 15.338
+  Total time-to-best   : 0.022 s
+  Total runtime (s)    : 62.32
+  Seed portfolio (10 heuristics evaluated):
+    EDD          raw=121333.740000  LP=0.000000  [SELECTED]
+    TC-RBI       raw=113462.230000  LP=0.000000  [SELECTED]
+    GRASP-3      raw=113508.630000  LP=0.000000  [SELECTED]
+    GRASP-7      raw=116535.430000  LP=0.000000  [SELECTED]
+    CAF          raw=115488.330000  LP=5.440000
+    ATC          raw=121488.700000  LP=385.990000
+    ATCS         raw=121903.780000  LP=466.290000
+    FCFS         raw=123971.160000  LP=2667.330000
+    WCC          raw=190654.570000  LP=161849.680000
+    WEDD         raw=inf  LP=inf
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.009s  @0.011s  LP=2667.3300
+    EDD           construct=0.000s  lp_eval=0.009s  @0.022s  LP=0.0000
+    WEDD          construct=0.002s  lp_eval=0.005s  @0.031s  LP=inf
+    ATC           construct=0.016s  lp_eval=0.008s  @0.057s  LP=385.9900
+    ATCS          construct=0.020s  lp_eval=0.009s  @0.087s  LP=466.2900
+    TC-RBI        construct=12.414s  lp_eval=0.016s  @12.520s  LP=0.0000
+    CAF           construct=0.261s  lp_eval=0.017s  @12.802s  LP=5.4400
+    WCC           construct=1.968s  lp_eval=0.047s  @14.828s  LP=161849.6800
+    GRASP-3       construct=0.233s  lp_eval=0.014s  @15.078s  LP=0.0000
+    GRASP-7       construct=0.241s  lp_eval=0.015s  @15.338s  LP=0.0000
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.011s  LP=2667.330000
+    t=   0.022s  LP=0.000000
+    t=  15.338s  LP=0.000000
+
+========================================================================
+  AIRLAND13  |  n=500  |  m=2
+========================================================================
+  SA+VND+PR LP         : 4074.460000
+  Reference / BKS      : 3943.85
+  Gap to BKS           : 3.31%
+  Sequence feasible    : YES
+  Seed construct (s)   : 43.526
+  Seed LP eval (s)     : 0.810
+  Best seed LP at (s)  : 32.899
+  SA dispatch at (s)   : 44.528
+  Total time-to-best   : 1209.911 s
+  Total runtime (s)    : 1224.19
+  Seed portfolio (10 heuristics evaluated):
+    TC-RBI       raw=182805.990000  LP=4659.600000  [SELECTED]
+    EDD          raw=184424.180000  LP=4666.600000  [SELECTED]
+    CAF          raw=180721.130000  LP=4978.090000  [SELECTED]
+    GRASP-7      raw=181201.960000  LP=5009.900000  [SELECTED]
+    GRASP-3      raw=180559.470000  LP=5259.230000
+    ATCS         raw=191020.510000  LP=9385.620000
+    ATC          raw=190154.950000  LP=10925.260000
+    FCFS         raw=237381.180000  LP=41101.360000
+    WCC          raw=423649.900000  LP=411223.570000
+    WEDD         raw=inf  LP=inf
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.001s  lp_eval=0.083s  @0.103s  LP=41101.3600
+    EDD           construct=0.000s  lp_eval=0.082s  @0.206s  LP=4666.6000
+    WEDD          construct=0.013s  lp_eval=0.045s  @0.284s  LP=inf
+    ATC           construct=0.068s  lp_eval=0.075s  @0.444s  LP=10925.2600
+    ATCS          construct=0.085s  lp_eval=0.075s  @0.621s  LP=9385.6200
+    TC-RBI        construct=32.183s  lp_eval=0.079s  @32.899s  LP=4659.6000
+    CAF           construct=0.167s  lp_eval=0.084s  @33.171s  LP=4978.0900
+    WCC           construct=10.651s  lp_eval=0.137s  @43.989s  LP=411223.5700
+    GRASP-3       construct=0.170s  lp_eval=0.073s  @44.249s  LP=5259.2300
+    GRASP-7       construct=0.186s  lp_eval=0.077s  @44.528s  LP=5009.9000
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.103s  LP=41101.360000
+    t=   0.206s  LP=4666.600000
+    t=  32.899s  LP=4659.600000
+    t=  44.528s  LP=4659.600000
+    t=  59.688s  LP=4637.720000
+    t=  62.246s  LP=4626.230000
+    t=  64.440s  LP=4516.590000
+    t=  66.841s  LP=4511.710000
+    t=  82.963s  LP=4440.310000
+    t=  92.315s  LP=4435.570000
+    t= 121.690s  LP=4364.170000
+    t= 160.485s  LP=4314.460000
+    t= 403.591s  LP=4310.970000
+    t= 414.846s  LP=4239.570000
+    t= 477.579s  LP=4189.860000
+    t=1209.911s  LP=4074.460000
+
+========================================================================
+  AIRLAND13  |  n=500  |  m=3
+========================================================================
+  SA+VND+PR LP         : 706.900000
+  Reference / BKS      : 673.85
+  Gap to BKS           : 4.90%
+  Sequence feasible    : YES
+  Seed construct (s)   : 34.884
+  Seed LP eval (s)     : 0.588
+  Best seed LP at (s)  : 24.681
+  SA dispatch at (s)   : 35.609
+  Total time-to-best   : 690.553 s
+  Total runtime (s)    : 700.67
+  Seed portfolio (10 heuristics evaluated):
+    CAF          raw=206919.870000  LP=863.280000  [SELECTED]
+    EDD          raw=212688.210000  LP=879.860000  [SELECTED]
+    TC-RBI       raw=207175.620000  LP=914.510000  [SELECTED]
+    GRASP-7      raw=207288.280000  LP=1072.520000  [SELECTED]
+    GRASP-3      raw=208895.960000  LP=1128.840000
+    ATCS         raw=221096.120000  LP=4932.060000
+    ATC          raw=222096.840000  LP=5144.570000
+    FCFS         raw=243429.280000  LP=22154.270000
+    WCC          raw=430273.890000  LP=414125.810000
+    WEDD         raw=inf  LP=inf
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.001s  lp_eval=0.057s  @0.072s  LP=22154.2700
+    EDD           construct=0.000s  lp_eval=0.056s  @0.141s  LP=879.8600
+    WEDD          construct=0.009s  lp_eval=0.031s  @0.195s  LP=inf
+    ATC           construct=0.065s  lp_eval=0.053s  @0.324s  LP=5144.5700
+    ATCS          construct=0.082s  lp_eval=0.053s  @0.469s  LP=4932.0600
+    TC-RBI        construct=23.891s  lp_eval=0.051s  @24.422s  LP=914.5100
+    CAF           construct=0.190s  lp_eval=0.056s  @24.681s  LP=863.2800
+    WCC           construct=10.250s  lp_eval=0.136s  @35.096s  LP=414125.8100
+    GRASP-3       construct=0.191s  lp_eval=0.047s  @35.345s  LP=1128.8400
+    GRASP-7       construct=0.204s  lp_eval=0.048s  @35.608s  LP=1072.5200
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.072s  LP=22154.270000
+    t=   0.141s  LP=879.860000
+    t=  24.681s  LP=863.280000
+    t=  35.609s  LP=1072.520000
+    t=  37.373s  LP=1026.250000
+    t=  41.011s  LP=1024.850000
+    t=  41.879s  LP=922.140000
+    t=  45.550s  LP=883.200000
+    t=  46.462s  LP=857.030000
+    t=  51.908s  LP=807.010000
+    t=  63.556s  LP=803.830000
+    t= 106.895s  LP=802.430000
+    t= 126.258s  LP=800.310000
+    t= 153.104s  LP=796.880000
+    t= 156.679s  LP=781.890000
+    t= 171.060s  LP=781.660000
+    t= 174.798s  LP=768.420000
+    t= 178.553s  LP=751.390000
+    t= 206.270s  LP=749.270000
+    t= 503.683s  LP=728.910000
+    t= 516.994s  LP=726.790000
+    t= 523.986s  LP=712.360000
+    t= 690.553s  LP=706.900000
+
+========================================================================
+  AIRLAND13  |  n=500  |  m=4
+========================================================================
+  SA+VND+PR LP         : 89.950000
+  Reference / BKS      : 89.95
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 30.207
+  Seed LP eval (s)     : 0.462
+  Best seed LP at (s)  : 19.841
+  SA dispatch at (s)   : 30.779
+  Total time-to-best   : 51.513 s
+  Total runtime (s)    : 421.61
+  Seed portfolio (10 heuristics evaluated):
+    TC-RBI       raw=220141.850000  LP=145.610000  [SELECTED]
+    EDD          raw=228436.340000  LP=154.560000  [SELECTED]
+    GRASP-7      raw=213056.990000  LP=172.430000  [SELECTED]
+    CAF          raw=220431.620000  LP=210.770000  [SELECTED]
+    GRASP-3      raw=214115.600000  LP=217.300000
+    ATCS         raw=234719.570000  LP=1971.560000
+    ATC          raw=235353.980000  LP=2492.820000
+    FCFS         raw=244245.610000  LP=13003.460000
+    WCC          raw=436113.330000  LP=418564.470000
+    WEDD         raw=inf  LP=inf
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.001s  lp_eval=0.042s  @0.053s  LP=13003.4600
+    EDD           construct=0.000s  lp_eval=0.042s  @0.105s  LP=154.5600
+    WEDD          construct=0.007s  lp_eval=0.022s  @0.144s  LP=inf
+    ATC           construct=0.062s  lp_eval=0.038s  @0.253s  LP=2492.8200
+    ATCS          construct=0.080s  lp_eval=0.037s  @0.379s  LP=1971.5600
+    TC-RBI        construct=19.417s  lp_eval=0.038s  @19.841s  LP=145.6100
+    CAF           construct=0.209s  lp_eval=0.040s  @20.101s  LP=210.7700
+    WCC           construct=10.007s  lp_eval=0.131s  @30.266s  LP=418564.4700
+    GRASP-3       construct=0.207s  lp_eval=0.036s  @30.517s  LP=217.3000
+    GRASP-7       construct=0.217s  lp_eval=0.037s  @30.779s  LP=172.4300
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.053s  LP=13003.460000
+    t=   0.105s  LP=154.560000
+    t=  19.841s  LP=145.610000
+    t=  30.779s  LP=145.610000
+    t=  32.246s  LP=119.920000
+    t=  34.333s  LP=106.400000
+    t=  37.397s  LP=99.870000
+    t=  37.839s  LP=93.780000
+    t=  40.905s  LP=92.440000
+    t=  44.767s  LP=91.040000
+    t=  51.513s  LP=89.950000
+
+========================================================================
+  AIRLAND13  |  n=500  |  m=5
+========================================================================
+  SA+VND+PR LP         : 0.000000
+  Reference / BKS      : 0.0
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 27.249
+  Seed LP eval (s)     : 0.398
+  Best seed LP at (s)  : 0.084
+  SA dispatch at (s)   : 27.741
+  Total time-to-best   : 0.084 s
+  Total runtime (s)    : 66.54
+  Seed portfolio (10 heuristics evaluated):
+    EDD          raw=237793.460000  LP=0.000000  [SELECTED]
+    TC-RBI       raw=222238.150000  LP=1.090000  [SELECTED]
+    CAF          raw=224197.220000  LP=9.920000  [SELECTED]
+    GRASP-7      raw=220832.390000  LP=31.840000  [SELECTED]
+    GRASP-3      raw=214668.520000  LP=46.590000
+    ATC          raw=240300.500000  LP=891.550000
+    ATCS         raw=240710.420000  LP=1204.340000
+    FCFS         raw=244309.440000  LP=6401.040000
+    WCC          raw=408314.260000  LP=384815.260000
+    WEDD         raw=inf  LP=inf
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.001s  lp_eval=0.034s  @0.043s  LP=6401.0400
+    EDD           construct=0.000s  lp_eval=0.033s  @0.084s  LP=0.0000
+    WEDD          construct=0.006s  lp_eval=0.017s  @0.116s  LP=inf
+    ATC           construct=0.061s  lp_eval=0.031s  @0.215s  LP=891.5500
+    ATCS          construct=0.078s  lp_eval=0.031s  @0.331s  LP=1204.3400
+    TC-RBI        construct=16.627s  lp_eval=0.030s  @16.995s  LP=1.0900
+    CAF           construct=0.227s  lp_eval=0.033s  @17.263s  LP=9.9200
+    WCC           construct=9.796s  lp_eval=0.133s  @27.220s  LP=384815.2600
+    GRASP-3       construct=0.221s  lp_eval=0.028s  @27.476s  LP=46.5900
+    GRASP-7       construct=0.231s  lp_eval=0.027s  @27.740s  LP=31.8400
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.043s  LP=6401.040000
+    t=   0.084s  LP=0.000000
+    t=  27.741s  LP=0.000000
+
+========================================================================
+  AIRLAND2  |  n=15  |  m=2
+========================================================================
+  SA+VND+PR LP         : 210.000000
+  Reference / BKS      : 210.0
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 0.029
+  Seed LP eval (s)     : 0.009
+  Best seed LP at (s)  : 0.002
+  SA dispatch at (s)   : 0.039
+  Total time-to-best   : 0.002 s
+  Total runtime (s)    : 6.49
+  Seed portfolio (11 heuristics evaluated):
+    EDD          raw=6670.000000  LP=210.000000  [SELECTED]
+    TC-RBI       raw=6690.000000  LP=210.000000  [SELECTED]
+    CAF          raw=6620.000000  LP=210.000000  [SELECTED]
+    GRASP-3      raw=6670.000000  LP=210.000000  [SELECTED]
+    MPDS         raw=6690.000000  LP=210.000000
+    FCFS         raw=6690.000000  LP=270.000000
+    GRASP-7      raw=6550.000000  LP=290.000000
+    WEDD         raw=6560.000000  LP=520.000000
+    ATC          raw=6560.000000  LP=520.000000
+    ATCS         raw=6560.000000  LP=520.000000
+    WCC          raw=6560.000000  LP=520.000000
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.001s  @0.001s  LP=270.0000
+    EDD           construct=0.000s  lp_eval=0.001s  @0.002s  LP=210.0000
+    WEDD          construct=0.000s  lp_eval=0.001s  @0.003s  LP=520.0000
+    ATC           construct=0.000s  lp_eval=0.001s  @0.005s  LP=520.0000
+    ATCS          construct=0.000s  lp_eval=0.001s  @0.006s  LP=520.0000
+    TC-RBI        construct=0.012s  lp_eval=0.001s  @0.018s  LP=210.0000
+    CAF           construct=0.002s  lp_eval=0.001s  @0.021s  LP=210.0000
+    WCC           construct=0.000s  lp_eval=0.001s  @0.022s  LP=520.0000
+    GRASP-3       construct=0.002s  lp_eval=0.001s  @0.025s  LP=210.0000
+    GRASP-7       construct=0.002s  lp_eval=0.001s  @0.028s  LP=290.0000
+    MPDS          construct=0.011s  lp_eval=0.001s  @0.039s  LP=210.0000
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.001s  LP=270.000000
+    t=   0.002s  LP=210.000000
+    t=   0.039s  LP=210.000000
+
+========================================================================
+  AIRLAND2  |  n=15  |  m=3
+========================================================================
+  SA+VND+PR LP         : 0.000000
+  Reference / BKS      : 0.0
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 0.064
+  Seed LP eval (s)     : 0.010
+  Best seed LP at (s)  : 0.001
+  SA dispatch at (s)   : 0.075
+  Total time-to-best   : 0.001 s
+  Total runtime (s)    : 6.34
+  Seed portfolio (11 heuristics evaluated):
+    FCFS         raw=6940.000000  LP=0.000000  [SELECTED]
+    EDD          raw=6940.000000  LP=0.000000
+    TC-RBI       raw=6880.000000  LP=0.000000  [SELECTED]
+    CAF          raw=6820.000000  LP=0.000000  [SELECTED]
+    MPDS         raw=6940.000000  LP=0.000000
+    GRASP-3      raw=6850.000000  LP=20.000000  [SELECTED]
+    GRASP-7      raw=6760.000000  LP=90.000000
+    WEDD         raw=6740.000000  LP=110.000000
+    ATC          raw=6740.000000  LP=110.000000
+    ATCS         raw=6740.000000  LP=110.000000
+    WCC          raw=6740.000000  LP=110.000000
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.001s  @0.001s  LP=0.0000
+    EDD           construct=0.000s  lp_eval=0.001s  @0.003s  LP=0.0000
+    WEDD          construct=0.000s  lp_eval=0.001s  @0.004s  LP=110.0000
+    ATC           construct=0.000s  lp_eval=0.001s  @0.005s  LP=110.0000
+    ATCS          construct=0.000s  lp_eval=0.001s  @0.007s  LP=110.0000
+    TC-RBI        construct=0.034s  lp_eval=0.001s  @0.042s  LP=0.0000
+    CAF           construct=0.004s  lp_eval=0.001s  @0.047s  LP=0.0000
+    WCC           construct=0.001s  lp_eval=0.001s  @0.048s  LP=110.0000
+    GRASP-3       construct=0.003s  lp_eval=0.001s  @0.052s  LP=20.0000
+    GRASP-7       construct=0.003s  lp_eval=0.001s  @0.056s  LP=90.0000
+    MPDS          construct=0.018s  lp_eval=0.001s  @0.075s  LP=0.0000
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.001s  LP=0.000000
+    t=   0.075s  LP=0.000000
+
+========================================================================
+  AIRLAND3  |  n=20  |  m=2
+========================================================================
+  SA+VND+PR LP         : 60.000000
+  Reference / BKS      : 60.0
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 0.062
+  Seed LP eval (s)     : 0.011
+  Best seed LP at (s)  : 0.033
+  SA dispatch at (s)   : 0.073
+  Total time-to-best   : 0.033 s
+  Total runtime (s)    : 8.66
+  Seed portfolio (11 heuristics evaluated):
+    TC-RBI       raw=9290.000000  LP=60.000000  [SELECTED]
+    GRASP-7      raw=9250.000000  LP=110.000000  [SELECTED]
+    EDD          raw=9490.000000  LP=120.000000  [SELECTED]
+    CAF          raw=9390.000000  LP=120.000000  [SELECTED]
+    FCFS         raw=9490.000000  LP=180.000000
+    WEDD         raw=9230.000000  LP=210.000000
+    ATC          raw=9230.000000  LP=210.000000
+    ATCS         raw=9230.000000  LP=210.000000
+    WCC          raw=9230.000000  LP=210.000000
+    MPDS         raw=9000.000000  LP=360.000000
+    GRASP-3      raw=8660.000000  LP=420.000000
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.001s  @0.001s  LP=180.0000
+    EDD           construct=0.000s  lp_eval=0.001s  @0.003s  LP=120.0000
+    WEDD          construct=0.000s  lp_eval=0.001s  @0.004s  LP=210.0000
+    ATC           construct=0.000s  lp_eval=0.001s  @0.006s  LP=210.0000
+    ATCS          construct=0.000s  lp_eval=0.001s  @0.007s  LP=210.0000
+    TC-RBI        construct=0.025s  lp_eval=0.001s  @0.033s  LP=60.0000
+    CAF           construct=0.003s  lp_eval=0.001s  @0.038s  LP=120.0000
+    WCC           construct=0.001s  lp_eval=0.001s  @0.039s  LP=210.0000
+    GRASP-3       construct=0.004s  lp_eval=0.001s  @0.044s  LP=420.0000
+    GRASP-7       construct=0.004s  lp_eval=0.001s  @0.048s  LP=110.0000
+    MPDS          construct=0.024s  lp_eval=0.001s  @0.073s  LP=360.0000
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.001s  LP=180.000000
+    t=   0.003s  LP=120.000000
+    t=   0.033s  LP=60.000000
+    t=   0.073s  LP=60.000000
+
+========================================================================
+  AIRLAND3  |  n=20  |  m=3
+========================================================================
+  SA+VND+PR LP         : 0.000000
+  Reference / BKS      : 0.0
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 0.143
+  Seed LP eval (s)     : 0.016
+  Best seed LP at (s)  : 0.002
+  SA dispatch at (s)   : 0.160
+  Total time-to-best   : 0.002 s
+  Total runtime (s)    : 7.37
+  Seed portfolio (11 heuristics evaluated):
+    FCFS         raw=9720.000000  LP=0.000000  [SELECTED]
+    EDD          raw=9720.000000  LP=0.000000  [SELECTED]
+    TC-RBI       raw=9630.000000  LP=0.000000  [SELECTED]
+    WEDD         raw=9570.000000  LP=40.000000  [SELECTED]
+    ATC          raw=9570.000000  LP=40.000000
+    ATCS         raw=9570.000000  LP=40.000000
+    WCC          raw=9570.000000  LP=40.000000
+    GRASP-3      raw=9410.000000  LP=40.000000
+    GRASP-7      raw=9570.000000  LP=40.000000
+    CAF          raw=9700.000000  LP=60.000000
+    MPDS         raw=9700.000000  LP=70.000000
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.001s  @0.002s  LP=0.0000
+    EDD           construct=0.000s  lp_eval=0.001s  @0.003s  LP=0.0000
+    WEDD          construct=0.000s  lp_eval=0.001s  @0.004s  LP=40.0000
+    ATC           construct=0.000s  lp_eval=0.001s  @0.006s  LP=40.0000
+    ATCS          construct=0.000s  lp_eval=0.001s  @0.008s  LP=40.0000
+    TC-RBI        construct=0.028s  lp_eval=0.002s  @0.038s  LP=0.0000
+    CAF           construct=0.012s  lp_eval=0.002s  @0.051s  LP=60.0000
+    WCC           construct=0.003s  lp_eval=0.002s  @0.055s  LP=40.0000
+    GRASP-3       construct=0.011s  lp_eval=0.002s  @0.068s  LP=40.0000
+    GRASP-7       construct=0.011s  lp_eval=0.002s  @0.081s  LP=40.0000
+    MPDS          construct=0.077s  lp_eval=0.001s  @0.160s  LP=70.0000
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.002s  LP=0.000000
+    t=   0.160s  LP=0.000000
+
+========================================================================
+  AIRLAND4  |  n=20  |  m=2
+========================================================================
+  SA+VND+PR LP         : 640.000000
+  Reference / BKS      : 640.0
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 0.061
+  Seed LP eval (s)     : 0.010
+  Best seed LP at (s)  : 0.003
+  SA dispatch at (s)   : 0.072
+  Total time-to-best   : 0.003 s
+  Total runtime (s)    : 10.32
+  Seed portfolio (11 heuristics evaluated):
+    EDD          raw=8440.000000  LP=640.000000  [SELECTED]
+    WEDD         raw=8440.000000  LP=640.000000
+    ATC          raw=8440.000000  LP=640.000000
+    ATCS         raw=8440.000000  LP=640.000000
+    TC-RBI       raw=8380.000000  LP=640.000000  [SELECTED]
+    CAF          raw=8440.000000  LP=640.000000  [SELECTED]
+    GRASP-7      raw=8440.000000  LP=640.000000
+    MPDS         raw=8430.000000  LP=640.000000  [SELECTED]
+    GRASP-3      raw=8250.000000  LP=720.000000
+    FCFS         raw=7980.000000  LP=1380.000000
+    WCC          raw=17410.000000  LP=11230.000000
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.001s  @0.001s  LP=1380.0000
+    EDD           construct=0.000s  lp_eval=0.001s  @0.003s  LP=640.0000
+    WEDD          construct=0.000s  lp_eval=0.001s  @0.004s  LP=640.0000
+    ATC           construct=0.000s  lp_eval=0.001s  @0.006s  LP=640.0000
+    ATCS          construct=0.000s  lp_eval=0.001s  @0.007s  LP=640.0000
+    TC-RBI        construct=0.025s  lp_eval=0.001s  @0.033s  LP=640.0000
+    CAF           construct=0.003s  lp_eval=0.001s  @0.037s  LP=640.0000
+    WCC           construct=0.001s  lp_eval=0.001s  @0.039s  LP=11230.0000
+    GRASP-3       construct=0.004s  lp_eval=0.001s  @0.043s  LP=720.0000
+    GRASP-7       construct=0.004s  lp_eval=0.001s  @0.048s  LP=640.0000
+    MPDS          construct=0.024s  lp_eval=0.001s  @0.072s  LP=640.0000
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.001s  LP=1380.000000
+    t=   0.003s  LP=640.000000
+    t=   0.072s  LP=640.000000
+
+========================================================================
+  AIRLAND4  |  n=20  |  m=3
+========================================================================
+  SA+VND+PR LP         : 130.000000
+  Reference / BKS      : 130.0
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 0.136
+  Seed LP eval (s)     : 0.012
+  Best seed LP at (s)  : 0.003
+  SA dispatch at (s)   : 0.149
+  Total time-to-best   : 0.003 s
+  Total runtime (s)    : 7.64
+  Seed portfolio (11 heuristics evaluated):
+    EDD          raw=9050.000000  LP=130.000000  [SELECTED]
+    WEDD         raw=9050.000000  LP=140.000000  [SELECTED]
+    ATC          raw=9050.000000  LP=140.000000
+    ATCS         raw=9050.000000  LP=140.000000
+    TC-RBI       raw=9050.000000  LP=140.000000  [SELECTED]
+    GRASP-3      raw=9000.000000  LP=180.000000  [SELECTED]
+    GRASP-7      raw=9050.000000  LP=190.000000
+    CAF          raw=8990.000000  LP=200.000000
+    MPDS         raw=9050.000000  LP=200.000000
+    FCFS         raw=8790.000000  LP=460.000000
+    WCC          raw=18170.000000  LP=10380.000000
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.001s  @0.001s  LP=460.0000
+    EDD           construct=0.000s  lp_eval=0.001s  @0.003s  LP=130.0000
+    WEDD          construct=0.000s  lp_eval=0.001s  @0.004s  LP=140.0000
+    ATC           construct=0.000s  lp_eval=0.001s  @0.006s  LP=140.0000
+    ATCS          construct=0.000s  lp_eval=0.001s  @0.008s  LP=140.0000
+    TC-RBI        construct=0.082s  lp_eval=0.001s  @0.091s  LP=140.0000
+    CAF           construct=0.011s  lp_eval=0.001s  @0.103s  LP=200.0000
+    WCC           construct=0.002s  lp_eval=0.001s  @0.107s  LP=10380.0000
+    GRASP-3       construct=0.011s  lp_eval=0.001s  @0.119s  LP=180.0000
+    GRASP-7       construct=0.004s  lp_eval=0.001s  @0.123s  LP=190.0000
+    MPDS          construct=0.025s  lp_eval=0.001s  @0.149s  LP=200.0000
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.001s  LP=460.000000
+    t=   0.003s  LP=130.000000
+    t=   0.149s  LP=130.000000
+
+========================================================================
+  AIRLAND4  |  n=20  |  m=4
+========================================================================
+  SA+VND+PR LP         : 0.000000
+  Reference / BKS      : 0.0
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 0.066
+  Seed LP eval (s)     : 0.008
+  Best seed LP at (s)  : 0.002
+  SA dispatch at (s)   : 0.074
+  Total time-to-best   : 0.002 s
+  Total runtime (s)    : 7.28
+  Seed portfolio (11 heuristics evaluated):
+    EDD          raw=9330.000000  LP=0.000000  [SELECTED]
+    WEDD         raw=9330.000000  LP=0.000000  [SELECTED]
+    ATC          raw=9330.000000  LP=0.000000
+    ATCS         raw=9330.000000  LP=0.000000
+    MPDS         raw=9330.000000  LP=0.000000  [SELECTED]
+    CAF          raw=9260.000000  LP=10.000000  [SELECTED]
+    GRASP-7      raw=9320.000000  LP=20.000000
+    TC-RBI       raw=9270.000000  LP=60.000000
+    FCFS         raw=9120.000000  LP=240.000000
+    GRASP-3      raw=9150.000000  LP=240.000000
+    WCC          raw=17610.000000  LP=9440.000000
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.001s  @0.001s  LP=240.0000
+    EDD           construct=0.000s  lp_eval=0.001s  @0.002s  LP=0.0000
+    WEDD          construct=0.000s  lp_eval=0.001s  @0.002s  LP=0.0000
+    ATC           construct=0.000s  lp_eval=0.001s  @0.003s  LP=0.0000
+    ATCS          construct=0.000s  lp_eval=0.001s  @0.004s  LP=0.0000
+    TC-RBI        construct=0.027s  lp_eval=0.001s  @0.032s  LP=60.0000
+    CAF           construct=0.004s  lp_eval=0.001s  @0.036s  LP=10.0000
+    WCC           construct=0.001s  lp_eval=0.001s  @0.038s  LP=9440.0000
+    GRASP-3       construct=0.004s  lp_eval=0.001s  @0.043s  LP=240.0000
+    GRASP-7       construct=0.004s  lp_eval=0.001s  @0.047s  LP=20.0000
+    MPDS          construct=0.026s  lp_eval=0.001s  @0.074s  LP=0.0000
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.001s  LP=240.000000
+    t=   0.002s  LP=0.000000
+    t=   0.074s  LP=0.000000
+
+========================================================================
+  AIRLAND5  |  n=20  |  m=2
+========================================================================
+  SA+VND+PR LP         : 650.000000
+  Reference / BKS      : 650.0
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 0.060
+  Seed LP eval (s)     : 0.009
+  Best seed LP at (s)  : 0.070
+  SA dispatch at (s)   : 0.070
+  Total time-to-best   : 0.070 s
+  Total runtime (s)    : 8.35
+  Seed portfolio (11 heuristics evaluated):
+    MPDS         raw=8190.000000  LP=650.000000  [SELECTED]
+    TC-RBI       raw=7740.000000  LP=670.000000  [SELECTED]
+    GRASP-3      raw=7690.000000  LP=700.000000  [SELECTED]
+    WEDD         raw=8400.000000  LP=750.000000  [SELECTED]
+    ATC          raw=8400.000000  LP=750.000000
+    ATCS         raw=8400.000000  LP=750.000000
+    WCC          raw=8400.000000  LP=750.000000
+    FCFS         raw=8190.000000  LP=830.000000
+    GRASP-7      raw=7610.000000  LP=990.000000
+    CAF          raw=7450.000000  LP=1110.000000
+    EDD          raw=7500.000000  LP=1140.000000
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.001s  @0.001s  LP=830.0000
+    EDD           construct=0.000s  lp_eval=0.001s  @0.002s  LP=1140.0000
+    WEDD          construct=0.000s  lp_eval=0.001s  @0.003s  LP=750.0000
+    ATC           construct=0.000s  lp_eval=0.001s  @0.004s  LP=750.0000
+    ATCS          construct=0.000s  lp_eval=0.001s  @0.005s  LP=750.0000
+    TC-RBI        construct=0.025s  lp_eval=0.001s  @0.031s  LP=670.0000
+    CAF           construct=0.003s  lp_eval=0.001s  @0.035s  LP=1110.0000
+    WCC           construct=0.001s  lp_eval=0.001s  @0.037s  LP=750.0000
+    GRASP-3       construct=0.004s  lp_eval=0.001s  @0.041s  LP=700.0000
+    GRASP-7       construct=0.004s  lp_eval=0.001s  @0.045s  LP=990.0000
+    MPDS          construct=0.023s  lp_eval=0.001s  @0.070s  LP=650.0000
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.001s  LP=830.000000
+    t=   0.003s  LP=750.000000
+    t=   0.031s  LP=670.000000
+    t=   0.070s  LP=650.000000
+    t=   0.070s  LP=650.000000
+
+========================================================================
+  AIRLAND5  |  n=20  |  m=3
+========================================================================
+  SA+VND+PR LP         : 170.000000
+  Reference / BKS      : 170.0
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 0.063
+  Seed LP eval (s)     : 0.008
+  Best seed LP at (s)  : 0.032
+  SA dispatch at (s)   : 0.072
+  Total time-to-best   : 0.973 s
+  Total runtime (s)    : 8.37
+  Seed portfolio (11 heuristics evaluated):
+    TC-RBI       raw=8890.000000  LP=200.000000  [SELECTED]
+    FCFS         raw=9090.000000  LP=210.000000  [SELECTED]
+    EDD          raw=8770.000000  LP=270.000000  [SELECTED]
+    GRASP-7      raw=8770.000000  LP=270.000000  [SELECTED]
+    WEDD         raw=8920.000000  LP=300.000000
+    ATC          raw=8920.000000  LP=300.000000
+    ATCS         raw=8920.000000  LP=300.000000
+    WCC          raw=8920.000000  LP=300.000000
+    GRASP-3      raw=8650.000000  LP=390.000000
+    MPDS         raw=8540.000000  LP=390.000000
+    CAF          raw=8630.000000  LP=480.000000
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.001s  @0.001s  LP=210.0000
+    EDD           construct=0.000s  lp_eval=0.001s  @0.002s  LP=270.0000
+    WEDD          construct=0.000s  lp_eval=0.001s  @0.003s  LP=300.0000
+    ATC           construct=0.000s  lp_eval=0.001s  @0.004s  LP=300.0000
+    ATCS          construct=0.000s  lp_eval=0.001s  @0.005s  LP=300.0000
+    TC-RBI        construct=0.026s  lp_eval=0.001s  @0.032s  LP=200.0000
+    CAF           construct=0.004s  lp_eval=0.001s  @0.036s  LP=480.0000
+    WCC           construct=0.001s  lp_eval=0.001s  @0.038s  LP=300.0000
+    GRASP-3       construct=0.004s  lp_eval=0.001s  @0.042s  LP=390.0000
+    GRASP-7       construct=0.004s  lp_eval=0.001s  @0.047s  LP=270.0000
+    MPDS          construct=0.025s  lp_eval=0.001s  @0.072s  LP=390.0000
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.001s  LP=210.000000
+    t=   0.032s  LP=200.000000
+    t=   0.072s  LP=200.000000
+    t=   0.973s  LP=170.000000
+
+========================================================================
+  AIRLAND5  |  n=20  |  m=4
+========================================================================
+  SA+VND+PR LP         : 0.000000
+  Reference / BKS      : 0.0
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 0.066
+  Seed LP eval (s)     : 0.008
+  Best seed LP at (s)  : 0.002
+  SA dispatch at (s)   : 0.075
+  Total time-to-best   : 0.002 s
+  Total runtime (s)    : 10.01
+  Seed portfolio (11 heuristics evaluated):
+    EDD          raw=9300.000000  LP=0.000000  [SELECTED]
+    TC-RBI       raw=9190.000000  LP=0.000000  [SELECTED]
+    CAF          raw=9080.000000  LP=30.000000  [SELECTED]
+    FCFS         raw=9300.000000  LP=110.000000  [SELECTED]
+    MPDS         raw=8890.000000  LP=110.000000
+    GRASP-3      raw=9030.000000  LP=170.000000
+    WCC          raw=9120.000000  LP=190.000000
+    WEDD         raw=9120.000000  LP=210.000000
+    ATC          raw=9120.000000  LP=210.000000
+    ATCS         raw=9120.000000  LP=210.000000
+    GRASP-7      raw=8660.000000  LP=330.000000
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.001s  @0.001s  LP=110.0000
+    EDD           construct=0.000s  lp_eval=0.001s  @0.002s  LP=0.0000
+    WEDD          construct=0.000s  lp_eval=0.001s  @0.002s  LP=210.0000
+    ATC           construct=0.000s  lp_eval=0.001s  @0.003s  LP=210.0000
+    ATCS          construct=0.000s  lp_eval=0.001s  @0.004s  LP=210.0000
+    TC-RBI        construct=0.027s  lp_eval=0.001s  @0.033s  LP=0.0000
+    CAF           construct=0.004s  lp_eval=0.001s  @0.037s  LP=30.0000
+    WCC           construct=0.001s  lp_eval=0.001s  @0.039s  LP=190.0000
+    GRASP-3       construct=0.004s  lp_eval=0.001s  @0.044s  LP=170.0000
+    GRASP-7       construct=0.004s  lp_eval=0.001s  @0.048s  LP=330.0000
+    MPDS          construct=0.026s  lp_eval=0.001s  @0.075s  LP=110.0000
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.001s  LP=110.000000
+    t=   0.002s  LP=0.000000
+    t=   0.075s  LP=0.000000
+
+========================================================================
+  AIRLAND6  |  n=30  |  m=2
+========================================================================
+  SA+VND+PR LP         : 554.000000
+  Reference / BKS      : 554.0
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 0.065
+  Seed LP eval (s)     : 0.009
+  Best seed LP at (s)  : 0.050
+  SA dispatch at (s)   : 0.076
+  Total time-to-best   : 1.490 s
+  Total runtime (s)    : 6.23
+  Seed portfolio (11 heuristics evaluated):
+    GRASP-7      raw=701.000000  LP=701.000000  [SELECTED]
+    TC-RBI       raw=754.000000  LP=754.000000  [SELECTED]
+    CAF          raw=891.000000  LP=891.000000  [SELECTED]
+    EDD          raw=1011.000000  LP=1011.000000  [SELECTED]
+    GRASP-3      raw=1122.000000  LP=1122.000000
+    FCFS         raw=1160.000000  LP=1160.000000
+    MPDS         raw=1304.000000  LP=1304.000000
+    WCC          raw=7574.000000  LP=7574.000000
+    WEDD         raw=inf  LP=inf
+    ATC          raw=inf  LP=inf
+    ATCS         raw=inf  LP=inf
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.001s  @0.001s  LP=1160.0000
+    EDD           construct=0.000s  lp_eval=0.001s  @0.002s  LP=1011.0000
+    WEDD          construct=0.000s  lp_eval=0.001s  @0.003s  LP=inf
+    ATC           construct=0.000s  lp_eval=0.001s  @0.004s  LP=inf
+    ATCS          construct=0.000s  lp_eval=0.001s  @0.005s  LP=inf
+    TC-RBI        construct=0.029s  lp_eval=0.001s  @0.036s  LP=754.0000
+    CAF           construct=0.002s  lp_eval=0.001s  @0.039s  LP=891.0000
+    WCC           construct=0.003s  lp_eval=0.001s  @0.043s  LP=7574.0000
+    GRASP-3       construct=0.003s  lp_eval=0.001s  @0.046s  LP=1122.0000
+    GRASP-7       construct=0.003s  lp_eval=0.001s  @0.050s  LP=701.0000
+    MPDS          construct=0.025s  lp_eval=0.001s  @0.076s  LP=1304.0000
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.001s  LP=1160.000000
+    t=   0.002s  LP=1011.000000
+    t=   0.036s  LP=754.000000
+    t=   0.050s  LP=701.000000
+    t=   0.076s  LP=701.000000
+    t=   0.201s  LP=686.000000
+    t=   0.223s  LP=677.000000
+    t=   0.400s  LP=612.000000
+    t=   0.430s  LP=577.000000
+    t=   0.970s  LP=572.000000
+    t=   1.054s  LP=563.000000
+    t=   1.096s  LP=557.000000
+    t=   1.490s  LP=554.000000
+
+========================================================================
+  AIRLAND6  |  n=30  |  m=3
+========================================================================
+  SA+VND+PR LP         : 0.000000
+  Reference / BKS      : 0.0
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 0.074
+  Seed LP eval (s)     : 0.008
+  Best seed LP at (s)  : 0.002
+  SA dispatch at (s)   : 0.083
+  Total time-to-best   : 0.002 s
+  Total runtime (s)    : 6.03
+  Seed portfolio (11 heuristics evaluated):
+    EDD          raw=0.000000  LP=0.000000  [SELECTED]
+    GRASP-7      raw=3.000000  LP=3.000000  [SELECTED]
+    TC-RBI       raw=48.000000  LP=48.000000  [SELECTED]
+    FCFS         raw=68.000000  LP=68.000000  [SELECTED]
+    GRASP-3      raw=141.000000  LP=141.000000
+    CAF          raw=177.000000  LP=177.000000
+    MPDS         raw=222.000000  LP=222.000000
+    ATCS         raw=477.000000  LP=477.000000
+    ATC          raw=858.000000  LP=858.000000
+    WCC          raw=6305.000000  LP=6305.000000
+    WEDD         raw=inf  LP=inf
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.001s  @0.001s  LP=68.0000
+    EDD           construct=0.000s  lp_eval=0.001s  @0.002s  LP=0.0000
+    WEDD          construct=0.000s  lp_eval=0.001s  @0.003s  LP=inf
+    ATC           construct=0.000s  lp_eval=0.001s  @0.004s  LP=858.0000
+    ATCS          construct=0.000s  lp_eval=0.001s  @0.005s  LP=477.0000
+    TC-RBI        construct=0.033s  lp_eval=0.001s  @0.039s  LP=48.0000
+    CAF           construct=0.003s  lp_eval=0.001s  @0.043s  LP=177.0000
+    WCC           construct=0.002s  lp_eval=0.001s  @0.045s  LP=6305.0000
+    GRASP-3       construct=0.003s  lp_eval=0.001s  @0.049s  LP=141.0000
+    GRASP-7       construct=0.003s  lp_eval=0.001s  @0.053s  LP=3.0000
+    MPDS          construct=0.029s  lp_eval=0.001s  @0.083s  LP=222.0000
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.001s  LP=68.000000
+    t=   0.002s  LP=0.000000
+    t=   0.083s  LP=0.000000
+
+========================================================================
+  AIRLAND7  |  n=44  |  m=2
+========================================================================
+  SA+VND+PR LP         : 0.000000
+  Reference / BKS      : 0.0
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 0.143
+  Seed LP eval (s)     : 0.013
+  Best seed LP at (s)  : 0.002
+  SA dispatch at (s)   : 0.158
+  Total time-to-best   : 0.002 s
+  Total runtime (s)    : 4.39
+  Seed portfolio (11 heuristics evaluated):
+    FCFS         raw=7642.000000  LP=0.000000  [SELECTED]
+    EDD          raw=7639.000000  LP=0.000000  [SELECTED]
+    TC-RBI       raw=7712.000000  LP=0.000000  [SELECTED]
+    CAF          raw=7584.000000  LP=0.000000  [SELECTED]
+    GRASP-3      raw=7712.000000  LP=0.000000
+    GRASP-7      raw=7390.000000  LP=0.000000
+    MPDS         raw=7476.000000  LP=0.000000
+    WCC          raw=6456.000000  LP=1656.000000
+    WEDD         raw=inf  LP=inf
+    ATC          raw=inf  LP=inf
+    ATCS         raw=inf  LP=inf
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.001s  @0.002s  LP=0.0000
+    EDD           construct=0.000s  lp_eval=0.001s  @0.003s  LP=0.0000
+    WEDD          construct=0.000s  lp_eval=0.001s  @0.004s  LP=inf
+    ATC           construct=0.001s  lp_eval=0.001s  @0.006s  LP=inf
+    ATCS          construct=0.001s  lp_eval=0.001s  @0.008s  LP=inf
+    TC-RBI        construct=0.067s  lp_eval=0.001s  @0.076s  LP=0.0000
+    CAF           construct=0.004s  lp_eval=0.001s  @0.082s  LP=0.0000
+    WCC           construct=0.005s  lp_eval=0.001s  @0.088s  LP=1656.0000
+    GRASP-3       construct=0.004s  lp_eval=0.001s  @0.093s  LP=0.0000
+    GRASP-7       construct=0.004s  lp_eval=0.001s  @0.099s  LP=0.0000
+    MPDS          construct=0.057s  lp_eval=0.001s  @0.158s  LP=0.0000
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.002s  LP=0.000000
+    t=   0.158s  LP=0.000000
+
+========================================================================
+  AIRLAND8  |  n=50  |  m=2
+========================================================================
+  SA+VND+PR LP         : 135.000000
+  Reference / BKS      : 135.0
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 1.700
+  Seed LP eval (s)     : 0.025
+  Best seed LP at (s)  : 0.949
+  SA dispatch at (s)   : 1.728
+  Total time-to-best   : 0.949 s
+  Total runtime (s)    : 24.70
+  Seed portfolio (11 heuristics evaluated):
+    TC-RBI       raw=80530.000000  LP=135.000000  [SELECTED]
+    GRASP-3      raw=79710.000000  LP=155.000000  [SELECTED]
+    GRASP-7      raw=80435.000000  LP=165.000000  [SELECTED]
+    CAF          raw=78425.000000  LP=175.000000  [SELECTED]
+    EDD          raw=79170.000000  LP=285.000000
+    MPDS         raw=76200.000000  LP=305.000000
+    ATCS         raw=83620.000000  LP=1945.000000
+    ATC          raw=83730.000000  LP=2950.000000
+    FCFS         raw=101025.000000  LP=10345.000000
+    WEDD         raw=91620.000000  LP=67315.000000
+    WCC          raw=147265.000000  LP=105875.000000
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.002s  @0.002s  LP=10345.0000
+    EDD           construct=0.000s  lp_eval=0.002s  @0.004s  LP=285.0000
+    WEDD          construct=0.000s  lp_eval=0.002s  @0.006s  LP=67315.0000
+    ATC           construct=0.001s  lp_eval=0.002s  @0.009s  LP=2950.0000
+    ATCS          construct=0.001s  lp_eval=0.002s  @0.012s  LP=1945.0000
+    TC-RBI        construct=0.933s  lp_eval=0.003s  @0.949s  LP=135.0000
+    CAF           construct=0.065s  lp_eval=0.003s  @1.017s  LP=175.0000
+    WCC           construct=0.005s  lp_eval=0.003s  @1.026s  LP=105875.0000
+    GRASP-3       construct=0.065s  lp_eval=0.003s  @1.095s  LP=155.0000
+    GRASP-7       construct=0.065s  lp_eval=0.003s  @1.163s  LP=165.0000
+    MPDS          construct=0.563s  lp_eval=0.002s  @1.728s  LP=305.0000
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.002s  LP=10345.000000
+    t=   0.004s  LP=285.000000
+    t=   0.949s  LP=135.000000
+    t=   1.728s  LP=135.000000
+
+========================================================================
+  AIRLAND8  |  n=50  |  m=3
+========================================================================
+  SA+VND+PR LP         : 0.000000
+  Reference / BKS      : 0.0
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 0.786
+  Seed LP eval (s)     : 0.016
+  Best seed LP at (s)  : 0.447
+  SA dispatch at (s)   : 0.803
+  Total time-to-best   : 0.447 s
+  Total runtime (s)    : 14.53
+  Seed portfolio (11 heuristics evaluated):
+    GRASP-7      raw=85955.000000  LP=0.000000  [SELECTED]
+    EDD          raw=90400.000000  LP=15.000000  [SELECTED]
+    TC-RBI       raw=89305.000000  LP=15.000000  [SELECTED]
+    CAF          raw=92165.000000  LP=15.000000  [SELECTED]
+    GRASP-3      raw=93065.000000  LP=15.000000
+    MPDS         raw=87900.000000  LP=15.000000
+    ATC          raw=95050.000000  LP=1265.000000
+    ATCS         raw=94690.000000  LP=1385.000000
+    FCFS         raw=101885.000000  LP=6110.000000
+    WEDD         raw=92595.000000  LP=59040.000000
+    WCC          raw=143510.000000  LP=93895.000000
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.001s  @0.002s  LP=6110.0000
+    EDD           construct=0.000s  lp_eval=0.001s  @0.003s  LP=15.0000
+    WEDD          construct=0.000s  lp_eval=0.002s  @0.005s  LP=59040.0000
+    ATC           construct=0.001s  lp_eval=0.001s  @0.008s  LP=1265.0000
+    ATCS          construct=0.001s  lp_eval=0.001s  @0.010s  LP=1385.0000
+    TC-RBI        construct=0.362s  lp_eval=0.001s  @0.373s  LP=15.0000
+    CAF           construct=0.021s  lp_eval=0.001s  @0.396s  LP=15.0000
+    WCC           construct=0.002s  lp_eval=0.002s  @0.400s  LP=93895.0000
+    GRASP-3       construct=0.022s  lp_eval=0.001s  @0.423s  LP=15.0000
+    GRASP-7       construct=0.022s  lp_eval=0.001s  @0.447s  LP=0.0000
+    MPDS          construct=0.355s  lp_eval=0.001s  @0.803s  LP=15.0000
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.002s  LP=6110.000000
+    t=   0.003s  LP=15.000000
+    t=   0.447s  LP=0.000000
+    t=   0.803s  LP=0.000000
+
+========================================================================
+  AIRLAND9  |  n=100  |  m=2
+========================================================================
+  SA+VND+PR LP         : 452.920000
+  Reference / BKS      : 444.1
+  Gap to BKS           : 1.99%
+  Sequence feasible    : YES
+  Seed construct (s)   : 2.741
+  Seed LP eval (s)     : 0.044
+  Best seed LP at (s)  : 1.361
+  SA dispatch at (s)   : 2.794
+  Total time-to-best   : 55.329 s
+  Total runtime (s)    : 56.27
+  Seed portfolio (11 heuristics evaluated):
+    TC-RBI       raw=41168.190000  LP=481.710000  [SELECTED]
+    GRASP-7      raw=43287.230000  LP=502.990000  [SELECTED]
+    EDD          raw=42222.970000  LP=540.010000  [SELECTED]
+    MPDS         raw=41573.200000  LP=608.860000  [SELECTED]
+    GRASP-3      raw=40217.090000  LP=624.590000
+    CAF          raw=41699.130000  LP=719.350000
+    ATC          raw=43286.550000  LP=1558.950000
+    ATCS         raw=42666.180000  LP=1570.160000
+    FCFS         raw=51674.130000  LP=7629.850000
+    WCC          raw=78341.590000  LP=71364.080000
+    WEDD         raw=inf  LP=inf
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.004s  @0.005s  LP=7629.8500
+    EDD           construct=0.000s  lp_eval=0.004s  @0.010s  LP=540.0100
+    WEDD          construct=0.001s  lp_eval=0.002s  @0.014s  LP=inf
+    ATC           construct=0.003s  lp_eval=0.004s  @0.021s  LP=1558.9500
+    ATCS          construct=0.004s  lp_eval=0.004s  @0.029s  LP=1570.1600
+    TC-RBI        construct=1.326s  lp_eval=0.004s  @1.361s  LP=481.7100
+    CAF           construct=0.039s  lp_eval=0.004s  @1.405s  LP=719.3500
+    WCC           construct=0.062s  lp_eval=0.006s  @1.474s  LP=71364.0800
+    GRASP-3       construct=0.038s  lp_eval=0.004s  @1.517s  LP=624.5900
+    GRASP-7       construct=0.039s  lp_eval=0.004s  @1.561s  LP=502.9900
+    MPDS          construct=1.228s  lp_eval=0.004s  @2.794s  LP=608.8600
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.005s  LP=7629.850000
+    t=   0.010s  LP=540.010000
+    t=   1.361s  LP=481.710000
+    t=   2.794s  LP=608.860000
+    t=   3.327s  LP=600.920000
+    t=   3.520s  LP=576.050000
+    t=   4.306s  LP=553.550000
+    t=   4.945s  LP=543.350000
+    t=   4.976s  LP=497.530000
+    t=   7.500s  LP=483.890000
+    t=   7.582s  LP=465.690000
+    t=   8.295s  LP=457.240000
+    t=  55.329s  LP=452.920000
+
+========================================================================
+  AIRLAND9  |  n=100  |  m=3
+========================================================================
+  SA+VND+PR LP         : 75.750000
+  Reference / BKS      : 75.75
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 2.797
+  Seed LP eval (s)     : 0.033
+  Best seed LP at (s)  : 0.007
+  SA dispatch at (s)   : 2.837
+  Total time-to-best   : 4.661 s
+  Total runtime (s)    : 42.83
+  Seed portfolio (11 heuristics evaluated):
+    EDD          raw=47611.750000  LP=89.030000  [SELECTED]
+    TC-RBI       raw=47220.250000  LP=98.630000  [SELECTED]
+    MPDS         raw=47116.550000  LP=103.950000  [SELECTED]
+    GRASP-7      raw=47078.890000  LP=128.090000  [SELECTED]
+    CAF          raw=47599.840000  LP=129.210000
+    GRASP-3      raw=46072.000000  LP=132.250000
+    ATC          raw=48177.760000  LP=566.370000
+    ATCS         raw=48172.200000  LP=629.160000
+    FCFS         raw=52935.030000  LP=4917.530000
+    WCC          raw=78113.100000  LP=70649.870000
+    WEDD         raw=inf  LP=inf
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.003s  @0.004s  LP=4917.5300
+    EDD           construct=0.000s  lp_eval=0.003s  @0.007s  LP=89.0300
+    WEDD          construct=0.001s  lp_eval=0.002s  @0.010s  LP=inf
+    ATC           construct=0.003s  lp_eval=0.003s  @0.016s  LP=566.3700
+    ATCS          construct=0.003s  lp_eval=0.003s  @0.023s  LP=629.1600
+    TC-RBI        construct=1.305s  lp_eval=0.003s  @1.331s  LP=98.6300
+    CAF           construct=0.038s  lp_eval=0.003s  @1.373s  LP=129.2100
+    WCC           construct=0.059s  lp_eval=0.005s  @1.438s  LP=70649.8700
+    GRASP-3       construct=0.037s  lp_eval=0.003s  @1.479s  LP=132.2500
+    GRASP-7       construct=0.038s  lp_eval=0.003s  @1.520s  LP=128.0900
+    MPDS          construct=1.313s  lp_eval=0.003s  @2.836s  LP=103.9500
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.004s  LP=4917.530000
+    t=   0.007s  LP=89.030000
+    t=   2.837s  LP=89.030000
+    t=   3.310s  LP=84.460000
+    t=   3.899s  LP=79.140000
+    t=   4.661s  LP=75.750000
+
+========================================================================
+  AIRLAND9  |  n=100  |  m=4
+========================================================================
+  SA+VND+PR LP         : 0.000000
+  Reference / BKS      : 0.0
+  Gap to BKS           : 0.00%
+  Sequence feasible    : YES
+  Seed construct (s)   : 2.649
+  Seed LP eval (s)     : 0.028
+  Best seed LP at (s)  : 0.006
+  SA dispatch at (s)   : 2.683
+  Total time-to-best   : 0.006 s
+  Total runtime (s)    : 18.81
+  Seed portfolio (11 heuristics evaluated):
+    EDD          raw=50151.670000  LP=0.000000  [SELECTED]
+    TC-RBI       raw=46962.100000  LP=0.000000  [SELECTED]
+    CAF          raw=48036.170000  LP=0.000000  [SELECTED]
+    GRASP-7      raw=49052.190000  LP=0.000000  [SELECTED]
+    MPDS         raw=48420.160000  LP=0.000000
+    GRASP-3      raw=50036.280000  LP=5.320000
+    ATCS         raw=51885.590000  LP=153.290000
+    ATC          raw=51692.880000  LP=168.810000
+    FCFS         raw=53160.930000  LP=1714.460000
+    WCC          raw=76542.500000  LP=65473.160000
+    WEDD         raw=inf  LP=inf
+  Per-seed timing (construct_s / lp_eval_s / job_rel_s):
+    FCFS          construct=0.000s  lp_eval=0.002s  @0.003s  LP=1714.4600
+    EDD           construct=0.000s  lp_eval=0.002s  @0.006s  LP=0.0000
+    WEDD          construct=0.000s  lp_eval=0.001s  @0.008s  LP=inf
+    ATC           construct=0.003s  lp_eval=0.002s  @0.014s  LP=168.8100
+    ATCS          construct=0.003s  lp_eval=0.002s  @0.020s  LP=153.2900
+    TC-RBI        construct=1.257s  lp_eval=0.003s  @1.279s  LP=0.0000
+    CAF           construct=0.037s  lp_eval=0.002s  @1.319s  LP=0.0000
+    WCC           construct=0.053s  lp_eval=0.005s  @1.378s  LP=65473.1600
+    GRASP-3       construct=0.036s  lp_eval=0.002s  @1.418s  LP=5.3200
+    GRASP-7       construct=0.037s  lp_eval=0.002s  @1.457s  LP=0.0000
+    MPDS          construct=1.223s  lp_eval=0.003s  @2.683s  LP=0.0000
+  LP improvement timeline (job_rel_s, lp_val):
+    t=   0.003s  LP=1714.460000
+    t=   0.006s  LP=0.000000
+    t=   2.683s  LP=0.000000
+

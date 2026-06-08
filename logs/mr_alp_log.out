@@ -1,0 +1,1355 @@
+==========================================================================
+  MR-ALP Solver — TC-RBI + Parallel SA + VND + Path Relinking
+  Workers       : 7 processes | 4 chains/job
+  T_LIMIT       : 300s (adaptive, max 600s)
+  Elite pool    : max 20 solutions, min diversity 5
+  Output dir    : MR_results
+  Save results  : True  |  Save plots: True
+  Accel         : Numba JIT, PyTorch GPU, matplotlib
+  RBI tuning    : RBI Optuna ON (30 base trials)
+  SA tuning     : SA Optuna ON (20 base trials)
+==========================================================================
+  Submitting 36 jobs to 7 workers...
+
+
+  [SA Optuna] AIRLAND1 m=3 → 20 trials ...
+  [SA Optuna] done in 12.8s  best: χ₀=0.882  M_stag=0.058  β=2.254  γ=0.0195  χ*=0.107
+  Adaptive T_LIMIT: 60s  (seed_LP=0.00  BKS=0.0)
+  [airland1 m=3] 4 seeds | N_iter=2000 | t_limit=60s
+  SA params: χ₀=0.882  M_stag=0.058  β=2.254  γ=0.0195  χ*=0.107
+    seed TC-RBI       LP=0.0000
+    seed LP-repair    LP=0.0000
+    seed Ctrl-X       LP=0.0000
+    seed TC-repair    LP=0.0000
+
+==========================================================================
+  AIRLAND1  |  n=10  |  m=3 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 2.45 s
+  TC-RBI params            : η=0.445 μ_TC=4.778 μ_late=0.060 μ_count=0.730 μ_sep=0.092
+  SA params                : χ₀=0.882  M_stag=0.058  β=2.254  γ=0.0195  χ*=0.107
+  Best seed LP             : 0.0000
+  SA+VND+PR final LP       : 0.0000
+  Earliest-time objective  : 4130.0000
+  BKS (opt=0)              : 0.0000
+  Gap (seed → final)       : 0.00% → 0.00%
+  Time to best LP          : 0.00 s
+  Elite pool size          : 1
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:    4 aircraft  seq=[2, 4, 6, 9]
+    Runway 2:    3 aircraft  seq=[3, 7, 8]
+    Runway 3:    3 aircraft  seq=[5, 0, 1]
+==========================================================================
+  ↳ airland1     m=3  seed=0.00  SA=0.00  gap=0.00%  ✓  t_best=0.0s  (2.5s) [tuned]
+
+  [SA Optuna] AIRLAND1 m=2 → 20 trials ...
+  [SA Optuna] done in 18.9s  best: χ₀=0.831  M_stag=0.252  β=1.857  γ=0.1416  χ*=0.332
+  Adaptive T_LIMIT: 60s  (seed_LP=90.00  BKS=90.0)
+  [airland1 m=2] 4 seeds | N_iter=2000 | t_limit=60s
+  SA params: χ₀=0.831  M_stag=0.252  β=1.857  γ=0.1416  χ*=0.332
+    seed TC-RBI       LP=90.0000
+    seed LP-repair    LP=90.0000
+    seed Ctrl-X       LP=90.0000
+    seed TC-repair    LP=150.0000
+
+==========================================================================
+  AIRLAND1  |  n=10  |  m=2 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 5.83 s
+  TC-RBI params            : η=0.571 μ_TC=2.324 μ_late=1.594 μ_count=1.422 μ_sep=0.376
+  SA params                : χ₀=0.831  M_stag=0.252  β=1.857  γ=0.1416  χ*=0.332
+  Best seed LP             : 90.0000
+  SA+VND+PR final LP       : 90.0000
+  Earliest-time objective  : 3990.0000
+  Reference/BKS            : 90.0000
+  Gap (seed → final)       : 0.00% → 0.00%
+  Time to best LP          : 0.00 s
+  Elite pool size          : 1
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:    5 aircraft  seq=[2, 4, 6, 8, 9]
+    Runway 2:    5 aircraft  seq=[3, 5, 7, 0, 1]
+==========================================================================
+  ↳ airland1     m=2  seed=90.00  SA=90.00  gap=0.00%  ✓  t_best=0.0s  (5.8s) [tuned]
+
+  [SA Optuna] AIRLAND10 m=5 → 6 trials ...
+  [SA Optuna] done in 60.6s  best: χ₀=0.821  M_stag=0.111  β=1.266  γ=0.1609  χ*=0.248
+  Adaptive T_LIMIT: 60s  (seed_LP=0.00  BKS=0.0)
+  [airland10 m=5] 4 seeds | N_iter=5000 | t_limit=60s
+  SA params: χ₀=0.821  M_stag=0.111  β=1.266  γ=0.1609  χ*=0.248
+    seed TC-RBI       LP=0.0000
+    seed LP-repair    LP=0.0000
+    seed Ctrl-X       LP=0.0000
+    seed TC-repair    LP=0.0000
+
+==========================================================================
+  AIRLAND10  |  n=150  |  m=5 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 17.78 s
+  TC-RBI params            : η=0.564 μ_TC=3.269 μ_late=0.365 μ_count=2.447 μ_sep=0.162
+  SA params                : χ₀=0.821  M_stag=0.111  β=1.266  γ=0.1609  χ*=0.248
+  Best seed LP             : 0.0000
+  SA+VND+PR final LP       : 0.0000
+  Earliest-time objective  : 67062.6300
+  BKS (opt=0)              : 0.0000
+  Gap (seed → final)       : 0.00% → 0.00%
+  Time to best LP          : 0.00 s
+  Elite pool size          : 1
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:   30 aircraft  seq=[11, 15, 17, 21, 25, 24,...]
+    Runway 2:   30 aircraft  seq=[3, 7, 14, 16, 18, 19,...]
+    Runway 3:   30 aircraft  seq=[2, 6, 30, 47, 62, 59,...]
+    Runway 4:   30 aircraft  seq=[5, 8, 9, 12, 27, 32,...]
+    Runway 5:   30 aircraft  seq=[0, 1, 4, 10, 13, 23,...]
+==========================================================================
+  ↳ airland10    m=5  seed=0.00  SA=0.00  gap=0.00%  ✓  t_best=0.0s  (17.8s) [tuned]
+
+  [SA Optuna] AIRLAND10 m=4 → 6 trials ...
+  [SA Optuna] done in 71.9s  best: χ₀=0.563  M_stag=0.077  β=1.642  γ=0.0177  χ*=0.263
+  Adaptive T_LIMIT: 60s  (seed_LP=34.22  BKS=34.22)
+  [airland10 m=4] 4 seeds | N_iter=5000 | t_limit=60s
+  SA params: χ₀=0.563  M_stag=0.077  β=1.642  γ=0.0177  χ*=0.263
+    seed TC-RBI       LP=34.2200
+    seed LP-repair    LP=34.2200
+    seed Ctrl-X       LP=34.2200
+    seed TC-repair    LP=37.4400
+
+==========================================================================
+  AIRLAND10  |  n=150  |  m=4 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 21.80 s
+  TC-RBI params            : η=0.794 μ_TC=1.716 μ_late=0.667 μ_count=1.703 μ_sep=0.433
+  SA params                : χ₀=0.563  M_stag=0.077  β=1.642  γ=0.0177  χ*=0.263
+  Best seed LP             : 34.2200
+  SA+VND+PR final LP       : 34.2200
+  Earliest-time objective  : 67102.9700
+  Reference/BKS            : 34.2200
+  Gap (seed → final)       : 0.00% → 0.00%
+  Time to best LP          : 0.00 s
+  Elite pool size          : 2
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:   37 aircraft  seq=[5, 7, 11, 15, 17, 20,...]
+    Runway 2:   38 aircraft  seq=[3, 8, 10, 14, 18, 19,...]
+    Runway 3:   38 aircraft  seq=[2, 6, 12, 13, 30, 43,...]
+    Runway 4:   37 aircraft  seq=[0, 1, 4, 9, 16, 23,...]
+==========================================================================
+  ↳ airland10    m=4  seed=34.22  SA=34.22  gap=0.00%  ✓  t_best=0.0s  (21.8s) [tuned]
+
+  [SA Optuna] AIRLAND11 m=4 → 6 trials ...
+  [SA Optuna] done in 112.2s  best: χ₀=0.666  M_stag=0.223  β=1.428  γ=0.1461  χ*=0.223
+  Adaptive T_LIMIT: 60s  (seed_LP=54.53  BKS=54.53)
+  [airland11 m=4] 4 seeds | N_iter=5000 | t_limit=60s
+  SA params: χ₀=0.666  M_stag=0.223  β=1.428  γ=0.1461  χ*=0.223
+    seed TC-RBI       LP=54.5300
+    seed LP-repair    LP=54.5300
+    seed Ctrl-X       LP=54.5300
+    seed TC-repair    LP=58.0800
+
+==========================================================================
+  AIRLAND11  |  n=200  |  m=4 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 61.80 s
+  TC-RBI params            : η=0.314 μ_TC=4.472 μ_late=1.543 μ_count=2.700 μ_sep=0.146
+  SA params                : χ₀=0.666  M_stag=0.223  β=1.428  γ=0.1461  χ*=0.223
+  Best seed LP             : 54.5300
+  SA+VND+PR final LP       : 54.5300
+  Earliest-time objective  : 93843.9300
+  Reference/BKS            : 54.5300
+  Gap (seed → final)       : 0.00% → 0.00%
+  Time to best LP          : 0.00 s
+  Elite pool size          : 2
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:   50 aircraft  seq=[3, 6, 11, 12, 14, 15,...]
+    Runway 2:   50 aircraft  seq=[7, 9, 18, 22, 37, 35,...]
+    Runway 3:   50 aircraft  seq=[0, 4, 1, 10, 8, 13,...]
+    Runway 4:   50 aircraft  seq=[2, 5, 17, 19, 28, 26,...]
+==========================================================================
+  ↳ airland11    m=4  seed=54.53  SA=54.53  gap=0.00%  ✓  t_best=0.0s  (61.8s) [tuned]
+
+  [SA Optuna] AIRLAND10 m=3 → 6 trials ...
+  [SA Optuna] done in 113.0s  best: χ₀=0.584  M_stag=0.290  β=2.190  γ=0.0387  χ*=0.179
+  Adaptive T_LIMIT: 600s  (seed_LP=258.46  BKS=205.21)
+  [airland10 m=3] 4 seeds | N_iter=5000 | t_limit=600s
+  SA params: χ₀=0.584  M_stag=0.290  β=2.190  γ=0.0387  χ*=0.179
+    seed TC-RBI       LP=258.4600
+    seed LP-repair    LP=258.4600
+    seed Ctrl-X       LP=258.4600
+    seed TC-repair    LP=248.2000
+
+==========================================================================
+  AIRLAND10  |  n=150  |  m=3 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 88.83 s
+  TC-RBI params            : η=0.773 μ_TC=2.732 μ_late=0.876 μ_count=0.405 μ_sep=0.083
+  SA params                : χ₀=0.584  M_stag=0.290  β=2.190  γ=0.0387  χ*=0.179
+  Best seed LP             : 248.2000
+  SA+VND+PR final LP       : 209.5700
+  Earliest-time objective  : 65350.8700
+  Reference/BKS            : 205.2100
+  Gap (seed → final)       : 20.95% → 2.12%
+  Time to best LP          : 5.13 s
+  Elite pool size          : 6
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:   51 aircraft  seq=[5, 8, 11, 19, 26, 30,...]
+    Runway 2:   50 aircraft  seq=[2, 3, 6, 9, 12, 13,...]
+    Runway 3:   49 aircraft  seq=[0, 1, 7, 4, 10, 14,...]
+==========================================================================
+  ↳ airland10    m=3  seed=248.20  SA=209.57  gap=2.12%  ✓  t_best=5.1s  (88.8s) [tuned]
+
+  [SA Optuna] AIRLAND11 m=5 → 6 trials ...
+  [SA Optuna] done in 104.1s  best: χ₀=0.532  M_stag=0.173  β=1.948  γ=0.1896  χ*=0.345
+  Adaptive T_LIMIT: 60s  (seed_LP=0.00  BKS=0.0)
+  [airland11 m=5] 4 seeds | N_iter=5000 | t_limit=60s
+  SA params: χ₀=0.532  M_stag=0.173  β=1.948  γ=0.1896  χ*=0.345
+    seed TC-RBI       LP=0.0000
+    seed LP-repair    LP=0.0000
+    seed Ctrl-X       LP=0.0000
+    seed TC-repair    LP=0.0000
+
+==========================================================================
+  AIRLAND11  |  n=200  |  m=5 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 45.08 s
+  TC-RBI params            : η=0.404 μ_TC=0.584 μ_late=1.830 μ_count=1.315 μ_sep=0.020
+  SA params                : χ₀=0.532  M_stag=0.173  β=1.948  γ=0.1896  χ*=0.345
+  Best seed LP             : 0.0000
+  SA+VND+PR final LP       : 0.0000
+  Earliest-time objective  : 96344.1600
+  BKS (opt=0)              : 0.0000
+  Gap (seed → final)       : 0.00% → 0.00%
+  Time to best LP          : 0.00 s
+  Elite pool size          : 1
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:   40 aircraft  seq=[2, 4, 5, 12, 14, 15,...]
+    Runway 2:   40 aircraft  seq=[0, 7, 9, 8, 16, 24,...]
+    Runway 3:   40 aircraft  seq=[10, 13, 17, 22, 27, 25,...]
+    Runway 4:   40 aircraft  seq=[1, 20, 32, 57, 59, 72,...]
+    Runway 5:   40 aircraft  seq=[3, 6, 11, 18, 19, 29,...]
+==========================================================================
+  ↳ airland11    m=5  seed=0.00  SA=0.00  gap=0.00%  ✓  t_best=0.0s  (45.1s) [tuned]
+
+  [SA Optuna] AIRLAND11 m=3 → 6 trials ...
+  [SA Optuna] done in 127.6s  best: χ₀=0.885  M_stag=0.185  β=1.242  γ=0.1339  χ*=0.228
+  Adaptive T_LIMIT: 600s  (seed_LP=316.07  BKS=253.07)
+  [airland11 m=3] 4 seeds | N_iter=5000 | t_limit=600s
+  SA params: χ₀=0.885  M_stag=0.185  β=1.242  γ=0.1339  χ*=0.228
+    seed TC-RBI       LP=316.0700
+    seed LP-repair    LP=299.4300
+    seed Ctrl-X       LP=316.0700
+    seed TC-repair    LP=294.4800
+
+==========================================================================
+  AIRLAND11  |  n=200  |  m=3 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 127.37 s
+  TC-RBI params            : η=0.733 μ_TC=2.754 μ_late=1.607 μ_count=0.305 μ_sep=0.241
+  SA params                : χ₀=0.885  M_stag=0.185  β=1.242  γ=0.1339  χ*=0.228
+  Best seed LP             : 294.4800
+  SA+VND+PR final LP       : 253.0700
+  Earliest-time objective  : 88293.5900
+  Reference/BKS            : 253.0700
+  Gap (seed → final)       : 16.36% → 0.00%
+  Time to best LP          : 62.07 s
+  Elite pool size          : 6
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:   66 aircraft  seq=[0, 7, 3, 9, 18, 15,...]
+    Runway 2:   68 aircraft  seq=[5, 6, 11, 12, 14, 16,...]
+    Runway 3:   66 aircraft  seq=[2, 4, 1, 10, 8, 13,...]
+==========================================================================
+  ↳ airland11    m=3  seed=294.48  SA=253.07  gap=0.00%  ✓  t_best=62.1s  (127.4s) [tuned]
+
+  [SA Optuna] AIRLAND10 m=2 → 6 trials ...
+  [SA Optuna] done in 152.6s  best: χ₀=0.639  M_stag=0.156  β=2.364  γ=0.0448  χ*=0.172
+  Adaptive T_LIMIT: 600s  (seed_LP=1279.78  BKS=1143.7)
+  [airland10 m=2] 4 seeds | N_iter=5000 | t_limit=600s
+  SA params: χ₀=0.639  M_stag=0.156  β=2.364  γ=0.0448  χ*=0.172
+    seed TC-RBI       LP=1279.7800
+    seed LP-repair    LP=1253.8600
+    seed Ctrl-X       LP=1279.7800
+    seed TC-repair    LP=1246.5800
+
+==========================================================================
+  AIRLAND10  |  n=150  |  m=2 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 133.47 s
+  TC-RBI params            : η=0.424 μ_TC=4.730 μ_late=1.509 μ_count=2.373 μ_sep=0.044
+  SA params                : χ₀=0.639  M_stag=0.156  β=2.364  γ=0.0448  χ*=0.172
+  Best seed LP             : 1246.5800
+  SA+VND+PR final LP       : 1155.9000
+  Earliest-time objective  : 57083.3300
+  Reference/BKS            : 1143.7000
+  Gap (seed → final)       : 9.00% → 1.07%
+  Time to best LP          : 46.41 s
+  Elite pool size          : 6
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:   75 aircraft  seq=[5, 1, 7, 4, 10, 16,...]
+    Runway 2:   75 aircraft  seq=[2, 0, 3, 8, 6, 9,...]
+==========================================================================
+  ↳ airland10    m=2  seed=1246.58  SA=1155.90  gap=1.07%  ✓  t_best=46.4s  (133.5s) [tuned]
+
+  [SA Optuna] AIRLAND11 m=2 → 6 trials ...
+  [SA Optuna] done in 190.9s  best: χ₀=0.740  M_stag=0.081  β=1.587  γ=0.0539  χ*=0.106
+  Adaptive T_LIMIT: 600s  (seed_LP=1544.87  BKS=1330.91)
+  [airland11 m=2] 4 seeds | N_iter=5000 | t_limit=600s
+  SA params: χ₀=0.740  M_stag=0.081  β=1.587  γ=0.0539  χ*=0.106
+    seed TC-RBI       LP=1544.8700
+    seed LP-repair    LP=1485.8800
+    seed Ctrl-X       LP=1544.8700
+    seed TC-repair    LP=1532.5000
+
+==========================================================================
+  AIRLAND11  |  n=200  |  m=2 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 116.79 s
+  TC-RBI params            : η=0.530 μ_TC=2.408 μ_late=1.362 μ_count=1.895 μ_sep=0.002
+  SA params                : χ₀=0.740  M_stag=0.081  β=1.587  γ=0.0539  χ*=0.106
+  Best seed LP             : 1485.8800
+  SA+VND+PR final LP       : 1369.1500
+  Earliest-time objective  : 83249.1900
+  Reference/BKS            : 1330.9100
+  Gap (seed → final)       : 11.64% → 2.87%
+  Time to best LP          : 48.25 s
+  Elite pool size          : 7
+  Path relinking improved  : Yes
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:   97 aircraft  seq=[0, 7, 3, 9, 6, 11,...]
+    Runway 2:  103 aircraft  seq=[2, 4, 1, 5, 10, 8,...]
+==========================================================================
+  ↳ airland11    m=2  seed=1485.88  SA=1369.15  gap=2.87%  ✓  t_best=48.3s  (116.8s) [tuned]
+
+  [SA Optuna] AIRLAND12 m=5 → 6 trials ...
+  [SA Optuna] done in 99.3s  best: χ₀=0.616  M_stag=0.069  β=2.287  γ=0.1567  χ*=0.136
+  Adaptive T_LIMIT: 60s  (seed_LP=0.00  BKS=0.0)
+  [airland12 m=5] 4 seeds | N_iter=5000 | t_limit=60s
+  SA params: χ₀=0.616  M_stag=0.069  β=2.287  γ=0.1567  χ*=0.136
+    seed TC-RBI       LP=0.0000
+    seed LP-repair    LP=0.0000
+    seed Ctrl-X       LP=0.0000
+    seed TC-repair    LP=0.0000
+
+==========================================================================
+  AIRLAND12  |  n=250  |  m=5 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 19.34 s
+  TC-RBI params            : η=0.235 μ_TC=1.592 μ_late=1.206 μ_count=2.837 μ_sep=0.105
+  SA params                : χ₀=0.616  M_stag=0.069  β=2.287  γ=0.1567  χ*=0.136
+  Best seed LP             : 0.0000
+  SA+VND+PR final LP       : 0.0000
+  Earliest-time objective  : 113462.2300
+  BKS (opt=0)              : 0.0000
+  Gap (seed → final)       : 0.00% → 0.00%
+  Time to best LP          : 0.00 s
+  Elite pool size          : 1
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:   49 aircraft  seq=[21, 32, 40, 39, 41, 46,...]
+    Runway 2:   50 aircraft  seq=[3, 7, 10, 20, 23, 26,...]
+    Runway 3:   50 aircraft  seq=[12, 15, 25, 28, 30, 43,...]
+    Runway 4:   51 aircraft  seq=[1, 2, 5, 6, 8, 13,...]
+    Runway 5:   50 aircraft  seq=[0, 4, 9, 11, 16, 19,...]
+==========================================================================
+  ↳ airland12    m=5  seed=0.00  SA=0.00  gap=0.00%  ✓  t_best=0.0s  (19.3s) [tuned]
+
+  [SA Optuna] AIRLAND12 m=4 → 6 trials ...
+  [SA Optuna] done in 133.6s  best: χ₀=0.627  M_stag=0.106  β=1.635  γ=0.1119  χ*=0.143
+  Adaptive T_LIMIT: 600s  (seed_LP=3.49  BKS=2.44)
+  [airland12 m=4] 4 seeds | N_iter=5000 | t_limit=600s
+  SA params: χ₀=0.627  M_stag=0.106  β=1.635  γ=0.1119  χ*=0.143
+    seed TC-RBI       LP=3.4900
+    seed LP-repair    LP=3.4900
+    seed Ctrl-X       LP=3.4900
+    seed TC-repair    LP=16.0900
+
+==========================================================================
+  AIRLAND12  |  n=250  |  m=4 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 62.14 s
+  TC-RBI params            : η=0.254 μ_TC=2.792 μ_late=1.160 μ_count=2.117 μ_sep=0.127
+  SA params                : χ₀=0.627  M_stag=0.106  β=1.635  γ=0.1119  χ*=0.143
+  Best seed LP             : 3.4900
+  SA+VND+PR final LP       : 2.4400
+  Earliest-time objective  : 111152.6700
+  Reference/BKS            : 2.4400
+  Gap (seed → final)       : 43.03% → 0.00%
+  Time to best LP          : 11.57 s
+  Elite pool size          : 5
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:   61 aircraft  seq=[0, 9, 12, 14, 17, 15,...]
+    Runway 2:   64 aircraft  seq=[7, 10, 13, 18, 19, 23,...]
+    Runway 3:   62 aircraft  seq=[3, 4, 11, 16, 21, 24,...]
+    Runway 4:   63 aircraft  seq=[1, 2, 5, 6, 8, 22,...]
+==========================================================================
+  ↳ airland12    m=4  seed=3.49  SA=2.44  gap=0.00%  ✓  t_best=11.6s  (62.1s) [tuned]
+
+  [SA Optuna] AIRLAND2 m=2 → 20 trials ...
+  [SA Optuna] done in 32.0s  best: χ₀=0.635  M_stag=0.055  β=2.080  γ=0.0198  χ*=0.207
+  Adaptive T_LIMIT: 60s  (seed_LP=210.00  BKS=210.0)
+  [airland2 m=2] 4 seeds | N_iter=2000 | t_limit=60s
+  SA params: χ₀=0.635  M_stag=0.055  β=2.080  γ=0.0198  χ*=0.207
+    seed TC-RBI       LP=210.0000
+    seed LP-repair    LP=210.0000
+    seed Ctrl-X       LP=210.0000
+    seed TC-repair    LP=240.0000
+
+==========================================================================
+  AIRLAND2  |  n=15  |  m=2 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 4.03 s
+  TC-RBI params            : η=0.724 μ_TC=0.724 μ_late=0.681 μ_count=1.042 μ_sep=0.188
+  SA params                : χ₀=0.635  M_stag=0.055  β=2.080  γ=0.0198  χ*=0.207
+  Best seed LP             : 210.0000
+  SA+VND+PR final LP       : 210.0000
+  Earliest-time objective  : 6690.0000
+  Reference/BKS            : 210.0000
+  Gap (seed → final)       : 0.00% → 0.00%
+  Time to best LP          : 0.00 s
+  Elite pool size          : 2
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:    8 aircraft  seq=[2, 4, 7, 6, 9, 12,...]
+    Runway 2:    7 aircraft  seq=[3, 5, 8, 0, 13, 11,...]
+==========================================================================
+  ↳ airland2     m=2  seed=210.00  SA=210.00  gap=0.00%  ✓  t_best=0.0s  (4.0s) [tuned]
+
+  [SA Optuna] AIRLAND2 m=3 → 20 trials ...
+  [SA Optuna] done in 20.8s  best: χ₀=0.509  M_stag=0.057  β=1.900  γ=0.0428  χ*=0.122
+  Adaptive T_LIMIT: 60s  (seed_LP=0.00  BKS=0.0)
+  [airland2 m=3] 4 seeds | N_iter=2000 | t_limit=60s
+  SA params: χ₀=0.509  M_stag=0.057  β=1.900  γ=0.0428  χ*=0.122
+    seed TC-RBI       LP=0.0000
+    seed LP-repair    LP=0.0000
+    seed Ctrl-X       LP=0.0000
+    seed TC-repair    LP=0.0000
+
+==========================================================================
+  AIRLAND2  |  n=15  |  m=3 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 3.15 s
+  TC-RBI params            : η=0.268 μ_TC=4.604 μ_late=1.425 μ_count=1.065 μ_sep=0.189
+  SA params                : χ₀=0.509  M_stag=0.057  β=1.900  γ=0.0428  χ*=0.122
+  Best seed LP             : 0.0000
+  SA+VND+PR final LP       : 0.0000
+  Earliest-time objective  : 6880.0000
+  BKS (opt=0)              : 0.0000
+  Gap (seed → final)       : 0.00% → 0.00%
+  Time to best LP          : 0.00 s
+  Elite pool size          : 1
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:    5 aircraft  seq=[2, 7, 8, 9, 12]
+    Runway 2:    5 aircraft  seq=[3, 4, 6, 13, 10]
+    Runway 3:    5 aircraft  seq=[5, 0, 1, 11, 14]
+==========================================================================
+  ↳ airland2     m=3  seed=0.00  SA=0.00  gap=0.00%  ✓  t_best=0.0s  (3.2s) [tuned]
+
+  [SA Optuna] AIRLAND3 m=2 → 20 trials ...
+  [SA Optuna] done in 37.7s  best: χ₀=0.516  M_stag=0.087  β=1.990  γ=0.0107  χ*=0.178
+  Adaptive T_LIMIT: 60s  (seed_LP=60.00  BKS=60.0)
+  [airland3 m=2] 4 seeds | N_iter=2000 | t_limit=60s
+  SA params: χ₀=0.516  M_stag=0.087  β=1.990  γ=0.0107  χ*=0.178
+    seed TC-RBI       LP=60.0000
+    seed LP-repair    LP=60.0000
+    seed Ctrl-X       LP=60.0000
+    seed TC-repair    LP=120.0000
+
+==========================================================================
+  AIRLAND3  |  n=20  |  m=2 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 4.76 s
+  TC-RBI params            : η=0.684 μ_TC=3.613 μ_late=1.552 μ_count=1.698 μ_sep=0.334
+  SA params                : χ₀=0.516  M_stag=0.087  β=1.990  γ=0.0107  χ*=0.178
+  Best seed LP             : 60.0000
+  SA+VND+PR final LP       : 60.0000
+  Earliest-time objective  : 9290.0000
+  Reference/BKS            : 60.0000
+  Gap (seed → final)       : 0.00% → 0.00%
+  Time to best LP          : 0.00 s
+  Elite pool size          : 1
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:   10 aircraft  seq=[0, 7, 3, 11, 8, 10,...]
+    Runway 2:   10 aircraft  seq=[5, 9, 2, 1, 6, 14,...]
+==========================================================================
+  ↳ airland3     m=2  seed=60.00  SA=60.00  gap=0.00%  ✓  t_best=0.0s  (4.8s) [tuned]
+
+  [SA Optuna] AIRLAND3 m=3 → 20 trials ...
+  [SA Optuna] done in 25.4s  best: χ₀=0.578  M_stag=0.137  β=1.861  γ=0.0694  χ*=0.111
+  Adaptive T_LIMIT: 60s  (seed_LP=0.00  BKS=0.0)
+  [airland3 m=3] 4 seeds | N_iter=2000 | t_limit=60s
+  SA params: χ₀=0.578  M_stag=0.137  β=1.861  γ=0.0694  χ*=0.111
+    seed TC-RBI       LP=0.0000
+    seed LP-repair    LP=0.0000
+    seed Ctrl-X       LP=0.0000
+    seed TC-repair    LP=0.0000
+
+==========================================================================
+  AIRLAND3  |  n=20  |  m=3 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 5.71 s
+  TC-RBI params            : η=0.709 μ_TC=4.770 μ_late=0.715 μ_count=2.866 μ_sep=0.329
+  SA params                : χ₀=0.578  M_stag=0.137  β=1.861  γ=0.0694  χ*=0.111
+  Best seed LP             : 0.0000
+  SA+VND+PR final LP       : 0.0000
+  Earliest-time objective  : 9630.0000
+  BKS (opt=0)              : 0.0000
+  Gap (seed → final)       : 0.00% → 0.00%
+  Time to best LP          : 0.00 s
+  Elite pool size          : 1
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:    7 aircraft  seq=[0, 5, 9, 10, 18, 12,...]
+    Runway 2:    6 aircraft  seq=[7, 3, 11, 19, 4, 13]
+    Runway 3:    7 aircraft  seq=[8, 2, 1, 6, 14, 17,...]
+==========================================================================
+  ↳ airland3     m=3  seed=0.00  SA=0.00  gap=0.00%  ✓  t_best=0.0s  (5.7s) [tuned]
+
+  [SA Optuna] AIRLAND12 m=3 → 6 trials ...
+  [SA Optuna] done in 186.3s  best: χ₀=0.934  M_stag=0.172  β=1.950  γ=0.0146  χ*=0.289
+  Adaptive T_LIMIT: 600s  (seed_LP=271.60  BKS=221.97)
+  [airland12 m=3] 4 seeds | N_iter=5000 | t_limit=600s
+  SA params: χ₀=0.934  M_stag=0.172  β=1.950  γ=0.0146  χ*=0.289
+    seed TC-RBI       LP=271.6000
+    seed LP-repair    LP=247.6200
+    seed Ctrl-X       LP=271.6000
+    seed TC-repair    LP=247.6200
+
+==========================================================================
+  AIRLAND12  |  n=250  |  m=3 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 174.82 s
+  TC-RBI params            : η=0.415 μ_TC=4.624 μ_late=0.243 μ_count=2.590 μ_sep=0.284
+  SA params                : χ₀=0.934  M_stag=0.172  β=1.950  γ=0.0146  χ*=0.289
+  Best seed LP             : 247.6200
+  SA+VND+PR final LP       : 228.8800
+  Earliest-time objective  : 106312.3400
+  Reference/BKS            : 221.9700
+  Gap (seed → final)       : 11.56% → 3.11%
+  Time to best LP          : 159.36 s
+  Elite pool size          : 7
+  Path relinking improved  : Yes
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:   84 aircraft  seq=[2, 5, 6, 8, 11, 18,...]
+    Runway 2:   81 aircraft  seq=[0, 3, 4, 9, 10, 12,...]
+    Runway 3:   85 aircraft  seq=[1, 7, 13, 14, 17, 15,...]
+==========================================================================
+  ↳ airland12    m=3  seed=247.62  SA=228.88  gap=3.11%  ✓  t_best=159.4s  (174.8s) [tuned]
+
+  [SA Optuna] AIRLAND4 m=2 → 20 trials ...
+  [SA Optuna] done in 27.9s  best: χ₀=0.841  M_stag=0.089  β=2.292  γ=0.1952  χ*=0.172
+  Adaptive T_LIMIT: 60s  (seed_LP=640.00  BKS=640.0)
+  [airland4 m=2] 4 seeds | N_iter=2000 | t_limit=60s
+  SA params: χ₀=0.841  M_stag=0.089  β=2.292  γ=0.1952  χ*=0.172
+    seed TC-RBI       LP=640.0000
+    seed LP-repair    LP=640.0000
+    seed Ctrl-X       LP=640.0000
+    seed TC-repair    LP=700.0000
+
+==========================================================================
+  AIRLAND4  |  n=20  |  m=2 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 6.25 s
+  TC-RBI params            : η=0.511 μ_TC=3.612 μ_late=0.246 μ_count=1.818 μ_sep=0.357
+  SA params                : χ₀=0.841  M_stag=0.089  β=2.292  γ=0.1952  χ*=0.172
+  Best seed LP             : 640.0000
+  SA+VND+PR final LP       : 640.0000
+  Earliest-time objective  : 8380.0000
+  Reference/BKS            : 640.0000
+  Gap (seed → final)       : 0.00% → 0.00%
+  Time to best LP          : 0.00 s
+  Elite pool size          : 2
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:   10 aircraft  seq=[0, 4, 8, 6, 12, 11,...]
+    Runway 2:   10 aircraft  seq=[1, 7, 5, 15, 18, 16,...]
+==========================================================================
+  ↳ airland4     m=2  seed=640.00  SA=640.00  gap=0.00%  ✓  t_best=0.0s  (6.3s) [tuned]
+
+  [SA Optuna] AIRLAND12 m=2 → 6 trials ...
+  [SA Optuna] done in 279.6s  best: χ₀=0.822  M_stag=0.116  β=2.431  γ=0.1905  χ*=0.235
+  Adaptive T_LIMIT: 600s  (seed_LP=2167.13  BKS=1695.62)
+  [airland12 m=2] 4 seeds | N_iter=5000 | t_limit=600s
+  SA params: χ₀=0.822  M_stag=0.116  β=2.431  γ=0.1905  χ*=0.235
+    seed TC-RBI       LP=2167.1300
+    seed LP-repair    LP=2062.7100
+    seed Ctrl-X       LP=2025.1900
+    seed TC-repair    LP=2099.2700
+
+==========================================================================
+  AIRLAND12  |  n=250  |  m=2 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 212.63 s
+  TC-RBI params            : η=0.536 μ_TC=2.500 μ_late=1.882 μ_count=2.811 μ_sep=0.186
+  SA params                : χ₀=0.822  M_stag=0.116  β=2.431  γ=0.1905  χ*=0.235
+  Best seed LP             : 2025.1900
+  SA+VND+PR final LP       : 1756.8700
+  Earliest-time objective  : 94994.5300
+  Reference/BKS            : 1695.6200
+  Gap (seed → final)       : 19.44% → 3.61%
+  Time to best LP          : 133.62 s
+  Elite pool size          : 6
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:  125 aircraft  seq=[0, 3, 4, 6, 9, 10,...]
+    Runway 2:  125 aircraft  seq=[1, 2, 5, 7, 8, 12,...]
+==========================================================================
+  ↳ airland12    m=2  seed=2025.19  SA=1756.87  gap=3.61%  ✓  t_best=133.6s  (212.6s) [tuned]
+
+  [SA Optuna] AIRLAND4 m=4 → 20 trials ...
+  [SA Optuna] done in 18.6s  best: χ₀=0.798  M_stag=0.058  β=2.142  γ=0.0264  χ*=0.331
+  Adaptive T_LIMIT: 60s  (seed_LP=60.00  BKS=0.0)
+  [airland4 m=4] 4 seeds | N_iter=2000 | t_limit=60s
+  SA params: χ₀=0.798  M_stag=0.058  β=2.142  γ=0.0264  χ*=0.331
+    seed TC-RBI       LP=60.0000
+    seed LP-repair    LP=60.0000
+    seed Ctrl-X       LP=60.0000
+    seed TC-repair    LP=0.0000
+
+==========================================================================
+  AIRLAND4  |  n=20  |  m=4 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 4.23 s
+  TC-RBI params            : η=0.443 μ_TC=2.683 μ_late=0.492 μ_count=0.557 μ_sep=0.186
+  SA params                : χ₀=0.798  M_stag=0.058  β=2.142  γ=0.0264  χ*=0.331
+  Best seed LP             : 0.0000
+  SA+VND+PR final LP       : 0.0000
+  Earliest-time objective  : 9330.0000
+  BKS (opt=0)              : 0.0000
+  Gap (seed → final)       : 0.00% → 0.00%
+  Time to best LP          : 0.20 s
+  Elite pool size          : 4
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:    5 aircraft  seq=[8, 11, 14, 9, 10]
+    Runway 2:    5 aircraft  seq=[1, 5, 15, 16, 3]
+    Runway 3:    5 aircraft  seq=[4, 7, 12, 18, 2]
+    Runway 4:    5 aircraft  seq=[0, 6, 17, 13, 19]
+==========================================================================
+  ↳ airland4     m=4  seed=0.00  SA=0.00  gap=0.00%  ✓  t_best=0.2s  (4.2s) [tuned]
+
+  [SA Optuna] AIRLAND4 m=3 → 20 trials ...
+  [SA Optuna] done in 22.7s  best: χ₀=0.680  M_stag=0.154  β=1.292  γ=0.1920  χ*=0.328
+  Adaptive T_LIMIT: 600s  (seed_LP=140.00  BKS=130.0)
+  [airland4 m=3] 4 seeds | N_iter=2000 | t_limit=600s
+  SA params: χ₀=0.680  M_stag=0.154  β=1.292  γ=0.1920  χ*=0.328
+    seed TC-RBI       LP=140.0000
+    seed LP-repair    LP=140.0000
+    seed Ctrl-X       LP=140.0000
+    seed TC-repair    LP=170.0000
+
+==========================================================================
+  AIRLAND4  |  n=20  |  m=3 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 8.91 s
+  TC-RBI params            : η=0.408 μ_TC=1.272 μ_late=0.302 μ_count=2.535 μ_sep=0.489
+  SA params                : χ₀=0.680  M_stag=0.154  β=1.292  γ=0.1920  χ*=0.328
+  Best seed LP             : 140.0000
+  SA+VND+PR final LP       : 130.0000
+  Earliest-time objective  : 9050.0000
+  Reference/BKS            : 130.0000
+  Gap (seed → final)       : 7.69% → 0.00%
+  Time to best LP          : 1.10 s
+  Elite pool size          : 4
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:    7 aircraft  seq=[4, 7, 17, 2, 3, 9,...]
+    Runway 2:    7 aircraft  seq=[1, 8, 6, 15, 16, 10,...]
+    Runway 3:    6 aircraft  seq=[0, 5, 12, 11, 18, 14]
+==========================================================================
+  ↳ airland4     m=3  seed=140.00  SA=130.00  gap=0.00%  ✓  t_best=1.1s  (8.9s) [tuned]
+
+  [SA Optuna] AIRLAND5 m=4 → 20 trials ...
+  [SA Optuna] done in 18.1s  best: χ₀=0.676  M_stag=0.118  β=1.959  γ=0.0207  χ*=0.343
+  Adaptive T_LIMIT: 60s  (seed_LP=0.00  BKS=0.0)
+  [airland5 m=4] 4 seeds | N_iter=2000 | t_limit=60s
+  SA params: χ₀=0.676  M_stag=0.118  β=1.959  γ=0.0207  χ*=0.343
+    seed TC-RBI       LP=0.0000
+    seed LP-repair    LP=0.0000
+    seed Ctrl-X       LP=0.0000
+    seed TC-repair    LP=0.0000
+
+==========================================================================
+  AIRLAND5  |  n=20  |  m=4 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 5.08 s
+  TC-RBI params            : η=0.794 μ_TC=2.427 μ_late=0.268 μ_count=0.468 μ_sep=0.207
+  SA params                : χ₀=0.676  M_stag=0.118  β=1.959  γ=0.0207  χ*=0.343
+  Best seed LP             : 0.0000
+  SA+VND+PR final LP       : 0.0000
+  Earliest-time objective  : 9190.0000
+  BKS (opt=0)              : 0.0000
+  Gap (seed → final)       : 0.00% → 0.00%
+  Time to best LP          : 0.00 s
+  Elite pool size          : 1
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:    5 aircraft  seq=[2, 4, 8, 16, 19]
+    Runway 2:    5 aircraft  seq=[3, 6, 13, 17, 15]
+    Runway 3:    4 aircraft  seq=[7, 9, 18, 12]
+    Runway 4:    6 aircraft  seq=[5, 0, 1, 11, 14, 10]
+==========================================================================
+  ↳ airland5     m=4  seed=0.00  SA=0.00  gap=0.00%  ✓  t_best=0.0s  (5.1s) [tuned]
+
+  [SA Optuna] AIRLAND5 m=3 → 20 trials ...
+  [SA Optuna] done in 24.1s  best: χ₀=0.816  M_stag=0.231  β=2.360  γ=0.1217  χ*=0.336
+  Adaptive T_LIMIT: 600s  (seed_LP=200.00  BKS=170.0)
+  [airland5 m=3] 4 seeds | N_iter=2000 | t_limit=600s
+  SA params: χ₀=0.816  M_stag=0.231  β=2.360  γ=0.1217  χ*=0.336
+    seed TC-RBI       LP=200.0000
+    seed LP-repair    LP=170.0000
+    seed Ctrl-X       LP=200.0000
+    seed TC-repair    LP=170.0000
+
+==========================================================================
+  AIRLAND5  |  n=20  |  m=3 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 9.76 s
+  TC-RBI params            : η=0.225 μ_TC=3.786 μ_late=1.156 μ_count=0.648 μ_sep=0.193
+  SA params                : χ₀=0.816  M_stag=0.231  β=2.360  γ=0.1217  χ*=0.336
+  Best seed LP             : 170.0000
+  SA+VND+PR final LP       : 170.0000
+  Earliest-time objective  : 8980.0000
+  Reference/BKS            : 170.0000
+  Gap (seed → final)       : 0.00% → 0.00%
+  Time to best LP          : 0.36 s
+  Elite pool size          : 3
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:    6 aircraft  seq=[7, 8, 0, 17, 19, 11]
+    Runway 2:    7 aircraft  seq=[3, 4, 5, 9, 18, 12,...]
+    Runway 3:    7 aircraft  seq=[2, 6, 13, 16, 14, 10,...]
+==========================================================================
+  ↳ airland5     m=3  seed=170.00  SA=170.00  gap=0.00%  ✓  t_best=0.4s  (9.8s) [tuned]
+
+  [SA Optuna] AIRLAND5 m=2 → 20 trials ...
+  [SA Optuna] done in 36.1s  best: χ₀=0.577  M_stag=0.286  β=1.337  γ=0.1781  χ*=0.291
+  Adaptive T_LIMIT: 300s  (seed_LP=670.00  BKS=650.0)
+  [airland5 m=2] 4 seeds | N_iter=2000 | t_limit=300s
+  SA params: χ₀=0.577  M_stag=0.286  β=1.337  γ=0.1781  χ*=0.291
+    seed TC-RBI       LP=670.0000
+    seed LP-repair    LP=670.0000
+    seed Ctrl-X       LP=670.0000
+    seed TC-repair    LP=670.0000
+
+==========================================================================
+  AIRLAND5  |  n=20  |  m=2 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 10.16 s
+  TC-RBI params            : η=0.607 μ_TC=0.251 μ_late=0.606 μ_count=0.585 μ_sep=0.258
+  SA params                : χ₀=0.577  M_stag=0.286  β=1.337  γ=0.1781  χ*=0.291
+  Best seed LP             : 670.0000
+  SA+VND+PR final LP       : 650.0000
+  Earliest-time objective  : 8190.0000
+  Reference/BKS            : 650.0000
+  Gap (seed → final)       : 3.08% → 0.00%
+  Time to best LP          : 0.25 s
+  Elite pool size          : 5
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:   10 aircraft  seq=[2, 7, 5, 0, 18, 12,...]
+    Runway 2:   10 aircraft  seq=[3, 4, 6, 8, 9, 13,...]
+==========================================================================
+  ↳ airland5     m=2  seed=670.00  SA=650.00  gap=0.00%  ✓  t_best=0.2s  (10.2s) [tuned]
+
+  [SA Optuna] AIRLAND6 m=2 → 20 trials ...
+  [SA Optuna] done in 12.2s  best: χ₀=0.553  M_stag=0.173  β=1.304  γ=0.1114  χ*=0.109
+  Adaptive T_LIMIT: 600s  (seed_LP=754.00  BKS=554.0)
+  [airland6 m=2] 4 seeds | N_iter=2000 | t_limit=600s
+  SA params: χ₀=0.553  M_stag=0.173  β=1.304  γ=0.1114  χ*=0.109
+    seed TC-RBI       LP=754.0000
+    seed LP-repair    LP=754.0000
+    seed Ctrl-X       LP=554.0000
+    seed TC-repair    LP=751.0000
+
+==========================================================================
+  AIRLAND6  |  n=30  |  m=2 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 4.74 s
+  TC-RBI params            : η=0.524 μ_TC=0.676 μ_late=1.895 μ_count=2.555 μ_sep=0.262
+  SA params                : χ₀=0.553  M_stag=0.173  β=1.304  γ=0.1114  χ*=0.109
+  Best seed LP             : 554.0000
+  SA+VND+PR final LP       : 554.0000
+  Earliest-time objective  : 554.0000
+  Reference/BKS            : 554.0000
+  Gap (seed → final)       : 0.00% → 0.00%
+  Time to best LP          : 0.16 s
+  Elite pool size          : 5
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:   15 aircraft  seq=[1, 2, 4, 6, 8, 9,...]
+    Runway 2:   15 aircraft  seq=[0, 3, 5, 7, 10, 11,...]
+==========================================================================
+  ↳ airland6     m=2  seed=554.00  SA=554.00  gap=0.00%  ✓  t_best=0.2s  (4.7s) [tuned]
+
+  [SA Optuna] AIRLAND6 m=3 → 20 trials ...
+  [SA Optuna] done in 11.3s  best: χ₀=0.817  M_stag=0.082  β=1.395  γ=0.1973  χ*=0.204
+  Adaptive T_LIMIT: 60s  (seed_LP=48.00  BKS=0.0)
+  [airland6 m=3] 4 seeds | N_iter=2000 | t_limit=60s
+  SA params: χ₀=0.817  M_stag=0.082  β=1.395  γ=0.1973  χ*=0.204
+    seed TC-RBI       LP=48.0000
+    seed LP-repair    LP=0.0000
+    seed Ctrl-X       LP=0.0000
+    seed TC-repair    LP=0.0000
+
+==========================================================================
+  AIRLAND6  |  n=30  |  m=3 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 3.21 s
+  TC-RBI params            : η=0.488 μ_TC=4.551 μ_late=1.441 μ_count=1.892 μ_sep=0.386
+  SA params                : χ₀=0.817  M_stag=0.082  β=1.395  γ=0.1973  χ*=0.204
+  Best seed LP             : 0.0000
+  SA+VND+PR final LP       : 0.0000
+  Earliest-time objective  : 0.0000
+  BKS (opt=0)              : 0.0000
+  Gap (seed → final)       : 0.00% → 0.00%
+  Time to best LP          : 0.25 s
+  Elite pool size          : 2
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:   10 aircraft  seq=[0, 2, 5, 8, 11, 14,...]
+    Runway 2:   10 aircraft  seq=[1, 4, 7, 10, 12, 15,...]
+    Runway 3:   10 aircraft  seq=[3, 6, 9, 13, 19, 22,...]
+==========================================================================
+  ↳ airland6     m=3  seed=0.00  SA=0.00  gap=0.00%  ✓  t_best=0.2s  (3.2s) [tuned]
+
+  [SA Optuna] AIRLAND7 m=2 → 20 trials ...
+  [SA Optuna] done in 14.5s  best: χ₀=0.629  M_stag=0.059  β=1.263  γ=0.1630  χ*=0.307
+  Adaptive T_LIMIT: 60s  (seed_LP=0.00  BKS=0.0)
+  [airland7 m=2] 4 seeds | N_iter=2000 | t_limit=60s
+  SA params: χ₀=0.629  M_stag=0.059  β=1.263  γ=0.1630  χ*=0.307
+    seed TC-RBI       LP=0.0000
+    seed LP-repair    LP=0.0000
+    seed Ctrl-X       LP=0.0000
+    seed TC-repair    LP=0.0000
+
+==========================================================================
+  AIRLAND7  |  n=44  |  m=2 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 3.72 s
+  TC-RBI params            : η=0.229 μ_TC=0.441 μ_late=1.142 μ_count=0.715 μ_sep=0.370
+  SA params                : χ₀=0.629  M_stag=0.059  β=1.263  γ=0.1630  χ*=0.307
+  Best seed LP             : 0.0000
+  SA+VND+PR final LP       : 0.0000
+  Earliest-time objective  : 7712.0000
+  BKS (opt=0)              : 0.0000
+  Gap (seed → final)       : 0.00% → 0.00%
+  Time to best LP          : 0.00 s
+  Elite pool size          : 1
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:   22 aircraft  seq=[0, 1, 5, 6, 8, 9,...]
+    Runway 2:   22 aircraft  seq=[2, 3, 4, 7, 11, 12,...]
+==========================================================================
+  ↳ airland7     m=2  seed=0.00  SA=0.00  gap=0.00%  ✓  t_best=0.0s  (3.7s) [tuned]
+
+  [SA Optuna] AIRLAND13 m=5 → 3 trials ...
+  [SA Optuna] done in 220.3s  best: χ₀=0.736  M_stag=0.100  β=1.529  γ=0.1418  χ*=0.236
+  Adaptive T_LIMIT: 60s  (seed_LP=1.09  BKS=0.0)
+  [airland13 m=5] 4 seeds | N_iter=8000 | t_limit=60s
+  SA params: χ₀=0.736  M_stag=0.100  β=1.529  γ=0.1418  χ*=0.236
+    seed TC-RBI       LP=1.0900
+    seed LP-repair    LP=0.0000
+    seed Ctrl-X       LP=1.0900
+    seed TC-repair    LP=0.0000
+
+==========================================================================
+  AIRLAND13  |  n=500  |  m=5 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 62.69 s
+  TC-RBI params            : η=0.701 μ_TC=1.596 μ_late=0.492 μ_count=0.772 μ_sep=0.339
+  SA params                : χ₀=0.736  M_stag=0.100  β=1.529  γ=0.1418  χ*=0.236
+  Best seed LP             : 0.0000
+  SA+VND+PR final LP       : 0.0000
+  Earliest-time objective  : 222276.9900
+  BKS (opt=0)              : 0.0000
+  Gap (seed → final)       : 0.00% → 0.00%
+  Time to best LP          : 1.01 s
+  Elite pool size          : 3
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:  100 aircraft  seq=[8, 16, 19, 21, 29, 38,...]
+    Runway 2:  101 aircraft  seq=[5, 18, 41, 46, 48, 82,...]
+    Runway 3:   99 aircraft  seq=[10, 12, 17, 20, 23, 22,...]
+    Runway 4:  100 aircraft  seq=[1, 3, 6, 24, 35, 44,...]
+    Runway 5:  100 aircraft  seq=[0, 4, 2, 9, 7, 13,...]
+==========================================================================
+  ↳ airland13    m=5  seed=0.00  SA=0.00  gap=0.00%  ✓  t_best=1.0s  (62.7s) [tuned]
+
+  [SA Optuna] AIRLAND8 m=3 → 20 trials ...
+  [SA Optuna] done in 67.0s  best: χ₀=0.734  M_stag=0.185  β=2.146  γ=0.0818  χ*=0.232
+  Adaptive T_LIMIT: 60s  (seed_LP=15.00  BKS=0.0)
+  [airland8 m=3] 4 seeds | N_iter=2000 | t_limit=60s
+  SA params: χ₀=0.734  M_stag=0.185  β=2.146  γ=0.0818  χ*=0.232
+    seed TC-RBI       LP=15.0000
+    seed LP-repair    LP=15.0000
+    seed Ctrl-X       LP=15.0000
+    seed TC-repair    LP=0.0000
+
+==========================================================================
+  AIRLAND8  |  n=50  |  m=3 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 13.83 s
+  TC-RBI params            : η=0.490 μ_TC=3.755 μ_late=0.210 μ_count=1.108 μ_sep=0.256
+  SA params                : χ₀=0.734  M_stag=0.185  β=2.146  γ=0.0818  χ*=0.232
+  Best seed LP             : 0.0000
+  SA+VND+PR final LP       : 0.0000
+  Earliest-time objective  : 87840.0000
+  BKS (opt=0)              : 0.0000
+  Gap (seed → final)       : 0.00% → 0.00%
+  Time to best LP          : 0.57 s
+  Elite pool size          : 4
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:   17 aircraft  seq=[7, 9, 10, 19, 1, 13,...]
+    Runway 2:   17 aircraft  seq=[0, 3, 8, 2, 4, 17,...]
+    Runway 3:   16 aircraft  seq=[5, 11, 18, 6, 14, 23,...]
+==========================================================================
+  ↳ airland8     m=3  seed=0.00  SA=0.00  gap=0.00%  ✓  t_best=0.6s  (13.8s) [tuned]
+
+  [SA Optuna] AIRLAND9 m=4 → 10 trials ...
+  [SA Optuna] done in 65.8s  best: χ₀=0.585  M_stag=0.066  β=2.061  γ=0.0446  χ*=0.163
+  Adaptive T_LIMIT: 60s  (seed_LP=0.00  BKS=0.0)
+  [airland9 m=4] 4 seeds | N_iter=5000 | t_limit=60s
+  SA params: χ₀=0.585  M_stag=0.066  β=2.061  γ=0.0446  χ*=0.163
+    seed TC-RBI       LP=0.0000
+    seed LP-repair    LP=0.0000
+    seed Ctrl-X       LP=0.0000
+    seed TC-repair    LP=0.0000
+
+==========================================================================
+  AIRLAND9  |  n=100  |  m=4 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 12.80 s
+  TC-RBI params            : η=0.305 μ_TC=4.302 μ_late=1.976 μ_count=2.914 μ_sep=0.430
+  SA params                : χ₀=0.585  M_stag=0.066  β=2.061  γ=0.0446  χ*=0.163
+  Best seed LP             : 0.0000
+  SA+VND+PR final LP       : 0.0000
+  Earliest-time objective  : 46962.1000
+  BKS (opt=0)              : 0.0000
+  Gap (seed → final)       : 0.00% → 0.00%
+  Time to best LP          : 0.00 s
+  Elite pool size          : 1
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:   25 aircraft  seq=[0, 1, 5, 2, 6, 12,...]
+    Runway 2:   26 aircraft  seq=[7, 14, 32, 41, 45, 49,...]
+    Runway 3:   24 aircraft  seq=[8, 11, 17, 21, 27, 31,...]
+    Runway 4:   25 aircraft  seq=[9, 3, 4, 10, 13, 15,...]
+==========================================================================
+  ↳ airland9     m=4  seed=0.00  SA=0.00  gap=0.00%  ✓  t_best=0.0s  (12.8s) [tuned]
+
+  [SA Optuna] AIRLAND8 m=2 → 20 trials ...
+  [SA Optuna] done in 139.3s  best: χ₀=0.516  M_stag=0.164  β=1.509  γ=0.0925  χ*=0.308
+  Adaptive T_LIMIT: 60s  (seed_LP=135.00  BKS=135.0)
+  [airland8 m=2] 4 seeds | N_iter=2000 | t_limit=60s
+  SA params: χ₀=0.516  M_stag=0.164  β=1.509  γ=0.0925  χ*=0.308
+    seed TC-RBI       LP=135.0000
+    seed LP-repair    LP=135.0000
+    seed Ctrl-X       LP=135.0000
+    seed TC-repair    LP=155.0000
+
+==========================================================================
+  AIRLAND8  |  n=50  |  m=2 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 27.01 s
+  TC-RBI params            : η=0.732 μ_TC=4.111 μ_late=1.358 μ_count=2.423 μ_sep=0.334
+  SA params                : χ₀=0.516  M_stag=0.164  β=1.509  γ=0.0925  χ*=0.308
+  Best seed LP             : 135.0000
+  SA+VND+PR final LP       : 135.0000
+  Earliest-time objective  : 80530.0000
+  Reference/BKS            : 135.0000
+  Gap (seed → final)       : 0.00% → 0.00%
+  Time to best LP          : 0.00 s
+  Elite pool size          : 1
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:   26 aircraft  seq=[0, 7, 3, 9, 8, 10,...]
+    Runway 2:   24 aircraft  seq=[5, 11, 18, 23, 17, 22,...]
+==========================================================================
+  ↳ airland8     m=2  seed=135.00  SA=135.00  gap=0.00%  ✓  t_best=0.0s  (27.0s) [tuned]
+
+  [SA Optuna] AIRLAND9 m=3 → 10 trials ...
+  [SA Optuna] done in 103.4s  best: χ₀=0.536  M_stag=0.243  β=2.467  γ=0.1722  χ*=0.137
+  Adaptive T_LIMIT: 600s  (seed_LP=98.63  BKS=75.75)
+  [airland9 m=3] 4 seeds | N_iter=5000 | t_limit=600s
+  SA params: χ₀=0.536  M_stag=0.243  β=2.467  γ=0.1722  χ*=0.137
+    seed TC-RBI       LP=98.6300
+    seed LP-repair    LP=98.6300
+    seed Ctrl-X       LP=98.6300
+    seed TC-repair    LP=92.8100
+
+==========================================================================
+  AIRLAND9  |  n=100  |  m=3 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 48.45 s
+  TC-RBI params            : η=0.372 μ_TC=0.568 μ_late=1.416 μ_count=1.895 μ_sep=0.001
+  SA params                : χ₀=0.536  M_stag=0.243  β=2.467  γ=0.1722  χ*=0.137
+  Best seed LP             : 92.8100
+  SA+VND+PR final LP       : 75.7500
+  Earliest-time objective  : 47203.2600
+  Reference/BKS            : 75.7500
+  Gap (seed → final)       : 22.52% → 0.00%
+  Time to best LP          : 1.55 s
+  Elite pool size          : 4
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:   33 aircraft  seq=[7, 6, 4, 10, 16, 19,...]
+    Runway 2:   34 aircraft  seq=[0, 1, 5, 2, 8, 12,...]
+    Runway 3:   33 aircraft  seq=[9, 3, 11, 13, 14, 18,...]
+==========================================================================
+  ↳ airland9     m=3  seed=92.81  SA=75.75  gap=0.00%  ✓  t_best=1.6s  (48.5s) [tuned]
+
+  [SA Optuna] AIRLAND9 m=2 → 10 trials ...
+  [SA Optuna] done in 142.0s  best: χ₀=0.747  M_stag=0.214  β=1.322  γ=0.1967  χ*=0.294
+  Adaptive T_LIMIT: 600s  (seed_LP=481.71  BKS=444.1)
+  [airland9 m=2] 4 seeds | N_iter=5000 | t_limit=600s
+  SA params: χ₀=0.747  M_stag=0.214  β=1.322  γ=0.1967  χ*=0.294
+    seed TC-RBI       LP=481.7100
+    seed LP-repair    LP=463.5100
+    seed Ctrl-X       LP=481.7100
+    seed TC-repair    LP=486.2000
+
+==========================================================================
+  AIRLAND9  |  n=100  |  m=2 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 62.02 s
+  TC-RBI params            : η=0.653 μ_TC=3.170 μ_late=1.700 μ_count=0.822 μ_sep=0.219
+  SA params                : χ₀=0.747  M_stag=0.214  β=1.322  γ=0.1967  χ*=0.294
+  Best seed LP             : 463.5100
+  SA+VND+PR final LP       : 452.9200
+  Earliest-time objective  : 40043.8900
+  Reference/BKS            : 444.1000
+  Gap (seed → final)       : 4.37% → 1.99%
+  Time to best LP          : 27.90 s
+  Elite pool size          : 8
+  Path relinking improved  : Yes
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:   50 aircraft  seq=[0, 1, 5, 2, 3, 4,...]
+    Runway 2:   50 aircraft  seq=[9, 7, 6, 8, 11, 10,...]
+==========================================================================
+  ↳ airland9     m=2  seed=463.51  SA=452.92  gap=1.99%  ✓  t_best=27.9s  (62.0s) [tuned]
+
+  [SA Optuna] AIRLAND13 m=4 → 3 trials ...
+  [SA Optuna] done in 292.6s  best: χ₀=0.720  M_stag=0.220  β=1.923  γ=0.1889  χ*=0.136
+  Adaptive T_LIMIT: 600s  (seed_LP=145.61  BKS=89.95)
+  [airland13 m=4] 4 seeds | N_iter=8000 | t_limit=600s
+  SA params: χ₀=0.720  M_stag=0.220  β=1.923  γ=0.1889  χ*=0.136
+    seed TC-RBI       LP=145.6100
+    seed LP-repair    LP=132.0900
+    seed Ctrl-X       LP=145.6100
+    seed TC-repair    LP=129.8800
+
+==========================================================================
+  AIRLAND13  |  n=500  |  m=4 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 409.95 s
+  TC-RBI params            : η=0.339 μ_TC=2.534 μ_late=1.394 μ_count=2.935 μ_sep=0.435
+  SA params                : χ₀=0.720  M_stag=0.220  β=1.923  γ=0.1889  χ*=0.136
+  Best seed LP             : 129.8800
+  SA+VND+PR final LP       : 89.9500
+  Earliest-time objective  : 219621.6200
+  Reference/BKS            : 89.9500
+  Gap (seed → final)       : 44.39% → 0.00%
+  Time to best LP          : 3.03 s
+  Elite pool size          : 4
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:  122 aircraft  seq=[4, 6, 10, 12, 20, 23,...]
+    Runway 2:  122 aircraft  seq=[5, 2, 9, 7, 13, 19,...]
+    Runway 3:  124 aircraft  seq=[0, 1, 3, 8, 16, 17,...]
+    Runway 4:  132 aircraft  seq=[11, 15, 14, 25, 27, 29,...]
+==========================================================================
+  ↳ airland13    m=4  seed=129.88  SA=89.95  gap=0.00%  ✓  t_best=3.0s  (409.9s) [tuned]
+
+  [SA Optuna] AIRLAND13 m=3 → 3 trials ...
+  [SA Optuna] done in 426.0s  best: χ₀=0.677  M_stag=0.195  β=1.618  γ=0.1179  χ*=0.331
+  Adaptive T_LIMIT: 600s  (seed_LP=914.51  BKS=673.85)
+  [airland13 m=3] 4 seeds | N_iter=8000 | t_limit=600s
+  SA params: χ₀=0.677  M_stag=0.195  β=1.618  γ=0.1179  χ*=0.331
+    seed TC-RBI       LP=914.5100
+    seed LP-repair    LP=867.2300
+    seed Ctrl-X       LP=905.8700
+    seed TC-repair    LP=867.2300
+
+==========================================================================
+  AIRLAND13  |  n=500  |  m=3 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 609.59 s
+  TC-RBI params            : η=0.349 μ_TC=3.411 μ_late=0.029 μ_count=0.810 μ_sep=0.245
+  SA params                : χ₀=0.677  M_stag=0.195  β=1.618  γ=0.1179  χ*=0.331
+  Best seed LP             : 867.2300
+  SA+VND+PR final LP       : 717.8900
+  Earliest-time objective  : 208655.1800
+  Reference/BKS            : 673.8500
+  Gap (seed → final)       : 28.70% → 6.54%
+  Time to best LP          : 118.31 s
+  Elite pool size          : 6
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:  167 aircraft  seq=[0, 1, 3, 7, 13, 11,...]
+    Runway 2:  166 aircraft  seq=[5, 2, 9, 8, 15, 14,...]
+    Runway 3:  167 aircraft  seq=[4, 6, 10, 16, 20, 24,...]
+==========================================================================
+  ↳ airland13    m=3  seed=867.23  SA=717.89  gap=6.54%  ✓  t_best=118.3s  (609.6s) [tuned]
+
+  [SA Optuna] AIRLAND13 m=2 → 3 trials ...
+  [SA Optuna] done in 809.9s  best: χ₀=0.693  M_stag=0.229  β=1.726  γ=0.1511  χ*=0.325
+  Adaptive T_LIMIT: 600s  (seed_LP=4659.60  BKS=3943.85)
+  [airland13 m=2] 4 seeds | N_iter=8000 | t_limit=600s
+  SA params: χ₀=0.693  M_stag=0.229  β=1.726  γ=0.1511  χ*=0.325
+    seed TC-RBI       LP=4659.6000
+    seed LP-repair    LP=4659.6000
+    seed Ctrl-X       LP=4659.6000
+    seed TC-repair    LP=4645.8600
+
+==========================================================================
+  AIRLAND13  |  n=500  |  m=2 runway(s)
+==========================================================================
+  Runtime (SA+PR+VND total): 618.38 s
+  TC-RBI params            : η=0.486 μ_TC=2.788 μ_late=1.551 μ_count=0.862 μ_sep=0.214
+  SA params                : χ₀=0.693  M_stag=0.229  β=1.726  γ=0.1511  χ*=0.325
+  Best seed LP             : 4645.8600
+  SA+VND+PR final LP       : 4140.2900
+  Earliest-time objective  : 179008.7500
+  Reference/BKS            : 3943.8500
+  Gap (seed → final)       : 17.80% → 4.98%
+  Time to best LP          : 267.25 s
+  Elite pool size          : 6
+  Path relinking improved  : No
+  Sequence feasibility     : PASS ✓
+  Runway load:
+    Runway 1:  252 aircraft  seq=[1, 5, 2, 6, 9, 10,...]
+    Runway 2:  248 aircraft  seq=[0, 4, 3, 7, 8, 13,...]
+==========================================================================
+  ↳ airland13    m=2  seed=4645.86  SA=4140.29  gap=4.98%  ✓  t_best=267.2s  (618.4s) [tuned]
+
+===================================================================================================
+  MR-ALP Solver — BATCH RESULTS
+===================================================================================================
+      Instance    n   m     Seed LP    Final LP   Reference Gap(seed)   Gap(SA) BKS?  Feas  Time(s)
+---------------------------------------------------------------------------------------------------
+      airland1   10   2     90.0000     90.0000     90.0000     0.00%     0.00%          ✓     5.83
+      airland1   10   3      0.0000      0.0000      0.0000     0.00%     0.00%          ✓     2.45
+     airland10  150   2   1246.5800   1155.9000   1143.7000     9.00%     1.07%          ✓   133.47
+     airland10  150   3    248.2000    209.5700    205.2100    20.95%     2.12%          ✓    88.83
+     airland10  150   4     34.2200     34.2200     34.2200     0.00%     0.00%          ✓    21.80
+     airland10  150   5      0.0000      0.0000      0.0000     0.00%     0.00%          ✓    17.78
+     airland11  200   2   1485.8800   1369.1500   1330.9100    11.64%     2.87%          ✓   116.79
+     airland11  200   3    294.4800    253.0700    253.0700    16.36%     0.00%          ✓   127.37
+     airland11  200   4     54.5300     54.5300     54.5300     0.00%     0.00%          ✓    61.80
+     airland11  200   5      0.0000      0.0000      0.0000     0.00%     0.00%          ✓    45.08
+     airland12  250   2   2025.1900   1756.8700   1695.6200    19.44%     3.61%          ✓   212.63
+     airland12  250   3    247.6200    228.8800    221.9700    11.56%     3.11%          ✓   174.82
+     airland12  250   4      3.4900      2.4400      2.4400    43.03%     0.00%          ✓    62.14
+     airland12  250   5      0.0000      0.0000      0.0000     0.00%     0.00%          ✓    19.34
+     airland13  500   2   4645.8600   4140.2900   3943.8500    17.80%     4.98%          ✓   618.38
+     airland13  500   3    867.2300    717.8900    673.8500    28.70%     6.54%          ✓   609.59
+     airland13  500   4    129.8800     89.9500     89.9500    44.39%     0.00%          ✓   409.95
+     airland13  500   5      0.0000      0.0000      0.0000     0.00%     0.00%          ✓    62.69
+      airland2   15   2    210.0000    210.0000    210.0000     0.00%     0.00%          ✓     4.03
+      airland2   15   3      0.0000      0.0000      0.0000     0.00%     0.00%          ✓     3.15
+      airland3   20   2     60.0000     60.0000     60.0000     0.00%     0.00%          ✓     4.76
+      airland3   20   3      0.0000      0.0000      0.0000     0.00%     0.00%          ✓     5.71
+      airland4   20   2    640.0000    640.0000    640.0000     0.00%     0.00%          ✓     6.25
+      airland4   20   3    140.0000    130.0000    130.0000     7.69%     0.00%          ✓     8.91
+      airland4   20   4      0.0000      0.0000      0.0000     0.00%     0.00%          ✓     4.23
+      airland5   20   2    670.0000    650.0000    650.0000     3.08%     0.00%          ✓    10.16
+      airland5   20   3    170.0000    170.0000    170.0000     0.00%     0.00%          ✓     9.76
+      airland5   20   4      0.0000      0.0000      0.0000     0.00%     0.00%          ✓     5.08
+      airland6   30   2    554.0000    554.0000    554.0000     0.00%     0.00%          ✓     4.74
+      airland6   30   3      0.0000      0.0000      0.0000     0.00%     0.00%          ✓     3.21
+      airland7   44   2      0.0000      0.0000      0.0000     0.00%     0.00%          ✓     3.72
+      airland8   50   2    135.0000    135.0000    135.0000     0.00%     0.00%          ✓    27.01
+      airland8   50   3      0.0000      0.0000      0.0000     0.00%     0.00%          ✓    13.83
+      airland9  100   2    463.5100    452.9200    444.1000     4.37%     1.99%          ✓    62.02
+      airland9  100   3     92.8100     75.7500     75.7500    22.52%     0.00%          ✓    48.45
+      airland9  100   4      0.0000      0.0000      0.0000     0.00%     0.00%          ✓    12.80
+===================================================================================================
+  Feasible         : 36/36
+  New BKS cands    : 0
+  Avg seed gap     : 11.33%  Max: 44.39%
+  Avg final gap    : 1.14%  Max: 6.54%
+  Avg improvement  : 10.18pp
+===================================================================================================
+  Saved MR_results/summary.csv
+  Saved MR_results/schedules.csv
+  Saved MR_results/alternatives.csv
+  Saved MR_results/verification.txt
+  Saved MR_results/run_metadata.json
+  Saved MR_results/plots/gap/gap_summary.png
+  Saved MR_results/plots/time_to_best/time_to_best.png
+  Saved MR_results/plots/convergence/convergence_airland1_3.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland1_3.png
+  Saved MR_results/plots/gantt/gantt_airland1_3.png
+  Saved MR_results/plots/convergence/convergence_airland1_2.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland1_2.png
+  Saved MR_results/plots/gantt/gantt_airland1_2.png
+  Saved MR_results/plots/convergence/convergence_airland10_5.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland10_5.png
+  Saved MR_results/plots/gantt/gantt_airland10_5.png
+  Saved MR_results/plots/convergence/convergence_airland10_4.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland10_4.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland10_4.png
+  Saved MR_results/plots/gantt/gantt_airland10_4.png
+  Saved MR_results/plots/convergence/convergence_airland11_4.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland11_4.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland11_4.png
+  Saved MR_results/plots/gantt/gantt_airland11_4.png
+  Saved MR_results/plots/convergence/convergence_airland10_3.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland10_3.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland10_3.png
+  Saved MR_results/plots/gantt/gantt_airland10_3.png
+  Saved MR_results/plots/convergence/convergence_airland11_5.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland11_5.png
+  Saved MR_results/plots/gantt/gantt_airland11_5.png
+  Saved MR_results/plots/convergence/convergence_airland11_3.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland11_3.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland11_3.png
+  Saved MR_results/plots/gantt/gantt_airland11_3.png
+  Saved MR_results/plots/convergence/convergence_airland10_2.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland10_2.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland10_2.png
+  Saved MR_results/plots/gantt/gantt_airland10_2.png
+  Saved MR_results/plots/convergence/convergence_airland11_2.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland11_2.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland11_2.png
+  Saved MR_results/plots/gantt/gantt_airland11_2.png
+  Saved MR_results/plots/convergence/convergence_airland12_5.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland12_5.png
+  Saved MR_results/plots/gantt/gantt_airland12_5.png
+  Saved MR_results/plots/convergence/convergence_airland12_4.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland12_4.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland12_4.png
+  Saved MR_results/plots/gantt/gantt_airland12_4.png
+  Saved MR_results/plots/convergence/convergence_airland2_2.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland2_2.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland2_2.png
+  Saved MR_results/plots/gantt/gantt_airland2_2.png
+  Saved MR_results/plots/convergence/convergence_airland2_3.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland2_3.png
+  Saved MR_results/plots/gantt/gantt_airland2_3.png
+  Saved MR_results/plots/convergence/convergence_airland3_2.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland3_2.png
+  Saved MR_results/plots/gantt/gantt_airland3_2.png
+  Saved MR_results/plots/convergence/convergence_airland3_3.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland3_3.png
+  Saved MR_results/plots/gantt/gantt_airland3_3.png
+  Saved MR_results/plots/convergence/convergence_airland12_3.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland12_3.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland12_3.png
+  Saved MR_results/plots/gantt/gantt_airland12_3.png
+  Saved MR_results/plots/convergence/convergence_airland4_2.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland4_2.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland4_2.png
+  Saved MR_results/plots/gantt/gantt_airland4_2.png
+  Saved MR_results/plots/convergence/convergence_airland12_2.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland12_2.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland12_2.png
+  Saved MR_results/plots/gantt/gantt_airland12_2.png
+  Saved MR_results/plots/convergence/convergence_airland4_4.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland4_4.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland4_4.png
+  Saved MR_results/plots/gantt/gantt_airland4_4.png
+  Saved MR_results/plots/convergence/convergence_airland4_3.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland4_3.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland4_3.png
+  Saved MR_results/plots/gantt/gantt_airland4_3.png
+  Saved MR_results/plots/convergence/convergence_airland5_4.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland5_4.png
+  Saved MR_results/plots/gantt/gantt_airland5_4.png
+  Saved MR_results/plots/convergence/convergence_airland5_3.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland5_3.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland5_3.png
+  Saved MR_results/plots/gantt/gantt_airland5_3.png
+  Saved MR_results/plots/convergence/convergence_airland5_2.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland5_2.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland5_2.png
+  Saved MR_results/plots/gantt/gantt_airland5_2.png
+  Saved MR_results/plots/convergence/convergence_airland6_2.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland6_2.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland6_2.png
+  Saved MR_results/plots/gantt/gantt_airland6_2.png
+  Saved MR_results/plots/convergence/convergence_airland6_3.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland6_3.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland6_3.png
+  Saved MR_results/plots/gantt/gantt_airland6_3.png
+  Saved MR_results/plots/convergence/convergence_airland7_2.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland7_2.png
+  Saved MR_results/plots/gantt/gantt_airland7_2.png
+  Saved MR_results/plots/convergence/convergence_airland13_5.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland13_5.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland13_5.png
+  Saved MR_results/plots/gantt/gantt_airland13_5.png
+  Saved MR_results/plots/convergence/convergence_airland8_3.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland8_3.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland8_3.png
+  Saved MR_results/plots/gantt/gantt_airland8_3.png
+  Saved MR_results/plots/convergence/convergence_airland9_4.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland9_4.png
+  Saved MR_results/plots/gantt/gantt_airland9_4.png
+  Saved MR_results/plots/convergence/convergence_airland8_2.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland8_2.png
+  Saved MR_results/plots/gantt/gantt_airland8_2.png
+  Saved MR_results/plots/convergence/convergence_airland9_3.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland9_3.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland9_3.png
+  Saved MR_results/plots/gantt/gantt_airland9_3.png
+  Saved MR_results/plots/convergence/convergence_airland9_2.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland9_2.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland9_2.png
+  Saved MR_results/plots/gantt/gantt_airland9_2.png
+  Saved MR_results/plots/convergence/convergence_airland13_4.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland13_4.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland13_4.png
+  Saved MR_results/plots/gantt/gantt_airland13_4.png
+  Saved MR_results/plots/convergence/convergence_airland13_3.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland13_3.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland13_3.png
+  Saved MR_results/plots/gantt/gantt_airland13_3.png
+  Saved MR_results/plots/convergence/convergence_airland13_2.png
+  Saved MR_results/plots/lp_timeline/lp_timeline_airland13_2.png
+  Saved MR_results/plots/elite_pool/elite_pool_airland13_2.png
+  Saved MR_results/plots/gantt/gantt_airland13_2.png

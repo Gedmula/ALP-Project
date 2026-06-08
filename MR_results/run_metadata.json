@@ -1,0 +1,3479 @@
+{
+  "run_time": "2026-06-07 20:43:46",
+  "config": {
+    "N_WORKERS": 7,
+    "N_CHAINS": 4,
+    "T_LIMIT": 600.0,
+    "MAX_T_LIMIT": 1200.0,
+    "ELITE_POOL_MAX": 20,
+    "ELITE_MIN_DIV": 5,
+    "RUN_RBI_OPTUNA": true,
+    "RUN_SA_OPTUNA": true,
+    "ATC_K": 2.5,
+    "ATCS_K1": 2.0,
+    "ATCS_K2": 2.0,
+    "GRASP_K_VALUES": [
+      3,
+      7
+    ],
+    "MPDS_MAX_N": 150
+  },
+  "results": [
+    {
+      "instance": "airland1",
+      "n": 10,
+      "m": 2,
+      "seed_lp": 90.0,
+      "sa_lp": 90.0,
+      "bks": 90.0,
+      "gap_pct": 0.0,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 0.0183,
+        "t_seed_lp_eval_s": 0.0094,
+        "t_best_seed_lp_s": 0.0013,
+        "t_sa_start_s": 0.0281,
+        "t_best_lp_s": 0.0013,
+        "total_s": 5.94
+      },
+      "elite_pool_size": 2,
+      "n_elite_solutions": 2,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "FCFS",
+          "raw_obj": 4000.0,
+          "lp_obj": 90.0,
+          "selected": true
+        },
+        {
+          "label": "EDD",
+          "raw_obj": 3990.0,
+          "lp_obj": 90.0,
+          "selected": true
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 3990.0,
+          "lp_obj": 90.0,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 4000.0,
+          "lp_obj": 90.0,
+          "selected": false
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 4000.0,
+          "lp_obj": 90.0,
+          "selected": false
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 3800.0,
+          "lp_obj": 180.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 3800.0,
+          "lp_obj": 180.0,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": 3920.0,
+          "lp_obj": 190.0,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 3920.0,
+          "lp_obj": 190.0,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 3920.0,
+          "lp_obj": 190.0,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 3920.0,
+          "lp_obj": 190.0,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.9021351480579942,
+        "M_stag_frac": 0.18885332826605744,
+        "lp_gamma": 0.031069481047347136,
+        "chi_target": 0.2449164272056508,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland1",
+      "n": 10,
+      "m": 3,
+      "seed_lp": 0.0,
+      "sa_lp": 0.0,
+      "bks": 0.0,
+      "gap_pct": null,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 0.0124,
+        "t_seed_lp_eval_s": 0.0089,
+        "t_best_seed_lp_s": 0.0012,
+        "t_sa_start_s": 0.0216,
+        "t_best_lp_s": 0.0012,
+        "total_s": 5.25
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "FCFS",
+          "raw_obj": 4130.0,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "EDD",
+          "raw_obj": 4090.0,
+          "lp_obj": 0.0,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": 4070.0,
+          "lp_obj": 0.0,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 4070.0,
+          "lp_obj": 0.0,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 4070.0,
+          "lp_obj": 0.0,
+          "selected": false
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 4130.0,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 4090.0,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 4070.0,
+          "lp_obj": 0.0,
+          "selected": false
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 4070.0,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 4100.0,
+          "lp_obj": 0.0,
+          "selected": false
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 4070.0,
+          "lp_obj": 0.0,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.9250541201560943,
+        "M_stag_frac": 0.2378766033006789,
+        "lp_gamma": 0.19377766416563502,
+        "chi_target": 0.1494341496762371,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland10",
+      "n": 150,
+      "m": 2,
+      "seed_lp": 1279.7799999999997,
+      "sa_lp": 1155.8999999999999,
+      "bks": 1143.7,
+      "gap_pct": 1.0667,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 4.1765,
+        "t_seed_lp_eval_s": 0.0972,
+        "t_best_seed_lp_s": 1.8009,
+        "t_sa_start_s": 4.2955,
+        "t_best_lp_s": 114.123,
+        "total_s": 116.08
+      },
+      "elite_pool_size": 6,
+      "n_elite_solutions": 6,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "TC-RBI",
+          "raw_obj": 57583.91,
+          "lp_obj": 1279.78,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 56201.52,
+          "lp_obj": 1442.79,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 58234.94,
+          "lp_obj": 1456.05,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 57132.43,
+          "lp_obj": 1466.29,
+          "selected": true
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 57751.78,
+          "lp_obj": 1493.12,
+          "selected": false
+        },
+        {
+          "label": "EDD",
+          "raw_obj": 56371.67,
+          "lp_obj": 1501.74,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 59212.72,
+          "lp_obj": 2647.61,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 58736.49,
+          "lp_obj": 2730.93,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 72256.09,
+          "lp_obj": 11035.15,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 118266.55,
+          "lp_obj": 108579.69,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.5681663310392393,
+        "M_stag_frac": 0.2154348065138602,
+        "lp_gamma": 0.10149890903419434,
+        "chi_target": 0.1821005386386524,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland10",
+      "n": 150,
+      "m": 3,
+      "seed_lp": 258.46000000000004,
+      "sa_lp": 205.21,
+      "bks": 205.21,
+      "gap_pct": 0.0,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 3.8079,
+        "t_seed_lp_eval_s": 0.0625,
+        "t_best_seed_lp_s": 1.5865,
+        "t_sa_start_s": 3.8837,
+        "t_best_lp_s": 79.5476,
+        "total_s": 80.68
+      },
+      "elite_pool_size": 6,
+      "n_elite_solutions": 6,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "TC-RBI",
+          "raw_obj": 63588.38,
+          "lp_obj": 258.46,
+          "selected": true
+        },
+        {
+          "label": "EDD",
+          "raw_obj": 64598.7,
+          "lp_obj": 327.86,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 66534.77,
+          "lp_obj": 350.66,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 63660.81,
+          "lp_obj": 352.45,
+          "selected": true
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 62792.74,
+          "lp_obj": 354.47,
+          "selected": false
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 63402.22,
+          "lp_obj": 360.13,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 67469.3,
+          "lp_obj": 1166.15,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 67495.59,
+          "lp_obj": 1173.85,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 73332.79,
+          "lp_obj": 5564.07,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 117536.15,
+          "lp_obj": 101838.99,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.549645637499745,
+        "M_stag_frac": 0.2891594694185385,
+        "lp_gamma": 0.181791131337191,
+        "chi_target": 0.19320519747070297,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland10",
+      "n": 150,
+      "m": 4,
+      "seed_lp": 34.22,
+      "sa_lp": 34.22,
+      "bks": 34.22,
+      "gap_pct": 0.0,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 7.6743,
+        "t_seed_lp_eval_s": 0.0742,
+        "t_best_seed_lp_s": 5.0781,
+        "t_sa_start_s": 7.7648,
+        "t_best_lp_s": 5.0781,
+        "total_s": 55.7
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "TC-RBI",
+          "raw_obj": 67102.97,
+          "lp_obj": 34.22,
+          "selected": true
+        },
+        {
+          "label": "EDD",
+          "raw_obj": 69760.36,
+          "lp_obj": 42.64,
+          "selected": true
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 66350.94,
+          "lp_obj": 48.22,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 66720.45,
+          "lp_obj": 53.42,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 66792.65,
+          "lp_obj": 77.02,
+          "selected": false
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 67454.79,
+          "lp_obj": 106.78,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 71312.59,
+          "lp_obj": 495.92,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 71291.77,
+          "lp_obj": 511.29,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 73465.57,
+          "lp_obj": 3224.43,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 110212.41,
+          "lp_obj": 90525.87,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.7266647258314661,
+        "M_stag_frac": 0.06849517384224597,
+        "lp_gamma": 0.15282282762141544,
+        "chi_target": 0.21914375673407743,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland10",
+      "n": 150,
+      "m": 5,
+      "seed_lp": 0.0,
+      "sa_lp": 0.0,
+      "bks": 0.0,
+      "gap_pct": null,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 5.0054,
+        "t_seed_lp_eval_s": 0.047,
+        "t_best_seed_lp_s": 0.0095,
+        "t_sa_start_s": 5.0618,
+        "t_best_lp_s": 0.0095,
+        "total_s": 43.93
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "EDD",
+          "raw_obj": 71183.42,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 67062.63,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 69580.68,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 69617.7,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 68526.37,
+          "lp_obj": 0.0,
+          "selected": false
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 69693.69,
+          "lp_obj": 5.2,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 72448.59,
+          "lp_obj": 197.78,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 72508.5,
+          "lp_obj": 277.1,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 73465.57,
+          "lp_obj": 1444.25,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 115865.84,
+          "lp_obj": 97541.96,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.8720883378454642,
+        "M_stag_frac": 0.11909583978549933,
+        "lp_gamma": 0.056139870965878566,
+        "chi_target": 0.3475250709980018,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland11",
+      "n": 200,
+      "m": 2,
+      "seed_lp": 1485.9799999999993,
+      "sa_lp": 1356.2599999999995,
+      "bks": 1330.91,
+      "gap_pct": 1.9047,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 3.9612,
+        "t_seed_lp_eval_s": 0.163,
+        "t_best_seed_lp_s": 3.062,
+        "t_sa_start_s": 4.1643,
+        "t_best_lp_s": 188.041,
+        "total_s": 189.32
+      },
+      "elite_pool_size": 7,
+      "n_elite_solutions": 7,
+      "relinking_improved": true,
+      "n_seeds_evaluated": 10,
+      "seed_portfolio": [
+        {
+          "label": "CAF",
+          "raw_obj": 78790.71,
+          "lp_obj": 1485.98,
+          "selected": true
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 80462.49,
+          "lp_obj": 1544.87,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 79661.79,
+          "lp_obj": 1571.1,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 78415.43,
+          "lp_obj": 1623.67,
+          "selected": true
+        },
+        {
+          "label": "EDD",
+          "raw_obj": 81813.59,
+          "lp_obj": 1742.69,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 84019.65,
+          "lp_obj": 3241.98,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 83150.28,
+          "lp_obj": 3295.14,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 99235.98,
+          "lp_obj": 13629.31,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 176440.76,
+          "lp_obj": 170314.86,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.7616405997577105,
+        "M_stag_frac": 0.09006338848323724,
+        "lp_gamma": 0.08334382384431768,
+        "chi_target": 0.2892511817217849,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland11",
+      "n": 200,
+      "m": 3,
+      "seed_lp": 316.07,
+      "sa_lp": 253.07000000000002,
+      "bks": 253.07,
+      "gap_pct": 0.0,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 3.5264,
+        "t_seed_lp_eval_s": 0.1005,
+        "t_best_seed_lp_s": 2.7152,
+        "t_sa_start_s": 3.6513,
+        "t_best_lp_s": 70.3919,
+        "total_s": 108.0
+      },
+      "elite_pool_size": 6,
+      "n_elite_solutions": 6,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 10,
+      "seed_portfolio": [
+        {
+          "label": "TC-RBI",
+          "raw_obj": 92649.0,
+          "lp_obj": 316.07,
+          "selected": true
+        },
+        {
+          "label": "EDD",
+          "raw_obj": 93264.65,
+          "lp_obj": 344.55,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 90890.04,
+          "lp_obj": 362.06,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 89779.19,
+          "lp_obj": 387.79,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 90334.85,
+          "lp_obj": 419.13,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 95589.65,
+          "lp_obj": 1862.77,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 96535.77,
+          "lp_obj": 1942.31,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 101372.92,
+          "lp_obj": 7425.46,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 175366.82,
+          "lp_obj": 167721.78,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.6018291964031965,
+        "M_stag_frac": 0.10482233904707923,
+        "lp_gamma": 0.03338554996606526,
+        "chi_target": 0.2668698207318869,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland11",
+      "n": 200,
+      "m": 4,
+      "seed_lp": 54.53,
+      "sa_lp": 54.53,
+      "bks": 54.53,
+      "gap_pct": 0.0,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 3.8574,
+        "t_seed_lp_eval_s": 0.0783,
+        "t_best_seed_lp_s": 0.018,
+        "t_sa_start_s": 3.9538,
+        "t_best_lp_s": 0.018,
+        "total_s": 57.25
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 10,
+      "seed_portfolio": [
+        {
+          "label": "EDD",
+          "raw_obj": 98049.97,
+          "lp_obj": 54.53,
+          "selected": true
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 93843.93,
+          "lp_obj": 54.53,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 92800.37,
+          "lp_obj": 70.86,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 95082.94,
+          "lp_obj": 74.33,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 93485.88,
+          "lp_obj": 74.41,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 99780.85,
+          "lp_obj": 595.06,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 99710.64,
+          "lp_obj": 766.87,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 101929.69,
+          "lp_obj": 3813.75,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 171103.21,
+          "lp_obj": 163404.58,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.5732282208781726,
+        "M_stag_frac": 0.2906875632555161,
+        "lp_gamma": 0.14647787196621467,
+        "chi_target": 0.18624652393835084,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland11",
+      "n": 200,
+      "m": 5,
+      "seed_lp": 0.0,
+      "sa_lp": 0.0,
+      "bks": 0.0,
+      "gap_pct": null,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 3.6419,
+        "t_seed_lp_eval_s": 0.0676,
+        "t_best_seed_lp_s": 0.0144,
+        "t_sa_start_s": 3.7246,
+        "t_best_lp_s": 0.0144,
+        "total_s": 61.25
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 10,
+      "seed_portfolio": [
+        {
+          "label": "EDD",
+          "raw_obj": 100807.5,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 96344.16,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 97278.77,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 96458.93,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 96442.07,
+          "lp_obj": 1.73,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 101519.53,
+          "lp_obj": 72.01,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 101880.1,
+          "lp_obj": 220.8,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 102139.69,
+          "lp_obj": 1650.37,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 169279.78,
+          "lp_obj": 160384.57,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.6949833226076635,
+        "M_stag_frac": 0.20906199615136978,
+        "lp_gamma": 0.08976029787551014,
+        "chi_target": 0.21988616811100836,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland12",
+      "n": 250,
+      "m": 2,
+      "seed_lp": 2067.3900000000003,
+      "sa_lp": 1783.6499999999999,
+      "bks": 1695.62,
+      "gap_pct": 5.1916,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 12.4181,
+        "t_seed_lp_eval_s": 0.2792,
+        "t_best_seed_lp_s": 0.0978,
+        "t_sa_start_s": 12.7669,
+        "t_best_lp_s": 196.4423,
+        "total_s": 223.55
+      },
+      "elite_pool_size": 6,
+      "n_elite_solutions": 6,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 10,
+      "seed_portfolio": [
+        {
+          "label": "EDD",
+          "raw_obj": 94258.47,
+          "lp_obj": 2067.39,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 94389.4,
+          "lp_obj": 2118.41,
+          "selected": true
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 93911.39,
+          "lp_obj": 2167.13,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 91379.47,
+          "lp_obj": 2177.46,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 92848.47,
+          "lp_obj": 2315.88,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 97249.26,
+          "lp_obj": 4791.28,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 96431.79,
+          "lp_obj": 5025.03,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 121422.04,
+          "lp_obj": 19294.09,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 216467.34,
+          "lp_obj": 205816.42,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.7585204883954562,
+        "M_stag_frac": 0.07189922561073021,
+        "lp_gamma": 0.060741856636991706,
+        "chi_target": 0.1957544165284703,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland12",
+      "n": 250,
+      "m": 3,
+      "seed_lp": 271.6,
+      "sa_lp": 228.89000000000001,
+      "bks": 221.97,
+      "gap_pct": 3.1175,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 5.6923,
+        "t_seed_lp_eval_s": 0.1467,
+        "t_best_seed_lp_s": 4.4699,
+        "t_sa_start_s": 5.8736,
+        "t_best_lp_s": 141.1195,
+        "total_s": 143.88
+      },
+      "elite_pool_size": 6,
+      "n_elite_solutions": 6,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 10,
+      "seed_portfolio": [
+        {
+          "label": "TC-RBI",
+          "raw_obj": 105508.77,
+          "lp_obj": 271.6,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 104616.81,
+          "lp_obj": 272.89,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 103489.65,
+          "lp_obj": 289.11,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 106229.95,
+          "lp_obj": 325.86,
+          "selected": true
+        },
+        {
+          "label": "EDD",
+          "raw_obj": 109317.14,
+          "lp_obj": 363.23,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 113541.16,
+          "lp_obj": 1855.09,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 113913.94,
+          "lp_obj": 1946.85,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 123573.76,
+          "lp_obj": 10641.77,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 203945.26,
+          "lp_obj": 190947.22,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.81896371397315,
+        "M_stag_frac": 0.07908384843058726,
+        "lp_gamma": 0.14979864892148906,
+        "chi_target": 0.1296106039863755,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland12",
+      "n": 250,
+      "m": 4,
+      "seed_lp": 3.49,
+      "sa_lp": 2.44,
+      "bks": 2.44,
+      "gap_pct": 0.0,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 6.1519,
+        "t_seed_lp_eval_s": 0.1308,
+        "t_best_seed_lp_s": 4.7103,
+        "t_sa_start_s": 6.3134,
+        "t_best_lp_s": 33.4327,
+        "total_s": 104.91
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 10,
+      "seed_portfolio": [
+        {
+          "label": "TC-RBI",
+          "raw_obj": 111317.13,
+          "lp_obj": 3.49,
+          "selected": true
+        },
+        {
+          "label": "EDD",
+          "raw_obj": 118134.5,
+          "lp_obj": 10.52,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 111567.73,
+          "lp_obj": 13.99,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 112142.06,
+          "lp_obj": 13.99,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 110425.48,
+          "lp_obj": 45.87,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 119685.18,
+          "lp_obj": 920.4,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 119257.21,
+          "lp_obj": 1027.81,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 123933.46,
+          "lp_obj": 3997.02,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 197605.91,
+          "lp_obj": 176995.7,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.8897680087428993,
+        "M_stag_frac": 0.26982650500409555,
+        "lp_gamma": 0.020921336833512782,
+        "chi_target": 0.1902250836447934,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland12",
+      "n": 250,
+      "m": 5,
+      "seed_lp": 0.0,
+      "sa_lp": 0.0,
+      "bks": 0.0,
+      "gap_pct": null,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 15.1553,
+        "t_seed_lp_eval_s": 0.1475,
+        "t_best_seed_lp_s": 0.0224,
+        "t_sa_start_s": 15.3379,
+        "t_best_lp_s": 0.0224,
+        "total_s": 62.32
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 10,
+      "seed_portfolio": [
+        {
+          "label": "EDD",
+          "raw_obj": 121333.74,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 113462.23,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 113508.63,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 116535.43,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 115488.33,
+          "lp_obj": 5.44,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 121488.7,
+          "lp_obj": 385.99,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 121903.78,
+          "lp_obj": 466.29,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 123971.16,
+          "lp_obj": 2667.33,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 190654.57,
+          "lp_obj": 161849.68,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.5026872272492054,
+        "M_stag_frac": 0.07748949041947094,
+        "lp_gamma": 0.16214852743500902,
+        "chi_target": 0.32181321953954634,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland13",
+      "n": 500,
+      "m": 2,
+      "seed_lp": 4659.5999999999985,
+      "sa_lp": 4074.4600000000005,
+      "bks": 3943.85,
+      "gap_pct": 3.3117,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 43.5258,
+        "t_seed_lp_eval_s": 0.8103,
+        "t_best_seed_lp_s": 32.8994,
+        "t_sa_start_s": 44.5279,
+        "t_best_lp_s": 1209.9106,
+        "total_s": 1224.19
+      },
+      "elite_pool_size": 6,
+      "n_elite_solutions": 6,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 10,
+      "seed_portfolio": [
+        {
+          "label": "TC-RBI",
+          "raw_obj": 182805.99,
+          "lp_obj": 4659.6,
+          "selected": true
+        },
+        {
+          "label": "EDD",
+          "raw_obj": 184424.18,
+          "lp_obj": 4666.6,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 180721.13,
+          "lp_obj": 4978.09,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 181201.96,
+          "lp_obj": 5009.9,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 180559.47,
+          "lp_obj": 5259.23,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 191020.51,
+          "lp_obj": 9385.62,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 190154.95,
+          "lp_obj": 10925.26,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 237381.18,
+          "lp_obj": 41101.36,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 423649.9,
+          "lp_obj": 411223.57,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.770555330456372,
+        "M_stag_frac": 0.2314982225972761,
+        "lp_gamma": 0.0268548859697062,
+        "chi_target": 0.30982879286768517,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland13",
+      "n": 500,
+      "m": 3,
+      "seed_lp": 863.28,
+      "sa_lp": 706.9000000000001,
+      "bks": 673.85,
+      "gap_pct": 4.9047,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 34.8837,
+        "t_seed_lp_eval_s": 0.5881,
+        "t_best_seed_lp_s": 24.6812,
+        "t_sa_start_s": 35.6086,
+        "t_best_lp_s": 690.5529,
+        "total_s": 700.67
+      },
+      "elite_pool_size": 6,
+      "n_elite_solutions": 6,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 10,
+      "seed_portfolio": [
+        {
+          "label": "CAF",
+          "raw_obj": 206919.87,
+          "lp_obj": 863.28,
+          "selected": true
+        },
+        {
+          "label": "EDD",
+          "raw_obj": 212688.21,
+          "lp_obj": 879.86,
+          "selected": true
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 207175.62,
+          "lp_obj": 914.51,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 207288.28,
+          "lp_obj": 1072.52,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 208895.96,
+          "lp_obj": 1128.84,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 221096.12,
+          "lp_obj": 4932.06,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 222096.84,
+          "lp_obj": 5144.57,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 243429.28,
+          "lp_obj": 22154.27,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 430273.89,
+          "lp_obj": 414125.81,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.6756006567449092,
+        "M_stag_frac": 0.061045760388646855,
+        "lp_gamma": 0.020868910854978245,
+        "chi_target": 0.24816589233834835,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland13",
+      "n": 500,
+      "m": 4,
+      "seed_lp": 145.61,
+      "sa_lp": 89.95,
+      "bks": 89.95,
+      "gap_pct": 0.0,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 30.2067,
+        "t_seed_lp_eval_s": 0.462,
+        "t_best_seed_lp_s": 19.8411,
+        "t_sa_start_s": 30.7794,
+        "t_best_lp_s": 51.5134,
+        "total_s": 421.61
+      },
+      "elite_pool_size": 6,
+      "n_elite_solutions": 6,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 10,
+      "seed_portfolio": [
+        {
+          "label": "TC-RBI",
+          "raw_obj": 220141.85,
+          "lp_obj": 145.61,
+          "selected": true
+        },
+        {
+          "label": "EDD",
+          "raw_obj": 228436.34,
+          "lp_obj": 154.56,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 213056.99,
+          "lp_obj": 172.43,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 220431.62,
+          "lp_obj": 210.77,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 214115.6,
+          "lp_obj": 217.3,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 234719.57,
+          "lp_obj": 1971.56,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 235353.98,
+          "lp_obj": 2492.82,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 244245.61,
+          "lp_obj": 13003.46,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 436113.33,
+          "lp_obj": 418564.47,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.5398289914926524,
+        "M_stag_frac": 0.1309607809101508,
+        "lp_gamma": 0.06239394479837764,
+        "chi_target": 0.14896041470075275,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland13",
+      "n": 500,
+      "m": 5,
+      "seed_lp": 0.0,
+      "sa_lp": 0.0,
+      "bks": 0.0,
+      "gap_pct": null,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 27.2493,
+        "t_seed_lp_eval_s": 0.3977,
+        "t_best_seed_lp_s": 0.0843,
+        "t_sa_start_s": 27.7407,
+        "t_best_lp_s": 0.0843,
+        "total_s": 66.54
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 10,
+      "seed_portfolio": [
+        {
+          "label": "EDD",
+          "raw_obj": 237793.46,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 222238.15,
+          "lp_obj": 1.09,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 224197.22,
+          "lp_obj": 9.92,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 220832.39,
+          "lp_obj": 31.84,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 214668.52,
+          "lp_obj": 46.59,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 240300.5,
+          "lp_obj": 891.55,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 240710.42,
+          "lp_obj": 1204.34,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 244309.44,
+          "lp_obj": 6401.04,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 408314.26,
+          "lp_obj": 384815.26,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.5684537112774757,
+        "M_stag_frac": 0.19898281764179637,
+        "lp_gamma": 0.17848317636463934,
+        "chi_target": 0.26824218334668454,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland2",
+      "n": 15,
+      "m": 2,
+      "seed_lp": 210.0,
+      "sa_lp": 210.0,
+      "bks": 210.0,
+      "gap_pct": 0.0,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 0.0293,
+        "t_seed_lp_eval_s": 0.0094,
+        "t_best_seed_lp_s": 0.0022,
+        "t_sa_start_s": 0.0392,
+        "t_best_lp_s": 0.0022,
+        "total_s": 6.49
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "EDD",
+          "raw_obj": 6670.0,
+          "lp_obj": 210.0,
+          "selected": true
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 6690.0,
+          "lp_obj": 210.0,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 6620.0,
+          "lp_obj": 210.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 6670.0,
+          "lp_obj": 210.0,
+          "selected": true
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 6690.0,
+          "lp_obj": 210.0,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 6690.0,
+          "lp_obj": 270.0,
+          "selected": false
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 6550.0,
+          "lp_obj": 290.0,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": 6560.0,
+          "lp_obj": 520.0,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 6560.0,
+          "lp_obj": 520.0,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 6560.0,
+          "lp_obj": 520.0,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 6560.0,
+          "lp_obj": 520.0,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.6662364154211983,
+        "M_stag_frac": 0.0819191136285047,
+        "lp_gamma": 0.18324166862959407,
+        "chi_target": 0.11537880910229018,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland2",
+      "n": 15,
+      "m": 3,
+      "seed_lp": 0.0,
+      "sa_lp": 0.0,
+      "bks": 0.0,
+      "gap_pct": null,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 0.064,
+        "t_seed_lp_eval_s": 0.0104,
+        "t_best_seed_lp_s": 0.0013,
+        "t_sa_start_s": 0.075,
+        "t_best_lp_s": 0.0013,
+        "total_s": 6.34
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "FCFS",
+          "raw_obj": 6940.0,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "EDD",
+          "raw_obj": 6940.0,
+          "lp_obj": 0.0,
+          "selected": false
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 6880.0,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 6820.0,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 6940.0,
+          "lp_obj": 0.0,
+          "selected": false
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 6850.0,
+          "lp_obj": 20.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 6760.0,
+          "lp_obj": 90.0,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": 6740.0,
+          "lp_obj": 110.0,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 6740.0,
+          "lp_obj": 110.0,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 6740.0,
+          "lp_obj": 110.0,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 6740.0,
+          "lp_obj": 110.0,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.7895449473417331,
+        "M_stag_frac": 0.26125066107799494,
+        "lp_gamma": 0.1861672391137774,
+        "chi_target": 0.13620300041723393,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland3",
+      "n": 20,
+      "m": 2,
+      "seed_lp": 60.0,
+      "sa_lp": 60.0,
+      "bks": 60.0,
+      "gap_pct": 0.0,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 0.0616,
+        "t_seed_lp_eval_s": 0.0105,
+        "t_best_seed_lp_s": 0.0333,
+        "t_sa_start_s": 0.0731,
+        "t_best_lp_s": 0.0333,
+        "total_s": 8.66
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "TC-RBI",
+          "raw_obj": 9290.0,
+          "lp_obj": 60.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 9250.0,
+          "lp_obj": 110.0,
+          "selected": true
+        },
+        {
+          "label": "EDD",
+          "raw_obj": 9490.0,
+          "lp_obj": 120.0,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 9390.0,
+          "lp_obj": 120.0,
+          "selected": true
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 9490.0,
+          "lp_obj": 180.0,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": 9230.0,
+          "lp_obj": 210.0,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 9230.0,
+          "lp_obj": 210.0,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 9230.0,
+          "lp_obj": 210.0,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 9230.0,
+          "lp_obj": 210.0,
+          "selected": false
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 9000.0,
+          "lp_obj": 360.0,
+          "selected": false
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 8660.0,
+          "lp_obj": 420.0,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.7037432962957472,
+        "M_stag_frac": 0.22708099152701822,
+        "lp_gamma": 0.1894946826196235,
+        "chi_target": 0.2219427982540506,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland3",
+      "n": 20,
+      "m": 3,
+      "seed_lp": 0.0,
+      "sa_lp": 0.0,
+      "bks": 0.0,
+      "gap_pct": null,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 0.1431,
+        "t_seed_lp_eval_s": 0.0157,
+        "t_best_seed_lp_s": 0.0016,
+        "t_sa_start_s": 0.1598,
+        "t_best_lp_s": 0.0016,
+        "total_s": 7.37
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "FCFS",
+          "raw_obj": 9720.0,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "EDD",
+          "raw_obj": 9720.0,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 9630.0,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": 9570.0,
+          "lp_obj": 40.0,
+          "selected": true
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 9570.0,
+          "lp_obj": 40.0,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 9570.0,
+          "lp_obj": 40.0,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 9570.0,
+          "lp_obj": 40.0,
+          "selected": false
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 9410.0,
+          "lp_obj": 40.0,
+          "selected": false
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 9570.0,
+          "lp_obj": 40.0,
+          "selected": false
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 9700.0,
+          "lp_obj": 60.0,
+          "selected": false
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 9700.0,
+          "lp_obj": 70.0,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.7800827283559384,
+        "M_stag_frac": 0.18262018038766537,
+        "lp_gamma": 0.07619767694506417,
+        "chi_target": 0.12339722224770511,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland4",
+      "n": 20,
+      "m": 2,
+      "seed_lp": 640.0,
+      "sa_lp": 640.0,
+      "bks": 640.0,
+      "gap_pct": 0.0,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 0.0612,
+        "t_seed_lp_eval_s": 0.0102,
+        "t_best_seed_lp_s": 0.0027,
+        "t_sa_start_s": 0.0723,
+        "t_best_lp_s": 0.0027,
+        "total_s": 10.32
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "EDD",
+          "raw_obj": 8440.0,
+          "lp_obj": 640.0,
+          "selected": true
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": 8440.0,
+          "lp_obj": 640.0,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 8440.0,
+          "lp_obj": 640.0,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 8440.0,
+          "lp_obj": 640.0,
+          "selected": false
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 8380.0,
+          "lp_obj": 640.0,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 8440.0,
+          "lp_obj": 640.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 8440.0,
+          "lp_obj": 640.0,
+          "selected": false
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 8430.0,
+          "lp_obj": 640.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 8250.0,
+          "lp_obj": 720.0,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 7980.0,
+          "lp_obj": 1380.0,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 17410.0,
+          "lp_obj": 11230.0,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.763396430840414,
+        "M_stag_frac": 0.24165572127474877,
+        "lp_gamma": 0.04087751875838972,
+        "chi_target": 0.21926467273251365,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland4",
+      "n": 20,
+      "m": 3,
+      "seed_lp": 130.0,
+      "sa_lp": 130.0,
+      "bks": 130.0,
+      "gap_pct": 0.0,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 0.1356,
+        "t_seed_lp_eval_s": 0.0122,
+        "t_best_seed_lp_s": 0.0028,
+        "t_sa_start_s": 0.1486,
+        "t_best_lp_s": 0.0028,
+        "total_s": 7.64
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "EDD",
+          "raw_obj": 9050.0,
+          "lp_obj": 130.0,
+          "selected": true
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": 9050.0,
+          "lp_obj": 140.0,
+          "selected": true
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 9050.0,
+          "lp_obj": 140.0,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 9050.0,
+          "lp_obj": 140.0,
+          "selected": false
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 9050.0,
+          "lp_obj": 140.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 9000.0,
+          "lp_obj": 180.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 9050.0,
+          "lp_obj": 190.0,
+          "selected": false
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 8990.0,
+          "lp_obj": 200.0,
+          "selected": false
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 9050.0,
+          "lp_obj": 200.0,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 8790.0,
+          "lp_obj": 460.0,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 18170.0,
+          "lp_obj": 10380.0,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.5795152000862522,
+        "M_stag_frac": 0.09946126292201062,
+        "lp_gamma": 0.04661881019620831,
+        "chi_target": 0.3148090445449153,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland4",
+      "n": 20,
+      "m": 4,
+      "seed_lp": 0.0,
+      "sa_lp": 0.0,
+      "bks": 0.0,
+      "gap_pct": null,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 0.0657,
+        "t_seed_lp_eval_s": 0.0076,
+        "t_best_seed_lp_s": 0.0015,
+        "t_sa_start_s": 0.0737,
+        "t_best_lp_s": 0.0015,
+        "total_s": 7.28
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "EDD",
+          "raw_obj": 9330.0,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": 9330.0,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 9330.0,
+          "lp_obj": 0.0,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 9330.0,
+          "lp_obj": 0.0,
+          "selected": false
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 9330.0,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 9260.0,
+          "lp_obj": 10.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 9320.0,
+          "lp_obj": 20.0,
+          "selected": false
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 9270.0,
+          "lp_obj": 60.0,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 9120.0,
+          "lp_obj": 240.0,
+          "selected": false
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 9150.0,
+          "lp_obj": 240.0,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 17610.0,
+          "lp_obj": 9440.0,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.7344239964896514,
+        "M_stag_frac": 0.10602946901793307,
+        "lp_gamma": 0.028581652127548623,
+        "chi_target": 0.29371613061875057,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland5",
+      "n": 20,
+      "m": 2,
+      "seed_lp": 650.0,
+      "sa_lp": 650.0,
+      "bks": 650.0,
+      "gap_pct": 0.0,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 0.0601,
+        "t_seed_lp_eval_s": 0.009,
+        "t_best_seed_lp_s": 0.0697,
+        "t_sa_start_s": 0.0697,
+        "t_best_lp_s": 0.0697,
+        "total_s": 8.35
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "MPDS",
+          "raw_obj": 8190.0,
+          "lp_obj": 650.0,
+          "selected": true
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 7740.0,
+          "lp_obj": 670.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 7690.0,
+          "lp_obj": 700.0,
+          "selected": true
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": 8400.0,
+          "lp_obj": 750.0,
+          "selected": true
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 8400.0,
+          "lp_obj": 750.0,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 8400.0,
+          "lp_obj": 750.0,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 8400.0,
+          "lp_obj": 750.0,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 8190.0,
+          "lp_obj": 830.0,
+          "selected": false
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 7610.0,
+          "lp_obj": 990.0,
+          "selected": false
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 7450.0,
+          "lp_obj": 1110.0,
+          "selected": false
+        },
+        {
+          "label": "EDD",
+          "raw_obj": 7500.0,
+          "lp_obj": 1140.0,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.7705779577287197,
+        "M_stag_frac": 0.14340942403078605,
+        "lp_gamma": 0.028737714029074754,
+        "chi_target": 0.20456841747180798,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland5",
+      "n": 20,
+      "m": 3,
+      "seed_lp": 200.0,
+      "sa_lp": 170.0,
+      "bks": 170.0,
+      "gap_pct": 0.0,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 0.0632,
+        "t_seed_lp_eval_s": 0.0083,
+        "t_best_seed_lp_s": 0.0317,
+        "t_sa_start_s": 0.072,
+        "t_best_lp_s": 0.9727,
+        "total_s": 8.37
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "TC-RBI",
+          "raw_obj": 8890.0,
+          "lp_obj": 200.0,
+          "selected": true
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 9090.0,
+          "lp_obj": 210.0,
+          "selected": true
+        },
+        {
+          "label": "EDD",
+          "raw_obj": 8770.0,
+          "lp_obj": 270.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 8770.0,
+          "lp_obj": 270.0,
+          "selected": true
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": 8920.0,
+          "lp_obj": 300.0,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 8920.0,
+          "lp_obj": 300.0,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 8920.0,
+          "lp_obj": 300.0,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 8920.0,
+          "lp_obj": 300.0,
+          "selected": false
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 8650.0,
+          "lp_obj": 390.0,
+          "selected": false
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 8540.0,
+          "lp_obj": 390.0,
+          "selected": false
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 8630.0,
+          "lp_obj": 480.0,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.5315060479401094,
+        "M_stag_frac": 0.2693126082857828,
+        "lp_gamma": 0.18789714060943494,
+        "chi_target": 0.3135429350472379,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland5",
+      "n": 20,
+      "m": 4,
+      "seed_lp": 0.0,
+      "sa_lp": 0.0,
+      "bks": 0.0,
+      "gap_pct": null,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 0.0661,
+        "t_seed_lp_eval_s": 0.0083,
+        "t_best_seed_lp_s": 0.0016,
+        "t_sa_start_s": 0.0749,
+        "t_best_lp_s": 0.0016,
+        "total_s": 10.01
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "EDD",
+          "raw_obj": 9300.0,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 9190.0,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 9080.0,
+          "lp_obj": 30.0,
+          "selected": true
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 9300.0,
+          "lp_obj": 110.0,
+          "selected": true
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 8890.0,
+          "lp_obj": 110.0,
+          "selected": false
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 9030.0,
+          "lp_obj": 170.0,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 9120.0,
+          "lp_obj": 190.0,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": 9120.0,
+          "lp_obj": 210.0,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 9120.0,
+          "lp_obj": 210.0,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 9120.0,
+          "lp_obj": 210.0,
+          "selected": false
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 8660.0,
+          "lp_obj": 330.0,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.7326569100855822,
+        "M_stag_frac": 0.27719394016818377,
+        "lp_gamma": 0.02445281548393223,
+        "chi_target": 0.1539158464730473,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland6",
+      "n": 30,
+      "m": 2,
+      "seed_lp": 701.0,
+      "sa_lp": 554.0,
+      "bks": 554.0,
+      "gap_pct": 0.0,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 0.0652,
+        "t_seed_lp_eval_s": 0.0095,
+        "t_best_seed_lp_s": 0.0499,
+        "t_sa_start_s": 0.0758,
+        "t_best_lp_s": 1.4901,
+        "total_s": 6.23
+      },
+      "elite_pool_size": 3,
+      "n_elite_solutions": 3,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "GRASP-7",
+          "raw_obj": 701.0,
+          "lp_obj": 701.0,
+          "selected": true
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 754.0,
+          "lp_obj": 754.0,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 891.0,
+          "lp_obj": 891.0,
+          "selected": true
+        },
+        {
+          "label": "EDD",
+          "raw_obj": 1011.0,
+          "lp_obj": 1011.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 1122.0,
+          "lp_obj": 1122.0,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 1160.0,
+          "lp_obj": 1160.0,
+          "selected": false
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 1304.0,
+          "lp_obj": 1304.0,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 7574.0,
+          "lp_obj": 7574.0,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.9466358196853428,
+        "M_stag_frac": 0.18178005891341903,
+        "lp_gamma": 0.1455080119572773,
+        "chi_target": 0.26637308824507416,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland6",
+      "n": 30,
+      "m": 3,
+      "seed_lp": 0.0,
+      "sa_lp": 0.0,
+      "bks": 0.0,
+      "gap_pct": null,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 0.0737,
+        "t_seed_lp_eval_s": 0.0085,
+        "t_best_seed_lp_s": 0.0018,
+        "t_sa_start_s": 0.083,
+        "t_best_lp_s": 0.0018,
+        "total_s": 6.03
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "EDD",
+          "raw_obj": 0.0,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 3.0,
+          "lp_obj": 3.0,
+          "selected": true
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 48.0,
+          "lp_obj": 48.0,
+          "selected": true
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 68.0,
+          "lp_obj": 68.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 141.0,
+          "lp_obj": 141.0,
+          "selected": false
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 177.0,
+          "lp_obj": 177.0,
+          "selected": false
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 222.0,
+          "lp_obj": 222.0,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 477.0,
+          "lp_obj": 477.0,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 858.0,
+          "lp_obj": 858.0,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 6305.0,
+          "lp_obj": 6305.0,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.7233885165256468,
+        "M_stag_frac": 0.21413690051370549,
+        "lp_gamma": 0.06529665241766545,
+        "chi_target": 0.1625311383903919,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland7",
+      "n": 44,
+      "m": 2,
+      "seed_lp": 0.0,
+      "sa_lp": 0.0,
+      "bks": 0.0,
+      "gap_pct": null,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 0.1432,
+        "t_seed_lp_eval_s": 0.0127,
+        "t_best_seed_lp_s": 0.0016,
+        "t_sa_start_s": 0.1578,
+        "t_best_lp_s": 0.0016,
+        "total_s": 4.39
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "FCFS",
+          "raw_obj": 7642.0,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "EDD",
+          "raw_obj": 7639.0,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 7712.0,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 7584.0,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 7712.0,
+          "lp_obj": 0.0,
+          "selected": false
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 7390.0,
+          "lp_obj": 0.0,
+          "selected": false
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 7476.0,
+          "lp_obj": 0.0,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 6456.0,
+          "lp_obj": 1656.0,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.8920697160013622,
+        "M_stag_frac": 0.14592551675874688,
+        "lp_gamma": 0.038923825468909296,
+        "chi_target": 0.11380277531687916,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland8",
+      "n": 50,
+      "m": 2,
+      "seed_lp": 135.0,
+      "sa_lp": 135.0,
+      "bks": 135.0,
+      "gap_pct": 0.0,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 1.6999,
+        "t_seed_lp_eval_s": 0.0253,
+        "t_best_seed_lp_s": 0.9486,
+        "t_sa_start_s": 1.7285,
+        "t_best_lp_s": 0.9486,
+        "total_s": 24.7
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "TC-RBI",
+          "raw_obj": 80530.0,
+          "lp_obj": 135.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 79710.0,
+          "lp_obj": 155.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 80435.0,
+          "lp_obj": 165.0,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 78425.0,
+          "lp_obj": 175.0,
+          "selected": true
+        },
+        {
+          "label": "EDD",
+          "raw_obj": 79170.0,
+          "lp_obj": 285.0,
+          "selected": false
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 76200.0,
+          "lp_obj": 305.0,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 83620.0,
+          "lp_obj": 1945.0,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 83730.0,
+          "lp_obj": 2950.0,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 101025.0,
+          "lp_obj": 10345.0,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": 91620.0,
+          "lp_obj": 67315.0,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 147265.0,
+          "lp_obj": 105875.0,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.6805215190337984,
+        "M_stag_frac": 0.15276889888040118,
+        "lp_gamma": 0.19607923554941536,
+        "chi_target": 0.32699852383907757,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland8",
+      "n": 50,
+      "m": 3,
+      "seed_lp": 0.0,
+      "sa_lp": 0.0,
+      "bks": 0.0,
+      "gap_pct": null,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 0.7856,
+        "t_seed_lp_eval_s": 0.0158,
+        "t_best_seed_lp_s": 0.4466,
+        "t_sa_start_s": 0.8032,
+        "t_best_lp_s": 0.4466,
+        "total_s": 14.53
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "GRASP-7",
+          "raw_obj": 85955.0,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "EDD",
+          "raw_obj": 90400.0,
+          "lp_obj": 15.0,
+          "selected": true
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 89305.0,
+          "lp_obj": 15.0,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 92165.0,
+          "lp_obj": 15.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 93065.0,
+          "lp_obj": 15.0,
+          "selected": false
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 87900.0,
+          "lp_obj": 15.0,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 95050.0,
+          "lp_obj": 1265.0,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 94690.0,
+          "lp_obj": 1385.0,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 101885.0,
+          "lp_obj": 6110.0,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": 92595.0,
+          "lp_obj": 59040.0,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 143510.0,
+          "lp_obj": 93895.0,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.7665661882512826,
+        "M_stag_frac": 0.1469669160115627,
+        "lp_gamma": 0.17472250854078858,
+        "chi_target": 0.20015511103358524,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland9",
+      "n": 100,
+      "m": 2,
+      "seed_lp": 481.71,
+      "sa_lp": 452.91999999999996,
+      "bks": 444.1,
+      "gap_pct": 1.986,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 2.7407,
+        "t_seed_lp_eval_s": 0.0444,
+        "t_best_seed_lp_s": 1.3608,
+        "t_sa_start_s": 2.794,
+        "t_best_lp_s": 55.3287,
+        "total_s": 56.27
+      },
+      "elite_pool_size": 6,
+      "n_elite_solutions": 6,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "TC-RBI",
+          "raw_obj": 41168.19,
+          "lp_obj": 481.71,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 43287.23,
+          "lp_obj": 502.99,
+          "selected": true
+        },
+        {
+          "label": "EDD",
+          "raw_obj": 42222.97,
+          "lp_obj": 540.01,
+          "selected": true
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 41573.2,
+          "lp_obj": 608.86,
+          "selected": true
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 40217.09,
+          "lp_obj": 624.59,
+          "selected": false
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 41699.13,
+          "lp_obj": 719.35,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 43286.55,
+          "lp_obj": 1558.95,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 42666.18,
+          "lp_obj": 1570.16,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 51674.13,
+          "lp_obj": 7629.85,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 78341.59,
+          "lp_obj": 71364.08,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.7024718694901994,
+        "M_stag_frac": 0.25651620270854286,
+        "lp_gamma": 0.13024280272596567,
+        "chi_target": 0.26013765330056676,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland9",
+      "n": 100,
+      "m": 3,
+      "seed_lp": 89.03,
+      "sa_lp": 75.75,
+      "bks": 75.75,
+      "gap_pct": 0.0,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 2.7974,
+        "t_seed_lp_eval_s": 0.0327,
+        "t_best_seed_lp_s": 0.0071,
+        "t_sa_start_s": 2.8365,
+        "t_best_lp_s": 4.6608,
+        "total_s": 42.83
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "EDD",
+          "raw_obj": 47611.75,
+          "lp_obj": 89.03,
+          "selected": true
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 47220.25,
+          "lp_obj": 98.63,
+          "selected": true
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 47116.55,
+          "lp_obj": 103.95,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 47078.89,
+          "lp_obj": 128.09,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 47599.84,
+          "lp_obj": 129.21,
+          "selected": false
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 46072.0,
+          "lp_obj": 132.25,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 48177.76,
+          "lp_obj": 566.37,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 48172.2,
+          "lp_obj": 629.16,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 52935.03,
+          "lp_obj": 4917.53,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 78113.1,
+          "lp_obj": 70649.87,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.6552582731109063,
+        "M_stag_frac": 0.17057797385442042,
+        "lp_gamma": 0.1721394112246143,
+        "chi_target": 0.17790380333756117,
+        "optuna_tuned": true
+      }
+    },
+    {
+      "instance": "airland9",
+      "n": 100,
+      "m": 4,
+      "seed_lp": 0.0,
+      "sa_lp": 0.0,
+      "bks": 0.0,
+      "gap_pct": null,
+      "new_bks": false,
+      "feasible": true,
+      "timing": {
+        "t_seed_construct_s": 2.6495,
+        "t_seed_lp_eval_s": 0.0282,
+        "t_best_seed_lp_s": 0.0059,
+        "t_sa_start_s": 2.6828,
+        "t_best_lp_s": 0.0059,
+        "total_s": 18.81
+      },
+      "elite_pool_size": 4,
+      "n_elite_solutions": 4,
+      "relinking_improved": false,
+      "n_seeds_evaluated": 11,
+      "seed_portfolio": [
+        {
+          "label": "EDD",
+          "raw_obj": 50151.67,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "TC-RBI",
+          "raw_obj": 46962.1,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "CAF",
+          "raw_obj": 48036.17,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "GRASP-7",
+          "raw_obj": 49052.19,
+          "lp_obj": 0.0,
+          "selected": true
+        },
+        {
+          "label": "MPDS",
+          "raw_obj": 48420.16,
+          "lp_obj": 0.0,
+          "selected": false
+        },
+        {
+          "label": "GRASP-3",
+          "raw_obj": 50036.28,
+          "lp_obj": 5.32,
+          "selected": false
+        },
+        {
+          "label": "ATCS",
+          "raw_obj": 51885.59,
+          "lp_obj": 153.29,
+          "selected": false
+        },
+        {
+          "label": "ATC",
+          "raw_obj": 51692.88,
+          "lp_obj": 168.81,
+          "selected": false
+        },
+        {
+          "label": "FCFS",
+          "raw_obj": 53160.93,
+          "lp_obj": 1714.46,
+          "selected": false
+        },
+        {
+          "label": "WCC",
+          "raw_obj": 76542.5,
+          "lp_obj": 65473.16,
+          "selected": false
+        },
+        {
+          "label": "WEDD",
+          "raw_obj": null,
+          "lp_obj": null,
+          "selected": false
+        }
+      ],
+      "sa_params": {
+        "chi0": 0.7850784742748269,
+        "M_stag_frac": 0.22707185965474008,
+        "lp_gamma": 0.11047695251643698,
+        "chi_target": 0.11455779697447063,
+        "optuna_tuned": true
+      }
+    }
+  ]
+}

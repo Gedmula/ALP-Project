@@ -6,6 +6,8 @@ $$1 | r_j, s_{jk}, d^-_j | Σ(g_j E_j + h_j T_j)$$
 
 and solved via a two-stage decomposition: sequence optimisation by parallel multi-start SA with ILS, followed by exact timing optimisation via a linear program.
 
+For the multi-runway extension ($m > 1$ parallel runways), see [MR_README.md](MR_README.md).
+
 ---
 
 ## Table of Contents
@@ -56,7 +58,10 @@ The MILP is NP-hard in general. The pipeline exploits the two-stage structure: o
 ```
 project_root/
 ├── Single_runway_SA.py      # Main solver — MS-SA + ILS + Stage-2 LP
-├── doe_alp.py               # Design of Experiments module (imports from above)
+├── mr_sa_alp.py             # Multi-runway solver entry point (see MR_README.md)
+├── ramp_rbi.py              # Standalone TC-RBI construction heuristic demo
+├── plot_ils.py              # ILS convergence plotting utility
+├── mr_alp/                  # Multi-runway solver package (see MR_README.md)
 ├── data/
 │   ├── airland1.txt         # OR Library benchmark instances
 │   ├── airland2.txt
@@ -66,18 +71,21 @@ project_root/
 │   ├── convergence/         # SA chain convergence curves
 │   ├── alpha trajectory/    # Reactive cooling-rate trajectories
 │   ├── seed improvement/    # Heuristic seed vs SA final objective
-│   ├── penalty profile/     # Per-aircraft penalty profiles
-│   ├── gap_summary.png      # Aggregate gap bar chart
-│   └── alt_solutions.png    # Alternate-optimal sequence counts
-├── results/                 # Auto-generated CSV/JSON/TXT exports
+│   └── penalty profile/     # Per-aircraft penalty profiles
+├── results/                 # Single-runway outputs
 │   ├── summary.csv
 │   ├── schedules.csv
 │   ├── verification.txt
 │   └── run_metadata.json
-└── doe_results/             # DOE outputs (written by doe_alp.py)
-    ├── exp1_heuristic/
-    ├── exp2_ils_depth/
-    └── exp3_parameter/
+├── MR_results/              # Multi-runway outputs (see MR_README.md)
+├── adaptive_results/        # Adaptive parameter experiment outputs
+├── doe_results/             # DOE outputs
+│   ├── analysis/
+│   └── plots/
+└── misc/                    # Auxiliary scripts
+    ├── doe.py               # Design of Experiments runner
+    ├── doe_analysis.py      # DOE result analysis
+    └── ...
 ```
 
 OR Library files are **not** included in the repository. See [Section 4](#4-data) for download instructions.
@@ -409,12 +417,12 @@ best_seq, best_obj, stats = ms_sa(inst, p, n_workers=16, n_ils=3)
 **Design of Experiments:**
 
 ```bash
-python doe_alp.py            # all three experiments
-python doe_alp.py --exp 1    # heuristic seeding study only
-python doe_alp.py --exp 2 3  # ILS depth + parameter factorial
+python misc/doe.py           # all three experiments
+python misc/doe.py --exp 1   # heuristic seeding study only
+python misc/doe.py --exp 2 3 # ILS depth + parameter factorial
 ```
 
-`doe_alp.py` imports directly from `Single_runway_SA.py` and writes all outputs to `./doe_results/`. See the module docstring in `doe_alp.py` for full experiment design details.
+`misc/doe.py` imports directly from `Single_runway_SA.py` and writes all outputs to `./doe_results/`. See the module docstring in `misc/doe.py` for full experiment design details.
 
 ---
 
