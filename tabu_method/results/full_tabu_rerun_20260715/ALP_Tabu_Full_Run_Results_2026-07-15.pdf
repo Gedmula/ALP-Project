@@ -1,0 +1,479 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R 5 0 R 7 0 R 9 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont /Courier >> >> >> /Contents 4 0 R >>
+endobj
+4 0 obj
+<< /Length 4966 >>
+stream
+BT
+/F1 8 Tf
+34 760 Td
+11 TL
+(ALP Tabu Full Rerun Results) Tj
+T*
+(Run date: July 15, 2026) Tj
+T*
+() Tj
+T*
+(This report contains the complete rerun output for the Tabu recommendation study: four hard ALP cases,) Tj
+T*
+(three seeds, and nine Tabu arms. The rerun result confirms the same best mean settings and best single) Tj
+T*
+(runs as the first controlled study.) Tj
+T*
+() Tj
+T*
+(Source files) Tj
+T*
+(  Rerun rows:    tabu_method_push_package/results/tabu_recommendation_study_rerun_20260714/study_rows.csv) Tj
+T*
+(  Rerun summary: tabu_method_push_package/results/tabu_recommendation_study_rerun_20260714/study_summary.csv) Tj
+T*
+(  First study:   ALP_Tabu_Handoff_2026-06-18/results/tabu_recommendation_study_20260624/study_rows.csv) Tj
+T*
+() Tj
+T*
+(Integrity check) Tj
+T*
+(  Raw rerun rows: 108) Tj
+T*
+(  Summary rows: 36) Tj
+T*
+(  Cases: 4) Tj
+T*
+(  Arms: 9) Tj
+T*
+(  Seeds: 0, 1, 2) Tj
+T*
+(  Infeasible schedules: 0) Tj
+T*
+(  Row-level gap differences from first study: 2) Tj
+T*
+() Tj
+T*
+(Best mean setting by case) Tj
+T*
+(Case             Best arm                  Mean      Median    Best      Runtime) Tj
+T*
+(airland11 m=2    fixed_t80                  1.8651%   1.9047%   1.7146%    237.7s) Tj
+T*
+(airland12 m=2    fixed_t20                  2.6549%   3.8540%   0.1121%    358.6s) Tj
+T*
+(airland13 m=2    fixed_t40                  3.8922%   3.4400%   2.2032%   1278.8s) Tj
+T*
+(airland13 m=3    fixed_t40                  4.9680%   5.3736%   3.4978%   1249.1s) Tj
+T*
+() Tj
+T*
+(Best single run by case) Tj
+T*
+(Case             Arm                       Seed  Objective   BKS       Gap       Runtime) Tj
+T*
+(airland11 m=2    fixed_t80                0       1353.73  1330.91   1.7146%    237.7s) Tj
+T*
+(airland12 m=2    fixed_t20                1       1697.52  1695.62   0.1121%    366.4s) Tj
+T*
+(airland13 m=2    fixed_t40                1       4030.74  3943.85   2.2032%   1280.8s) Tj
+T*
+(airland13 m=3    fixed_t80                2        690.06   673.85   2.4056%   1249.6s) Tj
+T*
+() Tj
+T*
+(Complete 36-row summary table) Tj
+T*
+(Case             Arm                       n  Mean      Median    Best      Std       Runtime) Tj
+T*
+(airland11 m=2    tabu_off                 3    2.4209%   2.2834%   2.2834%   0.2382%    241.7s) Tj
+T*
+(airland11 m=2    fixed_t20                3    2.1426%   2.1684%   1.9761%   0.1553%    232.5s) Tj
+T*
+(airland11 m=2    fixed_t40                3    3.8375%   3.8297%   3.6005%   0.2409%    234.4s) Tj
+T*
+(airland11 m=2    fixed_t80                3    1.8651%   1.9047%   1.7146%   0.1352%    237.7s) Tj
+T*
+(airland11 m=2    fixed_t160               3    4.1485%   3.3090%   2.9904%   1.7373%    242.7s) Tj
+T*
+(airland11 m=2    iteration_t80            3    3.5782%   3.5855%   2.4006%   1.1740%    240.0s) Tj
+T*
+(airland11 m=2    fixed_t80_lp_aspiration  3    3.9006%   4.6900%   2.1391%   1.5282%    243.2s) Tj
+T*
+(airland11 m=2    fixed_t80_least_recent   3    1.9676%   1.9761%   1.9047%   0.0591%    249.4s) Tj
+T*
+(airland11 m=2    reactive_combined        3    2.9030%   2.6959%   2.2834%   0.7451%    239.3s) Tj
+T*
+(airland12 m=2    tabu_off                 3    4.8449%   4.5559%   3.4082%   1.6008%    351.5s) Tj
+T*
+(airland12 m=2    fixed_t20                3    2.6549%   3.8540%   0.1121%   2.2033%    358.6s) Tj
+T*
+(airland12 m=2    fixed_t40                3    6.2115%   7.0482%   3.8723%   2.0530%    361.9s) Tj
+T*
+(airland12 m=2    fixed_t80                3    4.3789%   3.7178%   3.3410%   1.4834%    362.7s) Tj
+T*
+(airland12 m=2    fixed_t160               3    4.8079%   5.2984%   3.3410%   1.2934%    360.8s) Tj
+T*
+(airland12 m=2    iteration_t80            3    3.8193%   5.1598%   0.2784%   3.0965%    360.7s) Tj
+T*
+(airland12 m=2    fixed_t80_lp_aspiration  3    6.3511%   7.6591%   3.3410%   2.6142%    374.9s) Tj
+T*
+(airland12 m=2    fixed_t80_least_recent   3    4.3789%   3.7178%   3.3410%   1.4834%    384.6s) Tj
+T*
+(airland12 m=2    reactive_combined        3    5.7969%   5.4529%   5.2358%   0.7913%    369.0s) Tj
+T*
+(airland13 m=2    tabu_off                 3    5.0267%   4.8904%   4.3303%   0.7737%   1281.9s) Tj
+T*
+(airland13 m=2    fixed_t20                3    4.7903%   4.5481%   4.4581%   0.4994%   1280.4s) Tj
+T*
+(airland13 m=2    fixed_t40                3    3.8922%   3.4400%   2.2032%   1.9547%   1278.8s) Tj
+T*
+(airland13 m=2    fixed_t80                3    5.3228%   4.9941%   3.8627%   1.6492%   1285.5s) Tj
+T*
+(airland13 m=2    fixed_t160               3    5.9298%   6.4587%   3.8627%   1.8600%   1286.3s) Tj
+T*
+(airland13 m=2    iteration_t80            3    5.6106%   5.4660%   4.5121%   1.1775%   1290.0s) Tj
+T*
+(airland13 m=2    fixed_t80_lp_aspiration  3    5.0734%   5.1954%   4.6176%   0.4087%   1287.4s) Tj
+T*
+(airland13 m=2    fixed_t80_least_recent   3    5.3228%   4.9941%   3.8627%   1.6492%   1289.1s) Tj
+T*
+(airland13 m=2    reactive_combined        3    5.1385%   4.5052%   4.1792%   1.3889%   1285.5s) Tj
+ET
+BT
+/F1 8 Tf
+500 24 Td (Page 1 of 4) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont /Courier >> >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 6195 >>
+stream
+BT
+/F1 8 Tf
+34 760 Td
+11 TL
+(airland13 m=3    tabu_off                 3    6.3708%   6.0844%   5.4775%   1.0658%   1249.5s) Tj
+T*
+(airland13 m=3    fixed_t20                3    6.9348%   7.5506%   3.8109%   2.8660%   1245.3s) Tj
+T*
+(airland13 m=3    fixed_t40                3    4.9680%   5.3736%   3.4978%   1.3151%   1249.1s) Tj
+T*
+(airland13 m=3    fixed_t80                3    5.1040%   5.7401%   2.4056%   2.4433%   1246.6s) Tj
+T*
+(airland13 m=3    fixed_t160               3    6.7221%   7.2850%   5.3306%   1.2123%   1250.5s) Tj
+T*
+(airland13 m=3    iteration_t80            3    5.7174%   5.0456%   4.5559%   1.6064%   1254.6s) Tj
+T*
+(airland13 m=3    fixed_t80_lp_aspiration  3    5.4320%   5.3039%   4.1404%   1.3602%   1257.0s) Tj
+T*
+(airland13 m=3    fixed_t80_least_recent   3    5.1040%   5.7401%   2.4056%   2.4433%   1250.6s) Tj
+T*
+(airland13 m=3    reactive_combined        3    6.3080%   6.0444%   5.3291%   1.1340%   1250.2s) Tj
+T*
+() Tj
+T*
+(Rows that changed from the first saved study) Tj
+T*
+(Instance      m  Seed  Arm                 Old gap   Rerun gap  Change) Tj
+T*
+(airland13    2  1     iteration_t80       2.9167%   5.4660%    +2.5493 pp) Tj
+T*
+(airland13    2  1     tabu_off            3.3706%   5.8595%    +2.4889 pp) Tj
+T*
+() Tj
+T*
+(Complete 108-row run table) Tj
+T*
+(Case             Seed  Arm                       Objective   BKS       Gap       Feas  Runtime) Tj
+T*
+(airland11 m=2    0     tabu_off                   1361.30  1330.91   2.2834% True     233.7s) Tj
+T*
+(airland11 m=2    0     fixed_t20                  1357.21  1330.91   1.9761% True     238.3s) Tj
+T*
+(airland11 m=2    0     fixed_t40                  1381.88  1330.91   3.8297% True     242.8s) Tj
+T*
+(airland11 m=2    0     fixed_t80                  1353.73  1330.91   1.7146% True     237.7s) Tj
+T*
+(airland11 m=2    0     fixed_t160                 1370.71  1330.91   2.9904% True     241.1s) Tj
+T*
+(airland11 m=2    0     iteration_t80              1378.63  1330.91   3.5855% True     236.1s) Tj
+T*
+(airland11 m=2    0     fixed_t80_lp_aspiration    1393.33  1330.91   4.6900% True     239.7s) Tj
+T*
+(airland11 m=2    0     fixed_t80_least_recent     1357.82  1330.91   2.0219% True     255.8s) Tj
+T*
+(airland11 m=2    0     reactive_combined          1361.30  1330.91   2.2834% True     236.6s) Tj
+T*
+(airland11 m=2    1     tabu_off                   1366.79  1330.91   2.6959% True     260.4s) Tj
+T*
+(airland11 m=2    1     fixed_t20                  1359.77  1330.91   2.1684% True     226.4s) Tj
+T*
+(airland11 m=2    1     fixed_t40                  1378.83  1330.91   3.6005% True     227.2s) Tj
+T*
+(airland11 m=2    1     fixed_t80                  1357.21  1330.91   1.9761% True     225.2s) Tj
+T*
+(airland11 m=2    1     fixed_t160                 1412.71  1330.91   6.1462% True     225.7s) Tj
+T*
+(airland11 m=2    1     iteration_t80              1362.86  1330.91   2.4006% True     225.2s) Tj
+T*
+(airland11 m=2    1     fixed_t80_lp_aspiration    1395.76  1330.91   4.8726% True     228.5s) Tj
+T*
+(airland11 m=2    1     fixed_t80_least_recent     1357.21  1330.91   1.9761% True     232.2s) Tj
+T*
+(airland11 m=2    1     reactive_combined          1380.55  1330.91   3.7298% True     223.1s) Tj
+T*
+(airland11 m=2    2     tabu_off                   1361.30  1330.91   2.2834% True     231.1s) Tj
+T*
+(airland11 m=2    2     fixed_t20                  1361.30  1330.91   2.2834% True     232.8s) Tj
+T*
+(airland11 m=2    2     fixed_t40                  1385.24  1330.91   4.0822% True     233.3s) Tj
+T*
+(airland11 m=2    2     fixed_t80                  1356.26  1330.91   1.9047% True     250.3s) Tj
+T*
+(airland11 m=2    2     fixed_t160                 1374.95  1330.91   3.3090% True     261.2s) Tj
+T*
+(airland11 m=2    2     iteration_t80              1394.11  1330.91   4.7486% True     258.8s) Tj
+T*
+(airland11 m=2    2     fixed_t80_lp_aspiration    1359.38  1330.91   2.1391% True     261.3s) Tj
+T*
+(airland11 m=2    2     fixed_t80_least_recent     1356.26  1330.91   1.9047% True     260.1s) Tj
+T*
+(airland11 m=2    2     reactive_combined          1366.79  1330.91   2.6959% True     258.1s) Tj
+T*
+(airland12 m=2    0     tabu_off                   1807.03  1695.62   6.5705% True     362.6s) Tj
+T*
+(airland12 m=2    0     fixed_t20                  1760.97  1695.62   3.8540% True     364.9s) Tj
+T*
+(airland12 m=2    0     fixed_t40                  1826.42  1695.62   7.7140% True     369.9s) Tj
+T*
+(airland12 m=2    0     fixed_t80                  1752.27  1695.62   3.3410% True     368.9s) Tj
+T*
+(airland12 m=2    0     fixed_t160                 1752.27  1695.62   3.3410% True     369.1s) Tj
+T*
+(airland12 m=2    0     iteration_t80              1783.11  1695.62   5.1598% True     372.8s) Tj
+T*
+(airland12 m=2    0     fixed_t80_lp_aspiration    1752.27  1695.62   3.3410% True     371.7s) Tj
+T*
+(airland12 m=2    0     fixed_t80_least_recent     1752.27  1695.62   3.3410% True     370.4s) Tj
+T*
+(airland12 m=2    0     reactive_combined          1788.08  1695.62   5.4529% True     365.0s) Tj
+T*
+(airland12 m=2    1     tabu_off                   1772.87  1695.62   4.5559% True     354.6s) Tj
+T*
+(airland12 m=2    1     fixed_t20                  1697.52  1695.62   0.1121% True     366.4s) Tj
+T*
+(airland12 m=2    1     fixed_t40                  1815.13  1695.62   7.0482% True     371.1s) Tj
+T*
+(airland12 m=2    1     fixed_t80                  1758.66  1695.62   3.7178% True     371.9s) Tj
+T*
+(airland12 m=2    1     fixed_t160                 1785.46  1695.62   5.2984% True     365.6s) Tj
+T*
+(airland12 m=2    1     iteration_t80              1700.34  1695.62   0.2784% True     365.7s) Tj
+T*
+(airland12 m=2    1     fixed_t80_lp_aspiration    1825.49  1695.62   7.6591% True     406.5s) Tj
+T*
+(airland12 m=2    1     fixed_t80_least_recent     1758.66  1695.62   3.7178% True     437.4s) Tj
+T*
+(airland12 m=2    1     reactive_combined          1784.40  1695.62   5.2358% True     397.9s) Tj
+T*
+(airland12 m=2    2     tabu_off                   1753.41  1695.62   3.4082% True     337.3s) Tj
+T*
+(airland12 m=2    2     fixed_t20                  1763.42  1695.62   3.9985% True     344.6s) Tj
+ET
+BT
+/F1 8 Tf
+500 24 Td (Page 2 of 4) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont /Courier >> >> >> /Contents 8 0 R >>
+endobj
+8 0 obj
+<< /Length 6365 >>
+stream
+BT
+/F1 8 Tf
+34 760 Td
+11 TL
+(airland12 m=2    2     fixed_t40                  1761.28  1695.62   3.8723% True     344.8s) Tj
+T*
+(airland12 m=2    2     fixed_t80                  1798.68  1695.62   6.0780% True     347.3s) Tj
+T*
+(airland12 m=2    2     fixed_t160                 1793.70  1695.62   5.7843% True     347.8s) Tj
+T*
+(airland12 m=2    2     iteration_t80              1797.69  1695.62   6.0196% True     343.6s) Tj
+T*
+(airland12 m=2    2     fixed_t80_lp_aspiration    1832.17  1695.62   8.0531% True     346.6s) Tj
+T*
+(airland12 m=2    2     fixed_t80_least_recent     1798.68  1695.62   6.0780% True     345.8s) Tj
+T*
+(airland12 m=2    2     reactive_combined          1809.26  1695.62   6.7020% True     344.2s) Tj
+T*
+(airland13 m=2    0     tabu_off                   4136.72  3943.85   4.8904% True    1289.2s) Tj
+T*
+(airland13 m=2    0     fixed_t20                  4123.22  3943.85   4.5481% True    1277.4s) Tj
+T*
+(airland13 m=2    0     fixed_t40                  4181.80  3943.85   6.0334% True    1282.0s) Tj
+T*
+(airland13 m=2    0     fixed_t80                  4096.19  3943.85   3.8627% True    1288.8s) Tj
+T*
+(airland13 m=2    0     fixed_t160                 4096.19  3943.85   3.8627% True    1296.2s) Tj
+T*
+(airland13 m=2    0     iteration_t80              4121.80  3943.85   4.5121% True    1291.4s) Tj
+T*
+(airland13 m=2    0     fixed_t80_lp_aspiration    4148.75  3943.85   5.1954% True    1280.5s) Tj
+T*
+(airland13 m=2    0     fixed_t80_least_recent     4096.19  3943.85   3.8627% True    1294.2s) Tj
+T*
+(airland13 m=2    0     reactive_combined          4209.32  3943.85   6.7312% True    1278.8s) Tj
+T*
+(airland13 m=2    1     tabu_off                   4174.94  3943.85   5.8595% True    1276.5s) Tj
+T*
+(airland13 m=2    1     fixed_t20                  4119.67  3943.85   4.4581% True    1281.2s) Tj
+T*
+(airland13 m=2    1     fixed_t40                  4030.74  3943.85   2.2032% True    1280.8s) Tj
+T*
+(airland13 m=2    1     fixed_t80                  4140.81  3943.85   4.9941% True    1289.8s) Tj
+T*
+(airland13 m=2    1     fixed_t160                 4198.57  3943.85   6.4587% True    1274.5s) Tj
+T*
+(airland13 m=2    1     iteration_t80              4159.42  3943.85   5.4660% True    1291.3s) Tj
+T*
+(airland13 m=2    1     fixed_t80_lp_aspiration    4125.96  3943.85   4.6176% True    1282.8s) Tj
+T*
+(airland13 m=2    1     fixed_t80_least_recent     4140.81  3943.85   4.9941% True    1295.5s) Tj
+T*
+(airland13 m=2    1     reactive_combined          4108.67  3943.85   4.1792% True    1293.3s) Tj
+T*
+(airland13 m=2    2     tabu_off                   4114.63  3943.85   4.3303% True    1280.1s) Tj
+T*
+(airland13 m=2    2     fixed_t20                  4155.42  3943.85   5.3646% True    1282.7s) Tj
+T*
+(airland13 m=2    2     fixed_t40                  4079.52  3943.85   3.4400% True    1273.6s) Tj
+T*
+(airland13 m=2    2     fixed_t80                  4224.32  3943.85   7.1116% True    1277.8s) Tj
+T*
+(airland13 m=2    2     fixed_t160                 4238.38  3943.85   7.4681% True    1288.4s) Tj
+T*
+(airland13 m=2    2     iteration_t80              4214.15  3943.85   6.8537% True    1287.4s) Tj
+T*
+(airland13 m=2    2     fixed_t80_lp_aspiration    4157.10  3943.85   5.4072% True    1298.9s) Tj
+T*
+(airland13 m=2    2     fixed_t80_least_recent     4224.32  3943.85   7.1116% True    1277.6s) Tj
+T*
+(airland13 m=2    2     reactive_combined          4121.53  3943.85   4.5052% True    1284.5s) Tj
+T*
+(airland13 m=3    0     tabu_off                    710.76   673.85   5.4775% True    1251.8s) Tj
+T*
+(airland13 m=3    0     fixed_t20                   699.53   673.85   3.8109% True    1249.6s) Tj
+T*
+(airland13 m=3    0     fixed_t40                   697.42   673.85   3.4978% True    1253.7s) Tj
+T*
+(airland13 m=3    0     fixed_t80                   712.53   673.85   5.7401% True    1244.2s) Tj
+T*
+(airland13 m=3    0     fixed_t160                  722.94   673.85   7.2850% True    1242.0s) Tj
+T*
+(airland13 m=3    0     iteration_t80               707.85   673.85   5.0456% True    1240.7s) Tj
+T*
+(airland13 m=3    0     fixed_t80_lp_aspiration     701.75   673.85   4.1404% True    1258.8s) Tj
+T*
+(airland13 m=3    0     fixed_t80_least_recent      712.53   673.85   5.7401% True    1245.7s) Tj
+T*
+(airland13 m=3    0     reactive_combined           714.58   673.85   6.0444% True    1240.1s) Tj
+T*
+(airland13 m=3    1     tabu_off                    714.85   673.85   6.0844% True    1247.0s) Tj
+T*
+(airland13 m=3    1     fixed_t20                   737.48   673.85   9.4428% True    1239.2s) Tj
+T*
+(airland13 m=3    1     fixed_t40                   714.50   673.85   6.0325% True    1239.2s) Tj
+T*
+(airland13 m=3    1     fixed_t80                   722.14   673.85   7.1663% True    1245.8s) Tj
+T*
+(airland13 m=3    1     fixed_t160                  709.77   673.85   5.3306% True    1245.6s) Tj
+T*
+(airland13 m=3    1     iteration_t80               704.55   673.85   4.5559% True    1262.1s) Tj
+T*
+(airland13 m=3    1     fixed_t80_lp_aspiration     720.02   673.85   6.8517% True    1249.6s) Tj
+T*
+(airland13 m=3    1     fixed_t80_least_recent      722.14   673.85   7.1663% True    1254.2s) Tj
+T*
+(airland13 m=3    1     reactive_combined           709.76   673.85   5.3291% True    1252.6s) Tj
+T*
+(airland13 m=3    2     tabu_off                    724.73   673.85   7.5506% True    1249.5s) Tj
+T*
+(airland13 m=3    2     fixed_t20                   724.73   673.85   7.5506% True    1247.2s) Tj
+T*
+(airland13 m=3    2     fixed_t40                   710.06   673.85   5.3736% True    1254.3s) Tj
+T*
+(airland13 m=3    2     fixed_t80                   690.06   673.85   2.4056% True    1249.6s) Tj
+T*
+(airland13 m=3    2     fixed_t160                  724.73   673.85   7.5506% True    1264.0s) Tj
+T*
+(airland13 m=3    2     iteration_t80               724.73   673.85   7.5506% True    1261.1s) Tj
+T*
+(airland13 m=3    2     fixed_t80_lp_aspiration     709.59   673.85   5.3039% True    1262.6s) Tj
+T*
+(airland13 m=3    2     fixed_t80_least_recent      690.06   673.85   2.4056% True    1251.8s) Tj
+T*
+(airland13 m=3    2     reactive_combined           724.73   673.85   7.5506% True    1257.8s) Tj
+T*
+() Tj
+T*
+(Conclusion) Tj
+T*
+(The full rerun confirms the practical recommendation: keep the fixed-attribute Tabu memory and use) Tj
+ET
+BT
+/F1 8 Tf
+500 24 Td (Page 3 of 4) Tj
+ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont /Courier >> >> >> /Contents 10 0 R >>
+endobj
+10 0 obj
+<< /Length 366 >>
+stream
+BT
+/F1 8 Tf
+34 760 Td
+11 TL
+(case-specific tenure. The supported baseline is fixed 80 for airland11 m=2, fixed 20 for airland12) Tj
+T*
+(m=2, and fixed 40 for airland13 by mean performance. For airland13 m=3, fixed 80 still gives the best) Tj
+T*
+(single run. The adaptive variants did not win the mean gap on any case.) Tj
+ET
+BT
+/F1 8 Tf
+500 24 Td (Page 4 of 4) Tj
+ET
+endstream
+endobj
+xref
+0 11
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000133 00000 n 
+0000000306 00000 n 
+0000005324 00000 n 
+0000005497 00000 n 
+0000011744 00000 n 
+0000011917 00000 n 
+0000018334 00000 n 
+0000018508 00000 n 
+trailer
+<< /Size 11 /Root 1 0 R >>
+startxref
+18926
+%%EOF

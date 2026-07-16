@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# Keep only the curated final rerun result in this package.
+results/*
+!results/full_tabu_rerun_20260715/
+!results/full_tabu_rerun_20260715/study_rows.csv
+!results/full_tabu_rerun_20260715/study_summary.csv
+!results/full_tabu_rerun_20260715/ALP_Tabu_Full_Run_Results_2026-07-15.pdf
