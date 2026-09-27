@@ -132,7 +132,7 @@ http://people.brunel.ac.uk/~mastjjb/jeb/orlib/airlandinfo.html
 
 Download `airland1.txt` through `airland13.txt` and place them in `./data/` relative to `Single_runway_SA.py`. The loader detects whichever files are present and skips missing ones. The actual instance size $n$ for each file is printed by `diagnose_instance` at runtime; the values below are taken from Beasley et al. (2000).
 
-**Known optimal values** — CPLEX reference from Zhang et al. (2020); airland8 certified by Beasley et al. (2000) branch-and-bound:
+**Reference values** — Salehipour (2020), Table 6 (best of CPLEX and column generation). airland9–13 hit the 3600 s CPLEX limit, so they are best known, not proven optimal. Zhang et al. (2020) values used previously for airland10–13 were weaker heuristic results.
 
 | Instance | Known optimum | Source |
 |---|---|---|
@@ -145,10 +145,10 @@ Download `airland1.txt` through `airland13.txt` and place them in `./data/` rela
 | airland7 | 1550 | Zhang et al. (2020) |
 | airland8 | 1950 | Beasley et al. (2000) |
 | airland9 | 5611.70 | Zhang et al. (2020) |
-| airland10 | 12640.42 | Zhang et al. (2020) |
-| airland11 | 12462.18 | Zhang et al. (2020) |
-| airland12 | 16629.10 | Zhang et al. (2020) |
-| airland13 | 39287.52 | Zhang et al. (2020) |
+| airland10 | 12310.70 | Salehipour (2020) |
+| airland11 | 12418.32 | Salehipour (2020) |
+| airland12 | 16152.73 | Salehipour (2020) |
+| airland13 | 37268.12 | Salehipour (2020) |
 
 > **Note on airland8.** The value 1950 is a certified global optimum established by branch-and-bound in Beasley et al. (2000), not a heuristic bound. Any solver result below 1950 indicates a constraint-enforcement error, not a new best.
 
@@ -496,6 +496,7 @@ If verification fails, `run_experiment` sets the reported objective to $\infty$ 
 ## 13. References
 
 - Beasley, J. E., Krishnamoorthy, M., Sharaiha, Y. M., & Abramson, D. (2000). Scheduling aircraft landings — the static case. *Transportation Science*, 34(2), 180–197.
+- Salehipour, A. (2020). An algorithm for single- and multiple-runway aircraft landing problem. *Mathematics and Computers in Simulation*, 175, 179–191.
 - Zhang, J., Zhao, P., Yang, C., & Hu, R. (2020). A new meta-heuristic approach for the aircraft landing problem. *Transactions of Nanjing University of Aeronautics and Astronautics*, 37(2), 197–208.
 - Pinedo, M. L. (2016). *Scheduling: Theory, Algorithms, and Systems* (5th ed.). Springer.
 - Vepsalainen, A. P. J., & Morton, T. E. (1987). Priority rules for job shops with weighted tardiness costs. *Management Science*, 33(8), 1035–1047.
