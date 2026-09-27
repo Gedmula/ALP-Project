@@ -1839,9 +1839,9 @@ if __name__ == '__main__':
         'airland5.txt':  3100,     'airland6.txt':  24442,
         'airland7.txt':  1550,
         'airland8.txt':  1950,
-        'airland9.txt':  5611.70,  'airland10.txt': 12640.42,
-        'airland11.txt': 12462.18, 'airland12.txt': 16629.10,
-        'airland13.txt': 39287.52,
+        'airland9.txt':  5611.70,  'airland10.txt': 12310.70,
+        'airland11.txt': 12418.32, 'airland12.txt': 16152.73,
+        'airland13.txt': 37268.12,
     }
 
     use_doe = False  # Set to False to use adaptive parameters instead of DOE-tuned parameters
