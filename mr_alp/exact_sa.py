@@ -113,13 +113,29 @@ def exact_sa(
     seed: int = 0,
     cycle_s: Optional[float] = None,
     chi0: float = 0.3,
+    restart_T_frac: float = 0.3,
+    window: Optional[int] = None,
     verbose: bool = False,
 ) -> Tuple[Seqs, float, dict]:
     rng = random.Random(seed)
     ev = RunwayEvaluator(inst)
     m = len(init)
-    seqs = [s[:] for s in init]
-    costs = [ev.cost(s) for s in seqs]
+    use_local = window is not None and window > 0
+
+    def full(sq):
+        return ev.times(sq) if use_local else (ev.cost(sq), None)
+
+    def evaluate(r, new_sq):
+        if use_local:
+            return ev.local(new_sq, seqs[r], xs[r], window)
+        return ev.cost(new_sq), None
+
+    def reset(sol):
+        s_ = [q[:] for q in sol]
+        cx = [full(q) for q in s_]
+        return s_, [c for c, _ in cx], [x for _, x in cx]
+
+    seqs, costs, xs = reset(init)
     cur = sum(costs)
     if math.isinf(cur):
         raise ValueError("initial solution infeasible")
@@ -133,7 +149,7 @@ def exact_sa(
         if prop is None:
             continue
         touched, new = prop
-        dv = sum(ev.cost(new[r]) for r in touched) - sum(costs[r] for r in touched)
+        dv = sum(evaluate(r, new[r])[0] for r in touched) - sum(costs[r] for r in touched)
         if 0 < dv < math.inf:
             pos.append(dv)
     base_T0 = (float(np.median(pos)) if pos else max(cur * 0.01, 1.0)) / -math.log(chi0)
@@ -145,38 +161,46 @@ def exact_sa(
         n_cycles += 1
         c_start = time.perf_counter()
         c_len = min(cycle_s, deadline - c_start)
-        T0 = base_T0 * (1.0 if n_cycles == 1 else 0.3)
+        T0 = base_T0 * (1.0 if n_cycles == 1 else restart_T_frac)
         T_end = T0 * 1e-3
         if n_cycles > 1:
-            seqs = _kick(best_seqs, ev, rng, k=rng.randint(2, max(3, inst.n // (10 * m))))
-            costs = [ev.cost(s) for s in seqs]
+            seqs, costs, xs = reset(
+                _kick(best_seqs, ev, rng, k=rng.randint(2, max(3, inst.n // (10 * m)))))
             cur = sum(costs)
         T = T0
+        t_refresh = time.perf_counter()
         while True:
             n_it += 1
             if (n_it & 63) == 0:
-                el = time.perf_counter() - c_start
+                now = time.perf_counter()
+                el = now - c_start
                 if el >= c_len:
                     break
                 T = T0 * (T_end / T0) ** (el / c_len)
+                if use_local and now - t_refresh > 2.0:
+                    seqs, costs, xs = reset(seqs)
+                    cur = sum(costs); t_refresh = now
             prop = _propose(seqs, rng, ev.delta, m)
             if prop is None:
                 continue
             touched, new = prop
-            newc = {r: ev.cost(new[r]) for r in touched}
-            dv = sum(newc.values()) - sum(costs[r] for r in touched)
+            newc = {r: evaluate(r, new[r]) for r in touched}
+            dv = sum(c for c, _ in newc.values()) - sum(costs[r] for r in touched)
             if math.isinf(dv):
                 continue
             if dv <= 0 or rng.random() < math.exp(-dv / T):
                 for r in touched:
-                    seqs[r] = new[r]; costs[r] = newc[r]
+                    seqs[r] = new[r]; costs[r], xs[r] = newc[r]
                 cur += dv
                 if cur < best - 1e-7:
+                    if use_local:
+                        seqs, costs, xs = reset(seqs)
                     cur = sum(costs)
-                    best = cur; best_seqs = [s[:] for s in seqs]
-                    timeline.append((time.perf_counter() - t0, best))
-                    if verbose:
-                        print(f"    [seed {seed}] t={time.perf_counter()-t0:7.1f}s  best={best:.4f}", flush=True)
+                    if cur < best - 1e-7:
+                        best = cur; best_seqs = [s[:] for s in seqs]
+                        timeline.append((time.perf_counter() - t0, best))
+                        if verbose:
+                            print(f"    [seed {seed}] t={time.perf_counter()-t0:7.1f}s  best={best:.4f}", flush=True)
     return best_seqs, best, {
         "iters": n_it, "cycles": n_cycles, "lp_solves": ev.n_lp,
         "timeline": timeline, "wall": time.perf_counter() - t0,
@@ -184,13 +208,13 @@ def exact_sa(
 
 
 def _worker(args):
-    inst, init, t_limit, seed, verbose = args
-    return exact_sa(inst, init, t_limit, seed=seed, verbose=verbose)
+    inst, init, t_limit, seed, kw = args
+    return exact_sa(inst, init, t_limit, seed=seed, **kw)
 
 
 def ms_exact_sa(inst, starts: List[Seqs], t_limit: float, n_workers: int = 4,
-                seed: int = 0, verbose: bool = False):
-    tasks = [(inst, starts[i % len(starts)], t_limit, seed + 97 * i, verbose)
+                seed: int = 0, **kw):
+    tasks = [(inst, starts[i % len(starts)], t_limit, seed + 97 * i, kw)
              for i in range(n_workers)]
     with mp.get_context("fork").Pool(n_workers) as pool:
         res = pool.map(_worker, tasks)
