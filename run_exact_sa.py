@@ -61,7 +61,8 @@ def run(name: str, m: int, t_limit: float, workers: int, seed: int,
           f"lp_feas={feas} audit={'PASS' if ok else 'FAIL'}  wall={wall:.0f}s  "
           f"chains={[round(r[1], 2) for r in allr]}  iters/chain~{st['iters']}", flush=True)
     return dict(instance=name, m=m, n=inst.n, seed_lp=seed_best, exact_sa_lp=lp, bks=bks,
-                gap_pct=gap, feasible=feas and ok, wall_s=round(wall, 1), seqs=seqs)
+                gap_pct=gap, feasible=feas and ok, wall_s=round(wall, 1), seed=seed,
+                t_best_s=round(st["timeline"][-1][0], 1), seqs=seqs)
 
 
 def main():
