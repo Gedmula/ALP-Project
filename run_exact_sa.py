@@ -9,6 +9,7 @@ re-checked with the joint Stage-2 LP and the full pairwise audit.
 from __future__ import annotations
 
 import argparse
+import collections
 import contextlib
 import csv
 import io
@@ -24,7 +25,17 @@ from mr_alp.lp import stage2_lp_objective, verify_and_exact_obj
 from mr_alp.models import RBI_PARAM_BANK, HeuristicParams
 
 
-def run(name: str, m: int, t_limit: float, workers: int, seed: int):
+def load_schedule(path: str, name: str, m: int):
+    rows = collections.defaultdict(list)
+    with open(path) as f:
+        for r in csv.DictReader(f):
+            if r["instance"] == name and int(r["m"]) == m:
+                rows[int(r["rho"])].append((int(r["position"]), int(r["aircraft_j"])))
+    return [[j for _, j in sorted(rows[k])] for k in sorted(rows)] or None
+
+
+def run(name: str, m: int, t_limit: float, workers: int, seed: int,
+        warm: str = None, **kw):
     inst = load_instance(f"data/{name}.txt")
     params = RBI_PARAM_BANK.get((name, m), HeuristicParams())
     with contextlib.redirect_stdout(io.StringIO()):
@@ -32,8 +43,15 @@ def run(name: str, m: int, t_limit: float, workers: int, seed: int):
     order = sorted(range(len(starts)), key=lambda i: seed_lps[i])
     starts = [starts[i][1] for i in order if not math.isinf(seed_lps[i])]
     seed_best = min(seed_lps)
+    warm_seqs = load_schedule(warm, name, m) if warm else None
+    if warm_seqs:
+        wlp, _, wfeas, _ = stage2_lp_objective(warm_seqs, inst)
+        if wfeas:
+            print(f"  warm start {name} m={m}: {wlp:.2f} (seed best {seed_best:.2f})", flush=True)
+            starts = [warm_seqs] * max(1, workers - 1) + starts[:1]
+            seed_best = min(seed_best, wlp)
     t = time.perf_counter()
-    (seqs, obj, st), allr = ms_exact_sa(inst, starts, t_limit, n_workers=workers, seed=seed)
+    (seqs, obj, st), allr = ms_exact_sa(inst, starts, t_limit, n_workers=workers, seed=seed, **kw)
     wall = time.perf_counter() - t
     lp, _, feas, _ = stage2_lp_objective(seqs, inst)
     ok, viol, _, _ = verify_and_exact_obj(seqs, inst)
@@ -53,12 +71,21 @@ def main():
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--out", default="exact_sa_results")
+    ap.add_argument("--warm", default=None, help="schedules.csv to warm-start from")
+    ap.add_argument("--chi0", type=float, default=0.3)
+    ap.add_argument("--cycle", type=float, default=None, help="seconds per SA cycle")
+    ap.add_argument("--restart-frac", type=float, default=0.3)
+    ap.add_argument("--window", type=int, default=0,
+                    help="re-optimise only +/-W positions around each move (0 = full runway LP)")
+    ap.add_argument("--verbose", action="store_true")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
     rows = []
     for job in a.jobs:
         name, m = job.split(":")
-        rows.append(run(name, int(m), a.t, a.workers, a.seed))
+        rows.append(run(name, int(m), a.t, a.workers, a.seed, warm=a.warm, chi0=a.chi0,
+                        cycle_s=a.cycle, restart_T_frac=a.restart_frac, window=a.window,
+                        verbose=a.verbose))
     with open(os.path.join(a.out, "summary.csv"), "a", newline="") as f:
         w = csv.DictWriter(f, fieldnames=[k for k in rows[0] if k != "seqs"] + ["t_limit"])
         if f.tell() == 0:
