@@ -17,12 +17,15 @@ import math
 import os
 import time
 
+import numpy as np
+
 from mr_alp.config import KNOWN_OPTIMA
 from mr_alp.construction import _build_seed_portfolio
 from mr_alp.exact_sa import ms_exact_sa
 from mr_alp.instance import load_instance
 from mr_alp.lp import stage2_lp_objective, verify_and_exact_obj
 from mr_alp.models import RBI_PARAM_BANK, HeuristicParams
+from mr_alp.nonlinear import NONLINEAR_BKS, NonlinearEvaluator, score_of, upper_bound
 
 
 def load_schedule(path: str, name: str, m: int):
@@ -50,11 +53,30 @@ def run(name: str, m: int, t_limit: float, workers: int, seed: int,
             print(f"  warm start {name} m={m}: {wlp:.2f} (seed best {seed_best:.2f})", flush=True)
             starts = [warm_seqs] * max(1, workers - 1) + starts[:1]
             seed_best = min(seed_best, wlp)
+    objective = kw.get("objective", "linear")
+    if objective == "nonlinear":
+        ev = NonlinearEvaluator(inst)
+        seed_best = min(ev.total(s) for s in starts)
     t = time.perf_counter()
     (seqs, obj, st), allr = ms_exact_sa(inst, starts, t_limit, n_workers=workers, seed=seed, **kw)
     wall = time.perf_counter() - t
+    ok, viol, _, C = verify_and_exact_obj(seqs, inst)
+    if objective == "nonlinear":
+        ids = np.array(sorted(C)); x = np.array([C[j] for j in ids])
+        val = score_of(x, np.asarray(inst.delta, dtype=float)[ids])
+        feas = abs(val + obj) < 1e-6 * max(1.0, abs(val))
+        bks, proven = NONLINEAR_BKS.get(name, {}).get(m, (None, False))
+        ub = upper_bound(inst)
+        gap = 100 * (bks - val) / abs(bks) if bks else (bks - val if bks == 0 else float("nan"))
+        print(f"{name} m={m}: seed={-seed_best:.0f}  exactSA={val:.0f}  bks={bks}"
+              f"{' (opt)' if proven else ''}  UB={ub:.0f}  gap={gap:+.4f}%  "
+              f"eval_match={feas} audit={'PASS' if ok else 'FAIL'}  wall={wall:.0f}s  "
+              f"chains={[round(-r[1]) for r in allr]}", flush=True)
+        return dict(instance=name, m=m, n=inst.n, objective=objective, seed_lp=-seed_best,
+                    exact_sa_lp=val, bks=bks, bks_proven=proven, upper_bound=ub, gap_pct=gap,
+                    feasible=feas and ok, wall_s=round(wall, 1), seed=seed,
+                    t_best_s=round(st["timeline"][-1][0], 1), seqs=seqs)
     lp, _, feas, _ = stage2_lp_objective(seqs, inst)
-    ok, viol, _, _ = verify_and_exact_obj(seqs, inst)
     bks = KNOWN_OPTIMA.get(name, {}).get(m)
     gap = 100 * (lp - bks) / bks if bks else float("nan")
     print(f"{name} m={m}: seed={seed_best:.2f}  exactSA={lp:.2f}  bks={bks}  gap={gap:+.4f}%  "
@@ -78,6 +100,7 @@ def main():
     ap.add_argument("--restart-frac", type=float, default=0.3)
     ap.add_argument("--window", type=int, default=0,
                     help="re-optimise only +/-W positions around each move (0 = full runway LP)")
+    ap.add_argument("--objective", choices=["linear", "nonlinear"], default="linear")
     ap.add_argument("--verbose", action="store_true")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
@@ -85,7 +108,7 @@ def main():
     for job in a.jobs:
         name, m = job.split(":")
         rows.append(run(name, int(m), a.t, a.workers, a.seed, warm=a.warm, chi0=a.chi0,
-                        cycle_s=a.cycle, restart_T_frac=a.restart_frac, window=a.window,
+                        cycle_s=a.cycle, restart_T_frac=a.restart_frac, window=a.window, objective=a.objective,
                         verbose=a.verbose))
     with open(os.path.join(a.out, "summary.csv"), "a", newline="") as f:
         w = csv.DictWriter(f, fieldnames=[k for k in rows[0] if k != "seqs"] + ["t_limit"])
