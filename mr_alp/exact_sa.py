@@ -23,6 +23,7 @@ from typing import List, Optional, Tuple
 import numpy as np
 
 from mr_alp.exact_eval import RunwayEvaluator
+from mr_alp.nonlinear import NonlinearEvaluator
 
 
 Seqs = List[List[int]]
@@ -115,10 +116,11 @@ def exact_sa(
     chi0: float = 0.3,
     restart_T_frac: float = 0.3,
     window: Optional[int] = None,
+    objective: str = "linear",
     verbose: bool = False,
 ) -> Tuple[Seqs, float, dict]:
     rng = random.Random(seed)
-    ev = RunwayEvaluator(inst)
+    ev = (NonlinearEvaluator if objective == "nonlinear" else RunwayEvaluator)(inst)
     m = len(init)
     use_local = window is not None and window > 0
 
