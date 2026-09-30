@@ -1,0 +1,5 @@
+airland13 m=2: seed=4659.60  exactSA=3920.39  bks=3920.39  gap=+0.0000%  lp_feas=True audit=PASS  wall=900s  chains=[3920.39, 3920.39, 3922.4, 3922.4]  iters/chain~801408
+airland13 m=2: seed=4659.60  exactSA=3920.39  bks=3920.39  gap=+0.0000%  lp_feas=True audit=PASS  wall=900s  chains=[3920.39, 3922.4, 3920.39, 3920.39]  iters/chain~798592
+airland13 m=2: seed=4659.60  exactSA=3920.39  bks=3920.39  gap=+0.0000%  lp_feas=True audit=PASS  wall=900s  chains=[3920.39, 3920.39, 3920.39, 3920.39]  iters/chain~775872
+airland13 m=2: seed=4659.60  exactSA=3920.39  bks=3920.39  gap=+0.0000%  lp_feas=True audit=PASS  wall=900s  chains=[3920.39, 3922.42, 3922.4, 3920.39]  iters/chain~782208
+airland13 m=2: seed=4659.60  exactSA=3920.39  bks=3920.39  gap=+0.0000%  lp_feas=True audit=PASS  wall=900s  chains=[3922.4, 3922.4, 3920.39, 3920.39]  iters/chain~765184

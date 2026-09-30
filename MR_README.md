@@ -126,7 +126,7 @@ The solver uses the same OR Library ALP instances as the single-runway version (
 
 **Multi-runway benchmark reference values (`KNOWN_OPTIMA` in `config.py`):**
 
-Multi-runway values below are Zhang et al. (2020) heuristic BKS — not certified optima. Negative gaps (solver beats BKS) are valid and flagged with `★` in console output. $m=1$ values are B&B-certified optima from Beasley et al. (2000).
+All values are from Salehipour (2020), Tables 6 and 8 (best of CPLEX and column generation, zero separation across runways). Entries where CPLEX hit its 3600 s limit are best known, not proven optimal: $m=1$ airland9–13, $m=2$ airland10–13, $m=3$ airland12–13. Everything else is proven optimal, so a lower value there indicates a bug.
 
 | Instance | $m=1$ | $m=2$ | $m=3$ | $m=4$ | $m=5$ |
 |---|---|---|---|---|---|
@@ -139,10 +139,10 @@ Multi-runway values below are Zhang et al. (2020) heuristic BKS — not certifie
 | airland7 | 1550.00 | 0.00 | — | — | — |
 | airland8 | 1950.00 | 135.00 | 0.00 | — | — |
 | airland9 | 5611.70 | 444.10 | 75.75 | 0.00 | — |
-| airland10 | 12821.12 | 1143.70 | 205.21 | 34.22 | 0.00 |
-| airland11 | 12654.18 | 1330.91 | 253.07 | 54.53 | 0.00 |
-| airland12 | 16629.10 | 1695.62 | 221.97 | 2.44 | 0.00 |
-| airland13 | 39516.34 | 3943.85 | 673.85 | 89.95 | 0.00 |
+| airland10 | 12310.70 | 1143.70 | 205.21 | 34.22 | 0.00 |
+| airland11 | 12418.32 | 1330.91 | 253.07 | 54.53 | 0.00 |
+| airland12 | 16152.73 | 1695.62 | 221.97 | 2.44 | 0.00 |
+| airland13 | 37268.12 | 3920.39 | 673.85 | 89.95 | 0.00 |
 
 > **Note on zero entries.** Zero entries indicate that enough runways are available for every aircraft to land without competing for slots — the LP trivially achieves zero penalty by spreading the fleet across runways.
 
@@ -670,6 +670,7 @@ Timestamp, hostname, Python version, CPU count, full solver configuration snapsh
 ## 11. References
 
 - Beasley, J. E., Krishnamoorthy, M., Sharaiha, Y. M., & Abramson, D. (2000). Scheduling aircraft landings — the static case. *Transportation Science*, 34(2), 180–197.
+- Salehipour, A. (2020). An algorithm for single- and multiple-runway aircraft landing problem. *Mathematics and Computers in Simulation*, 175, 179–191.
 - Zhang, J., Zhao, P., Yang, C., & Hu, R. (2020). A new meta-heuristic approach for the aircraft landing problem. *Transactions of Nanjing University of Aeronautics and Astronautics*, 37(2), 197–208.
 - Pinedo, M. L. (2016). *Scheduling: Theory, Algorithms, and Systems* (5th ed.). Springer.
 - Glover, F. (1996). Tabu search and adaptive memory programming — Advances, applications and challenges. In *Interfaces in Computer Science and Operations Research*. Kluwer.

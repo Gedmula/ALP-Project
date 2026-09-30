@@ -94,9 +94,10 @@ MPDS_MAX_N = 150
 #   §1  BENCHMARK REFERENCE OPTIMA
 # ═══════════════════════════════════════════════════════════════════════════
 #
-# Single-runway values (m=1) are B&B-certified optima from Beasley et al.
-# (2000) and serve as hard correctness targets.  Multi-runway values are
-# Zhang et al. (2020) heuristic BKS; negative gaps are valid and flagged.
+# Source: Salehipour (2018/2020), Tables 6 and 8 — best of CPLEX / column
+# generation, same model as here (zero separation across runways). Entries
+# where CPLEX hit its 3600 s limit are best known, not proven optimal:
+# m=1 airland9–13; m=2 airland10–13; m=3 airland12–13.
 #
 KNOWN_OPTIMA: Dict[str, Dict[int, float]] = {
     "airland1":  {1: 700.00,    2: 90.00,    3: 0.00},
@@ -108,8 +109,8 @@ KNOWN_OPTIMA: Dict[str, Dict[int, float]] = {
     "airland7":  {1: 1550.00,   2: 0.00},
     "airland8":  {1: 1950.00,   2: 135.00,   3: 0.00},
     "airland9":  {1: 5611.70,   2: 444.10,   3: 75.75,   4: 0.00},
-    "airland10": {1: 12821.12,  2: 1143.70,  3: 205.21,  4: 34.22,  5: 0.00},
-    "airland11": {1: 12654.18,  2: 1330.91,  3: 253.07,  4: 54.53,  5: 0.00},
-    "airland12": {1: 16629.10,  2: 1695.62,  3: 221.97,  4: 2.44,   5: 0.00},
-    "airland13": {1: 39516.34,  2: 3943.85,  3: 673.85,  4: 89.95,  5: 0.00},
+    "airland10": {1: 12310.70,  2: 1143.70,  3: 205.21,  4: 34.22,  5: 0.00},
+    "airland11": {1: 12418.32,  2: 1330.91,  3: 253.07,  4: 54.53,  5: 0.00},
+    "airland12": {1: 16152.73,  2: 1695.62,  3: 221.97,  4: 2.44,   5: 0.00},
+    "airland13": {1: 37268.12,  2: 3920.39,  3: 673.85,  4: 89.95,  5: 0.00},
 }
