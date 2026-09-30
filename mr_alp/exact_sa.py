@@ -218,6 +218,7 @@ def ms_exact_sa(inst, starts: List[Seqs], t_limit: float, n_workers: int = 4,
                 seed: int = 0, **kw):
     tasks = [(inst, starts[i % len(starts)], t_limit, seed + 97 * i, kw)
              for i in range(n_workers)]
-    with mp.get_context("fork").Pool(n_workers) as pool:
+    ctx = "fork" if "fork" in mp.get_all_start_methods() else "spawn"
+    with mp.get_context(ctx).Pool(n_workers) as pool:
         res = pool.map(_worker, tasks)
     return min(res, key=lambda r: r[1]), res
