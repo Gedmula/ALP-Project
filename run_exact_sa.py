@@ -104,27 +104,31 @@ def main():
     ap.add_argument("--verbose", action="store_true")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
-    rows = []
+    summ = os.path.join(a.out, "summary.csv")
+    done = set()
+    if os.path.exists(summ):
+        with open(summ) as f:
+            done = {(r["instance"], int(r["m"]), int(r.get("seed") or -1)) for r in csv.DictReader(f)}
     for job in a.jobs:
         name, m = job.split(":")
-        rows.append(run(name, int(m), a.t, a.workers, a.seed, warm=a.warm, chi0=a.chi0,
-                        cycle_s=a.cycle, restart_T_frac=a.restart_frac, window=a.window, objective=a.objective,
-                        verbose=a.verbose))
-    with open(os.path.join(a.out, "summary.csv"), "a", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=[k for k in rows[0] if k != "seqs"] + ["t_limit"])
-        if f.tell() == 0:
-            w.writeheader()
-        for r in rows:
+        if (name, int(m), a.seed) in done:
+            print(f"skip {name} m={m} seed={a.seed} (already in {summ})", flush=True)
+            continue
+        r = run(name, int(m), a.t, a.workers, a.seed, warm=a.warm, chi0=a.chi0,
+                cycle_s=a.cycle, restart_T_frac=a.restart_frac, window=a.window,
+                objective=a.objective, verbose=a.verbose)
+        with open(summ, "a", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=[k for k in r if k != "seqs"] + ["t_limit"])
+            if f.tell() == 0:
+                w.writeheader()
             w.writerow({**{k: v for k, v in r.items() if k != "seqs"}, "t_limit": a.t})
-    with open(os.path.join(a.out, "schedules.csv"), "a", newline="") as f:
-        w = csv.writer(f)
-        if f.tell() == 0:
-            w.writerow(["instance", "m", "rho", "position", "aircraft_j"])
-        for r in rows:
+        with open(os.path.join(a.out, "schedules.csv"), "a", newline="") as f:
+            w = csv.writer(f)
+            if f.tell() == 0:
+                w.writerow(["instance", "m", "rho", "position", "aircraft_j"])
             for rho, sq in enumerate(r["seqs"], 1):
                 for p, j in enumerate(sq, 1):
                     w.writerow([r["instance"], r["m"], rho, p, j])
-
 
 if __name__ == "__main__":
     main()
