@@ -71,18 +71,19 @@ class Model:
 
     def __init__(self):
         self.lb, self.ub, self.cost, self.integer, self.names = [], [], [], [], []
-        self.rows = []  # (lo, hi, [(col, coef)])
+        self.rows = []  # (lo, hi, [(col, coef)], lazy)
+        self.n_tri = 0
 
     def var(self, lb, ub, cost=0.0, integer=False, name=""):
         self.lb.append(lb); self.ub.append(ub); self.cost.append(cost)
         self.integer.append(integer); self.names.append(name)
         return len(self.lb) - 1
 
-    def row(self, lo, hi, terms):
-        self.rows.append((lo, hi, terms))
+    def row(self, lo, hi, terms, lazy=False):
+        self.rows.append((lo, hi, terms, lazy))
 
 
-def build(inst, m, ub=math.inf):
+def build(inst, m, ub=math.inf, cuts=(), tri_k=0):
     n = inst.n
     r, d, dl = inst.r.astype(float), inst.d.astype(float), inst.delta.astype(float)
     if ub < math.inf:
@@ -133,7 +134,62 @@ def build(inst, m, ub=math.inf):
                 # x_i - x_j + Mji*o - Mji*z >= s_ji - Mji
                 M.row(s[j, i] - Mji, math.inf,
                       [(X[i], 1), (X[j], -1), (o, Mji), (z, -Mji)])
+    # block cuts: sum_{j in S} (g_j E_j + h_j T_j) >= LB(S)
+    for S, lb in cuts:
+        M.row(lb, math.inf, [(E[j], float(inst.g[j])) for j in S] +
+                            [(T[j], float(inst.h[j])) for j in S])
+    # transitivity on a runway: no cycle a->b->c->a among aircraft sharing a runway
+    #   bef(a,b) + bef(b,c) + bef(c,a) <= 2 + (3 - z_ab - z_bc - z_ac)
+    if tri_k > 0 and m >= 1:
+        def bef(a, b):
+            return ([(O[a, b], 1.0)], 0.0) if a < b else ([(O[b, a], -1.0)], 1.0)
+        def zz(a, b):
+            return Z[min(a, b), max(a, b)]
+        byT = np.argsort(dl, kind="stable")
+        n_tri = 0
+        for p in range(n):
+            for q in range(p + 1, min(n, p + tri_k)):
+                for w in range(q + 1, min(n, p + tri_k)):
+                    a, b, c = int(byT[p]), int(byT[q]), int(byT[w])
+                    pairs = [(min(u, v), max(u, v)) for u, v in ((a, b), (b, c), (a, c))]
+                    if any(pr not in O for pr in pairs):
+                        continue
+                    for (u, v, w2) in ((a, b, c), (a, c, b)):
+                        terms, const = [], 0.0
+                        for x1, x2 in ((u, v), (v, w2), (w2, u)):
+                            tt, cc = bef(x1, x2); terms += tt; const += cc
+                        terms += [(zz(a, b), 1.0), (zz(b, c), 1.0), (zz(a, c), 1.0)]
+                        M.row(-math.inf, 5.0 - const, terms, lazy=True)
+                        n_tri += 1
+        M.n_tri = n_tri
     return M, X, Y, O, Z, n_pairs
+
+
+class SubInstance:
+    def __init__(self, inst, idx):
+        self.n = len(idx)
+        self.r, self.d, self.delta = inst.r[idx], inst.d[idx], inst.delta[idx]
+        self.g, self.h = inst.g[idx], inst.h[idx]
+        self.s = inst.s[np.ix_(idx, idx)]
+
+
+def block_cuts(inst, m, ub, solve, block, t_block, threads):
+    """Sliding blocks of `block` aircraft by target time; each block's proven
+    lower bound bounds that block's share of the cost in any solution."""
+    order = np.argsort(inst.delta, kind="stable")
+    stride = max(1, block // 2)
+    cuts, starts = [], list(range(0, max(1, inst.n - block + 1), stride))
+    if starts[-1] + block < inst.n:
+        starts.append(inst.n - block)
+    for st in starts:
+        idx = np.sort(order[st:st + block])
+        sub = SubInstance(inst, idx)
+        Ms, *_ = build(sub, m, ub)
+        _, obj, bound, _ = solve(Ms, None, t_block, threads, None, quiet=True)
+        lb = bound if (bound is not None and math.isfinite(bound)) else 0.0
+        if lb > 1e-6:
+            cuts.append((list(map(int, idx)), lb * (1 - 1e-9)))
+    return cuts
 
 
 def start_vector(M, X, Y, O, Z, inst, seqs):
@@ -167,16 +223,17 @@ def start_vector(M, X, Y, O, Z, inst, seqs):
     return v
 
 
-def solve_highs(M, start, t_limit, threads, log):
+def solve_highs(M, start, t_limit, threads, log, quiet=False):
     import highspy
     highspy.Highs.resetGlobalScheduler(True)
     h = highspy.Highs()
-    h.setOptionValue("output_flag", True)
-    h.setOptionValue("log_to_console", True)
+    h.setOptionValue("output_flag", not quiet)
+    h.setOptionValue("log_to_console", not quiet)
     h.setOptionValue("time_limit", float(t_limit))
     h.setOptionValue("threads", int(threads))
     h.setOptionValue("mip_rel_gap", 1e-9)
-    h.setOptionValue("log_file", log)
+    if log:
+        h.setOptionValue("log_file", log)
     inf = highspy.kHighsInf
     nc = len(M.lb)
     fix = lambda v: inf if v == math.inf else (-inf if v == -math.inf else v)
@@ -185,7 +242,7 @@ def solve_highs(M, start, t_limit, threads, log):
     ints = np.array([i for i, b in enumerate(M.integer) if b], dtype=np.int32)
     h.changeColsIntegrality(len(ints), ints,
                             np.array([highspy.HighsVarType.kInteger] * len(ints)))
-    for lo, hi, terms in M.rows:
+    for lo, hi, terms, _lazy in M.rows:
         idx = np.array([c for c, _ in terms], dtype=np.int32)
         val = np.array([a for _, a in terms], dtype=float)
         h.addRow(fix(lo), fix(hi), len(idx), idx, val)
@@ -200,25 +257,31 @@ def solve_highs(M, start, t_limit, threads, log):
             info.mip_dual_bound, info.mip_gap)
 
 
-def solve_gurobi(M, start, t_limit, threads, log):
+def solve_gurobi(M, start, t_limit, threads, log, quiet=False):
     import gurobipy as gp
     g = gp.Model()
+    g.Params.OutputFlag = 0 if quiet else 1
     g.Params.TimeLimit = t_limit
     g.Params.Threads = threads
     g.Params.MIPGap = 1e-9
-    g.Params.LogFile = log
+    if log:
+        g.Params.LogFile = log
     v = [g.addVar(lb=M.lb[i], ub=M.ub[i], obj=M.cost[i],
                   vtype=gp.GRB.BINARY if M.integer[i] else gp.GRB.CONTINUOUS)
          for i in range(len(M.lb))]
-    for lo, hi, terms in M.rows:
+    for lo, hi, terms, lazy in M.rows:
         e = gp.quicksum(a * v[c] for c, a in terms)
+        cons = []
         if lo == hi:
-            g.addConstr(e == lo)
+            cons.append(g.addConstr(e == lo))
         else:
             if lo != -math.inf:
-                g.addConstr(e >= lo)
+                cons.append(g.addConstr(e >= lo))
             if hi != math.inf:
-                g.addConstr(e <= hi)
+                cons.append(g.addConstr(e <= hi))
+        if lazy:
+            for c in cons:
+                c.Lazy = 1
     if start is not None:
         for var, val in zip(v, start):
             var.Start = val
@@ -236,6 +299,11 @@ def main():
     ap.add_argument("--no-start", action="store_true", help="skip the MIP start")
     ap.add_argument("--no-tighten", dest="tighten", action="store_false",
                     help="keep the original time windows")
+    ap.add_argument("--block", type=int, default=0,
+                    help="add block lower-bound cuts with blocks of this many aircraft (e.g. 30)")
+    ap.add_argument("--block-time", type=float, default=60, help="seconds per block solve")
+    ap.add_argument("--tri", type=int, default=0,
+                    help="add transitivity cuts among aircraft within this many target-time neighbours (e.g. 12)")
     ap.add_argument("--out", default="proofs")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
@@ -244,27 +312,37 @@ def main():
         inst = load_instance(f"data/{name}.txt")
         t0 = time.perf_counter()
         ub, seqs = (math.inf, None) if a.no_start else best_known_schedule(inst, name, m)
-        M, X, Y, O, Z, n_pairs = build(inst, m, ub if a.tighten else math.inf)
+        ub_t = ub if a.tighten else math.inf
+        solve = solve_highs if a.solver == "highs" else solve_gurobi
+        cuts = []
+        if a.block > 0:
+            tb = time.perf_counter()
+            cuts = block_cuts(inst, m, ub_t, solve, a.block, a.block_time, a.threads)
+            print(f"{name} m={m}: {len(cuts)} block cuts, sum of disjoint-block bounds "
+                  f"~{sum(lb for _, lb in cuts[::2]):.2f}, in {time.perf_counter()-tb:.0f}s", flush=True)
+        M, X, Y, O, Z, n_pairs = build(inst, m, ub_t, cuts, a.tri)
         start = start_vector(M, X, Y, O, Z, inst, seqs) if seqs else None
         print(f"{name} m={m}: {len(M.lb)} cols, {len(M.rows)} rows, {n_pairs} pairs, "
-              f"start={ub:.2f}, built in {time.perf_counter()-t0:.1f}s", flush=True)
-        log = os.path.join(a.out, f"{name}_m{m}_{a.solver}.log")
-        solve = solve_highs if a.solver == "highs" else solve_gurobi
+              f"{M.n_tri} transitivity cuts, start={ub:.2f}, "
+              f"built in {time.perf_counter()-t0:.1f}s", flush=True)
+        tag = (f"_b{a.block}" if a.block else "") + (f"_t{a.tri}" if a.tri else "")
+        log = os.path.join(a.out, f"{name}_m{m}_{a.solver}{tag}.log")
         status, obj, bound, gap = solve(M, start, a.time, a.threads, log)
         wall = time.perf_counter() - t0
         bks = KNOWN_OPTIMA.get(name, {}).get(m)
         proven = gap is not None and gap <= 1e-6
         print(f"RESULT {name} m={m}: status={status} best={obj:.4f} bound={bound:.4f} "
               f"gap={100*gap:.4f}% bks={bks} proven_optimal={proven} wall={wall:.0f}s", flush=True)
-        path = os.path.join(a.out, "summary.csv")
+        path = os.path.join(a.out, "summary_v2.csv")
         new = not os.path.exists(path)
         with open(path, "a", newline="") as f:
             w = csv.writer(f)
             if new:
                 w.writerow(["instance", "m", "solver", "status", "best", "bound", "gap_pct",
-                            "bks", "proven_optimal", "time_limit", "wall_s", "start"])
+                            "bks", "proven_optimal", "time_limit", "wall_s", "start",
+                            "block", "tri"])
             w.writerow([name, m, a.solver, status, obj, bound, 100 * gap, bks, proven,
-                        a.time, round(wall, 1), ub])
+                        a.time, round(wall, 1), ub, a.block, a.tri])
 
 
 if __name__ == "__main__":
