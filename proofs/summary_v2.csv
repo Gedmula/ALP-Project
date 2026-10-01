@@ -1,0 +1,2 @@
+instance,m,solver,status,best,bound,gap_pct,bks,proven_optimal,time_limit,wall_s,start,block,tri
+airland13,2,gurobi,TimeLimit,3920.389997093977,3806.191630724039,2.9129338268536675,3920.39,False,3600.0,3630.7,3920.3900000000003,20,12
