@@ -70,7 +70,7 @@ project_root/
 │   └── output.py            # Reporting, persistence, and visualisation (§28–§30)
 ├── data/
 │   └── airland{1-13}.txt    # OR Library benchmark instances
-├── MR_results/              # Auto-generated outputs (written by output.py)
+├── outputs/multi_runway/    # Archived multi-runway outputs (new runs are written to MR_results/ by output.py)
 │   ├── summary.csv
 │   ├── schedules.csv
 │   ├── alternatives.csv
