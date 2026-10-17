@@ -65,30 +65,28 @@ project_root/
 ├── data/
 │   ├── airland1.txt         # OR Library benchmark instances
 │   ├── airland2.txt
-│   └── ...                  # airland1–airland13
-├── plots/
-│   ├── gantt/               # Gantt charts
-│   ├── convergence/         # SA chain convergence curves
-│   ├── alpha trajectory/    # Reactive cooling-rate trajectories
-│   ├── seed improvement/    # Heuristic seed vs SA final objective
-│   └── penalty profile/     # Per-aircraft penalty profiles
-├── results/                 # Single-runway outputs
-│   ├── summary.csv
-│   ├── schedules.csv
-│   ├── verification.txt
-│   └── run_metadata.json
-├── MR_results/              # Multi-runway outputs (see MR_README.md)
-├── adaptive_results/        # Adaptive parameter experiment outputs
-├── doe_results/             # DOE outputs
-│   ├── analysis/
-│   └── plots/
+│   └── ...                  # airland1-airland13
+├── outputs/                 # Archived run outputs, sorted by study
+│   ├── single_runway/       # results/ and plots/ from the single-runway solver
+│   │   ├── results/         # summary.csv, schedules.csv, verification.txt, run_metadata.json
+│   │   └── plots/           # gantt, convergence, alpha_trajectory, seed_improvement, penalty_profile
+│   ├── multi_runway/        # Multi-runway outputs (see MR_README.md)
+│   ├── adaptive_results/    # Adaptive parameter experiment outputs
+│   ├── doe_results/         # DOE outputs (analysis/ and plots/)
+│   ├── DOE/                 # Designed experiments exp1-exp3
+│   ├── exact_sa/            # Exact-SA results and benchmarks
+│   ├── nonlinear/           # Non-linear objective benchmark and validation
+│   └── logs/                # Run logs
+├── tabu_method/             # SA with a tabu filter on cross-runway transfers (see tabu_method/README.md)
 └── misc/                    # Auxiliary scripts
     ├── doe.py               # Design of Experiments runner
     ├── doe_analysis.py      # DOE result analysis
     └── ...
 ```
 
-OR Library files are **not** included in the repository. See [Section 4](#4-data) for download instructions.
+Archived outputs are stored under `outputs/`. The solvers still write new runs to their default folders at the project root (`results/`, `plots/`, `MR_results/`, `doe_results/`, `adaptive_results/`); move finished runs under `outputs/` to keep the root clean.
+
+The OR Library instance files airland1-airland13 are included in the repository under `data/`. See [Section 4](#4-data) for their source.
 
 ---
 
