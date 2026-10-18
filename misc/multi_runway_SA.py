@@ -112,7 +112,7 @@ import multiprocessing as _mp
 _MP_CTX = _mp.get_context("spawn" if (platform.system() == "Windows"
                                        or _GPU_AVAIL) else "fork")
 
-from ramp_rbi import (
+from const_heuristics.ramp_rbi import (
     Instance, HeuristicParams,
     load_instance, ramp_rbi,
     stage2_lp_objective, verify_and_exact_obj,
