@@ -190,10 +190,20 @@ def _queue_scores(seqs, lens, costs, Q, r, d, dl, g, h, s, s_max, wb, wf):
 # §3-4  Selection and commit
 # ─────────────────────────────────────────────────────────────────────────────
 
-def _construct(P: Problem, m: int, prm: TCRBIParams, rng) -> Optional[Tuple]:
+def _construct(P: Problem, m: int, prm: TCRBIParams, rng,
+               start: Optional[Tuple] = None, pending: Optional[List[int]] = None) -> Optional[Tuple]:
+    """
+    Build a schedule.  By default from empty runways with every aircraft pending.
+    With `start` = (seqs, lens, costs) and `pending` (aircraft not in `start`),
+    the partial schedule is completed instead (used by ruin-and-recreate).
+    """
     n = P.n
-    pending = [int(j) for j in np.argsort(P.dl, kind="stable")]
-    seqs = np.zeros((m, n), np.int64); lens = np.zeros(m, np.int64); costs = np.zeros(m)
+    if start is None:
+        pending = [int(j) for j in np.argsort(P.dl, kind="stable")]
+        seqs = np.zeros((m, n), np.int64); lens = np.zeros(m, np.int64); costs = np.zeros(m)
+    else:
+        seqs, lens, costs = (a.copy() for a in start)
+        pending = sorted((int(j) for j in pending), key=lambda j: (P.dl[j], j))
     while pending:
         Q = _queue(seqs, lens, np.array(pending, np.int64), min(m + 1, len(pending)),
                    prm.queue_cap, *P.A)
