@@ -36,6 +36,8 @@ import numpy as np
 from const_heuristics.alp_core import INF, Problem, audit, canonical, cet
 from const_heuristics.etri import etri_pool
 from const_heuristics.ramp_rbi import tc_rbi_pool
+from const_heuristics.rgi import rgi_pool
+from const_heuristics.sbc import sbc_pool
 from sa_single.kernels import prices, run_batch, sample_uphill, seed_rng, span_cdf
 from sa_single.mutation import ruin_recreate
 from sa_single.params import SAParams
@@ -47,14 +49,25 @@ Start = Tuple[float, List[int]]
 # Starting schedules
 # ─────────────────────────────────────────────────────────────────────────────
 
-def build_starts(inst, k: int, seed: int = 0, n_workers: int = 1) -> List[Start]:
+def build_starts(inst, k: int = 10, seed: int = 0, n_workers: int = 1,
+                 per_constructor: int = 8) -> List[Start]:
     """
-    Distinct TC-RBI and ETRI schedules (single runway), best first.  The
-    target-order sequence is added when feasible, so instances where the greedy
-    constructions dead-end (tight windows) still get a start.
+    Distinct starting schedules (single runway) from all four construction
+    heuristics, TC-RBI, ETRI, SBC and RGI.  Each constructor contributes up
+    to `per_constructor` schedules; the target-order sequence is added when
+    feasible, so instances where the constructions dead-end (tight windows)
+    still get a start.
+
+    The selection is not the best k: from the distinct schedules, sorted by
+    exact cost, it takes the best ceil(k/2) and the worst floor(k/2), so the
+    replicas start from a spread of quality rather than k near-identical
+    schedules.  With the default k = 10 that is the best 5 and the worst 5.
+    Fewer than k distinct schedules come back when the instance admits
+    fewer.
     """
-    pool = tc_rbi_pool(inst, 1, k=(k + 1) // 2, seed=seed, n_workers=n_workers)
-    pool += etri_pool(inst, 1, k=(k + 1) // 2, seed=seed, n_workers=n_workers)
+    pool = []
+    for pool_fn in (tc_rbi_pool, etri_pool, sbc_pool, rgi_pool):
+        pool += pool_fn(inst, 1, k=per_constructor, seed=seed, n_workers=n_workers)
     edd = [int(j) for j in np.argsort(np.asarray(inst.delta), kind="stable")]
     c_edd = Problem(inst).exact_cost(edd)
     if math.isfinite(c_edd):
@@ -65,6 +78,10 @@ def build_starts(inst, k: int, seed: int = 0, n_workers: int = 1) -> List[Start]
         if key not in seen:
             seen.add(key)
             out.append((c, sq[0]))
+    if len(out) > k:
+        n_best = (k + 1) // 2
+        n_worst = k - n_best
+        out = out[:n_best] + (out[-n_worst:] if n_worst else [])
     return out
 
 
