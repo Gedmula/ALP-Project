@@ -1,0 +1,9 @@
+design,configs,seeds,note,seconds_per_run,runs_20_instances,hours_20_instances,runs_48_instances,hours_48_instances
+single-factor foldover of the 2^(7-3) (16 configs),16,3,clears the 2FIs of one factor,94.2540775,960,25.134420666666664,2304,32.80633528888889
+single-factor foldover of the 2^(7-3) (16 configs),16,2,clears the 2FIs of one factor,94.2540775,640,16.756280444444442,1536,21.870890192592594
+"face-centred CCD on A,B,C,D; E,F,G fixed (16 + 8 + 6)",30,3,,59.362544166666666,1800,29.681272083333333,4320,42.59732166666666
+"face-centred CCD on A,B,C,D; E,F,G fixed (16 + 8 + 6)",30,2,,59.362544166666666,1200,19.787514722222223,2880,28.398214444444445
+"face-centred CCD on A,B,C,D,E; F,G fixed (16 + 10 + 6)",32,3,recommended,59.362544166666666,1920,31.660023555555554,4608,45.437143111111105
+"face-centred CCD on A,B,C,D,E; F,G fixed (16 + 10 + 6)",32,2,recommended,59.362544166666666,1280,21.106682370370372,3072,30.291428740740738
+F and G check at the CCD optimum (3 configs),3,3,after the CCD,94.2540775,180,4.712703875,432,6.151187866666667
+F and G check at the CCD optimum (3 configs),3,2,after the CCD,94.2540775,120,3.141802583333333,288,4.100791911111111

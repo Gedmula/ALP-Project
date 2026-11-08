@@ -3,13 +3,15 @@ analyze.py — statistical analysis and plots of the DOE phases
 ===============================================================================
 Set the CONFIGURE HERE block and run from the repository root:
 
-    python sa_single/doe/analyze.py
+    python sa_single/doe/analyze.py            # the ANALYSIS set below
 
 ANALYSIS
     "screening"  effects, ANOVA, curvature test and active factors of the
                  2^(7−3) fraction (+ foldover runs if present)
     "ccd"        second-order response surface, lack of fit, desirability
-                 optimisation → results/recommended_params.json
+                 optimisation → results/recommended_params.json; plus the
+                 optimum per instance class and the factor × class interactions
+    "check"      the optimum against F and G moved one at a time (paired by instance)
     "confirm"    held-out instances against the CCD prediction intervals
     "budget"     iteration budget read off the best-so-far curves of the long
                  anchor runs on the held-out set (confirm runs if absent) → budget
@@ -23,10 +25,10 @@ Responses (per run)
     ttb_s     seconds to the final best                             (reported)
     mean_gap  mean of the gap over the 101 budget checkpoints       lower is better
     ttt       budget fraction to come within GAP_TOL % (1 = never)  lower is better
-    D         Derringer–Suich desirability of quality and speed     higher is better
+    desir     Derringer–Suich desirability of quality and speed     higher is better
               d_q = clip(1 − gap / U, 0, 1)   U = 95th percentile of gap
               d_t = max(1 − ttb_frac, 0.05)
-              D   = (d_q^QW · d_t^SW)^(1 / (QW + SW))
+              desir = (d_q^QW · d_t^SW)^(1 / (QW + SW))
 """
 from __future__ import annotations
 
@@ -51,14 +53,17 @@ from statsmodels.stats.anova import anova_lm
 
 from sa_single import plots as P            # shared style and colours
 from sa_single.doe import design as Dsg
-from sa_single.params import FACTOR_BY_CODE, SAParams, decode
+from sa_single.params import FACTOR_SETS, SAParams, decode
 
 warnings.filterwarnings("ignore")
 
 # ═════════════════════════════════════════════════════════════════════════════
 #   CONFIGURE HERE
 # ═════════════════════════════════════════════════════════════════════════════
-ANALYSIS         = "screening"
+ANALYSIS         = "screening"                     # "screening" | "ccd" | "check" | "confirm" | "budget"
+# the screening is coded with the window over 4–16, every later stage over 8–24 (params.FACTOR_SETS)
+CODING           = "screening" if ANALYSIS in ("screening", "foldover") else "ccd"
+FACTOR_BY_CODE   = {f.code: f for f in FACTOR_SETS[CODING]}
 SCREENING_PHASES = ["screening", "foldover"]       # pooled in the screening analysis (missing ones skipped)
 GAP_TOL          = 0.1        # %: threshold of the time-to-target response
 QUALITY_WEIGHT   = 2.0        # desirability weights
@@ -76,10 +81,10 @@ RESP = [  # key, label, better
     ("ttb_frac", "time to best (fraction of budget)", "min"),
     ("mean_gap", "mean gap over the run (%)", "min"),
     ("ttt", f"budget fraction to reach {GAP_TOL}% gap", "min"),
-    ("D", "desirability (quality × speed)", "max"),
+    ("desir", "desirability (quality × speed)", "max"),
 ]
 RESP_LABEL = {k: l for k, l, _ in RESP}
-TUNE_PHASES = ["screening", "foldover", "ccd", "anchor_tune"]
+TUNE_PHASES = ["screening", "foldover", "ccd", "anchor_tune", "check"]   # every tune-set run found sets the reference
 HOLD_PHASES = ["confirm", "anchor_holdout"]
 
 
@@ -124,7 +129,7 @@ def responses(rec: pd.DataFrame, cur: pd.DataFrame, ref: pd.Series) -> pd.DataFr
     u = max(float(np.quantile(df["gap"], 0.95)), GAP_TOL)
     dq = np.clip(1.0 - df["gap"] / u, 0.0, 1.0)
     dt = np.maximum(1.0 - df["ttb_frac"], 0.05)
-    df["D"] = (dq ** QUALITY_WEIGHT * dt ** SPEED_WEIGHT) ** (1.0 / (QUALITY_WEIGHT + SPEED_WEIGHT))
+    df["desir"] = (dq ** QUALITY_WEIGHT * dt ** SPEED_WEIGHT) ** (1.0 / (QUALITY_WEIGHT + SPEED_WEIGHT))
     df["ctr"] = (df["point"] == "center").astype(float)
     df["n_class"] = df["n"].astype(int)
     return df
@@ -199,7 +204,7 @@ def fit_screen_model(df: pd.DataFrame, resp: str, terms2: List[str]):
     cols = Dsg.model_columns(data)
     for t in terms2:
         data[t] = cols[t]
-    rhs = ["C(instance)"] + LETTERS + terms2 + (["ctr"] if data["ctr"].sum() > 0 else [])
+    rhs = ["instance"] + LETTERS + terms2 + (["ctr"] if data["ctr"].sum() > 0 else [])
     model = smf.ols(f"{resp} ~ " + " + ".join(rhs), data=data).fit()
     try:
         aov = anova_lm(model, typ=2)
@@ -412,7 +417,7 @@ def plot_curvature(df: pd.DataFrame, resp: str, p_ctr: float, path) -> None:
 
 def plot_tradeoff(df: pd.DataFrame, path) -> None:
     fig, ax = plt.subplots(figsize=(8, 6))
-    sc = ax.scatter(df["ttb_frac"], df["gap"] + 0.01, c=df["D"], cmap=P.SEQ_BLUES, s=12, alpha=0.7)
+    sc = ax.scatter(df["ttb_frac"], df["gap"] + 0.01, c=df["desir"], cmap=P.SEQ_BLUES, s=12, alpha=0.7)
     ax.set_yscale("log")
     ax.set_xlabel("time to best (fraction of budget)")
     ax.set_ylabel("gap % + 0.01 (log scale)")
@@ -514,11 +519,11 @@ def screening_analysis() -> None:
 
     # active factors: significant main effect, or member of a significant interaction, on log_gap or D
     active = set()
-    for resp in ("log_gap", "D"):
+    for resp in ("log_gap", "desir"):
         for lab in summary["responses"][resp]["significant"]:
             for word in lab.split("="):
                 active.update(ch for ch in word.strip("-") if ch in LETTERS)
-    sgn = eff_table["D"]
+    sgn = eff_table["desir"]
     fixed = {c: (1.0 if sgn[c] > 0 else -1.0) for c in LETTERS if c not in active}
     summary["active_factors"] = sorted(active)
     summary["fixed_levels_for_inactive"] = fixed
@@ -526,7 +531,8 @@ def screening_analysis() -> None:
     df.to_csv(out / "runs_with_responses.csv", index=False)
     print(json.dumps({"active_factors": sorted(active), "fixed_levels_for_inactive": fixed,
                       "curvature_p": {r: summary["responses"][r]["curvature_p"] for r, _, _ in RESP}}, indent=1))
-    print(f"→ set run_doe.py: PHASE='ccd', CCD_FACTORS={sorted(active)}, CCD_FIXED={fixed}")
+    print("-> this rule flags every factor on the naive errors; the CCD factors are chosen in stages.py "
+          "(see results/analysis_screening/SCREENING_ANALYSIS.md)")
     print(f"plots and tables: {out}")
 
 
@@ -538,7 +544,7 @@ def rsm_formula(resp: str, fs: List[str]) -> str:
     lin = " + ".join(fs)
     quad = " + ".join(f"I({f}**2)" for f in fs)
     inter = (f"({lin})**2" if len(fs) > 1 else lin)
-    return f"{resp} ~ C(instance) + {inter} + {quad}"
+    return f"{resp} ~ instance + {inter} + {quad}"
 
 
 def pure_error(df: pd.DataFrame, resp: str) -> Tuple[float, int]:
@@ -548,18 +554,39 @@ def pure_error(df: pd.DataFrame, resp: str) -> Tuple[float, int]:
     return ss, dfree
 
 
+def _avg_predictor(model, fs: List[str], insts: List[str]):
+    """Population-average prediction of an `instance + terms` model, evaluated from the coefficients (exactly what
+    model.predict gives averaged over `insts`, without the formula machinery: the optimiser calls this thousands of
+    times).  The model is additive in the instance effect, so the average is the mean instance level plus the terms."""
+    p = model.params
+    eff = np.array([p.get(f"instance[T.{i}]", 0.0) for i in insts])
+    const = float(p["Intercept"] + eff.mean())
+    terms = [(k, float(v)) for k, v in p.items() if k != "Intercept" and not k.startswith("instance[")]
+    idx = {f: j for j, f in enumerate(fs)}
+
+    def f(Z: np.ndarray) -> np.ndarray:
+        out = np.full(len(Z), const)
+        for name, coef in terms:
+            if name.startswith("I("):                              # I(A ** 2)
+                out += coef * Z[:, idx[name[2:name.index(" ")]]] ** 2
+            else:                                                  # A  or  A:B
+                out += coef * np.prod([Z[:, idx[c]] for c in name.split(":")], axis=0)
+        return out
+    return f
+
+
 def predict_avg(model, fs: List[str], Z: np.ndarray, insts: List[str], fixed: Dict[str, float]) -> np.ndarray:
-    """Population-average prediction (mean over `insts`) at every row of Z (points × factors)."""
-    Z = np.atleast_2d(Z)
-    rows = pd.DataFrame(np.repeat(Z, len(insts), axis=0), columns=fs)
-    for f, v in fixed.items():
-        rows[f] = v
-    rows["instance"] = np.tile(np.asarray(insts, dtype=object), len(Z))
-    return np.asarray(model.predict(rows)).reshape(len(Z), len(insts)).mean(axis=1)
+    """Population-average prediction (mean over `insts`) at every row of Z (points × factors).
+    `fixed` factors are not in the model (they do not vary in the CCD) and play no part."""
+    key = tuple(insts)
+    cache = model.__dict__.setdefault("_avg_predictors", {})
+    if key not in cache:
+        cache[key] = _avg_predictor(model, fs, list(insts))
+    return cache[key](np.atleast_2d(np.asarray(Z, dtype=float)))
 
 
 def plot_coefficients(model, resp: str, path) -> None:
-    keep = [t for t in model.params.index if not t.startswith("C(instance)") and t != "Intercept"]
+    keep = [t for t in model.params.index if not t.startswith("instance[") and t != "Intercept"]
     ci = model.conf_int().loc[keep]
     fig, ax = plt.subplots(figsize=(8, 0.4 * len(keep) + 1.5))
     y = np.arange(len(keep))
@@ -666,6 +693,29 @@ def plot_perturbation(fn, fs: List[str], z_opt: np.ndarray, label: str, title: s
     _save(fig, path)
 
 
+def control_by_noise(df: pd.DataFrame, fs: List[str], resps=("log_gap", "ttb_frac")) -> pd.DataFrame:
+    """Does a factor's effect depend on the instance class?  Per factor and noise variable: instance fixed effects,
+    the factor and its product with the (±1 coded) noise variable, standard errors clustered by instance."""
+    d = df.copy()
+    noise = {"congestion 1.0 vs <1": np.where(d["congestion"] >= 1.0, 1.0, -1.0),
+             "wide vs tight windows": np.where(d["windows"] == "wide", 1.0, -1.0),
+             "n >= 300 vs < 300": np.where(d["n"] >= 300, 1.0, -1.0)}
+    g = pd.factorize(d["instance"])[0]
+    rows = []
+    for y in resps:
+        for nz, v in noise.items():
+            d["nz"] = v
+            for c in fs:
+                d["fx"], d["fn"] = d[c], d[c] * d["nz"]
+                r = smf.ols(f"{y} ~ instance + fx + fn", data=d).fit(cov_type="cluster", cov_kwds={"groups": g},
+                                                                    use_t=True)
+                b, bi = r.params["fx"], r.params["fn"]
+                rows.append(dict(response=y, noise=nz, factor=c, effect_per_unit_at_low=b - bi,
+                                 effect_per_unit_at_high=b + bi, interaction_t=float(r.tvalues["fn"]),
+                                 interaction_p=float(r.pvalues["fn"])))
+    return pd.DataFrame(rows)
+
+
 def ccd_analysis() -> None:
     x = load_phase("ccd")
     if x is None:
@@ -757,6 +807,48 @@ def ccd_analysis() -> None:
     ax.legend(fontsize=8)
     _save(fig, pl / "optimum_by_size.png")
 
+    # the screening found that D, B and E act differently by congestion and window type: optimum per instance class
+    grp = pd.Series(np.where(df["congestion"] >= 1.0, "c1.0 ", "c<1 ") + df["windows"].astype(str), index=df.index)
+    by_g, rows_g = {}, []
+    for g in sorted(grp.unique()):
+        sub = df[grp == g]
+        ig = sorted(sub["instance"].unique())
+        if len(ig) < 3:
+            continue
+        mg = {r: smf.ols(rsm_formula(r, fs), data=sub).fit() for r in ("log_gap", "ttb_frac")}
+
+        def d_group(Z, mg=mg, ig=ig):
+            yq = predict_avg(mg["log_gap"], fs, Z, ig, fixed)
+            yt = predict_avg(mg["ttb_frac"], fs, Z, ig, fixed)
+            dq = np.clip((uq - yq) / max(uq - lq, 1e-12), 0, 1)
+            dt = np.clip((ut - yt) / max(ut - lt, 1e-12), 0, 1)
+            return (dq ** QUALITY_WEIGHT * dt ** SPEED_WEIGHT) ** (1 / (QUALITY_WEIGHT + SPEED_WEIGHT))
+
+        zg = maximise(d_group)
+        by_g[g] = zg.tolist()
+        rows_g.append(dict(group=g, n_instances=len(ig), **{f"{c}_coded": float(v) for c, v in zip(fs, zg)},
+                           **{f"{c}_natural": FACTOR_BY_CODE[c].natural(float(v)) for c, v in zip(fs, zg)}))
+    rows_g.append(dict(group="pooled", n_instances=len(insts), **{f"{c}_coded": float(v) for c, v in zip(fs, z_opt)},
+                       **{f"{c}_natural": FACTOR_BY_CODE[c].natural(float(v)) for c, v in zip(fs, z_opt)}))
+    pd.DataFrame(rows_g).to_csv(out / "optimum_by_class.csv", index=False)
+    control_by_noise(df, fs).to_csv(out / "control_x_noise.csv", index=False)
+    if by_g:
+        fig, ax = plt.subplots(figsize=(8, 5))
+        names = list(by_g) + ["pooled"]
+        w = 0.8 / len(names)
+        for k, nm in enumerate(names):
+            zz = by_g.get(nm, z_opt)
+            ax.bar(np.arange(len(fs)) + (k - (len(names) - 1) / 2) * w, zz, width=w,
+                   color=("#9a9890" if nm == "pooled" else FCOL[k]), label=nm)
+        ax.axhline(0, color=P.INK2, lw=0.8)
+        ax.set_xticks(range(len(fs)))
+        ax.set_xticklabels([f"{c}: {FACTOR_BY_CODE[c].label}" for c in fs], fontsize=8)
+        ax.set_ylim(-1.1, 1.1)
+        ax.set_ylabel("optimal coded level (±1 = edge of the CCD box)")
+        ax.set_title("Optimum per instance class: do the classes want different settings?")
+        ax.legend(fontsize=8)
+        _save(fig, pl / "optimum_by_class.png")
+
     # predictions at the optimum (population average and observation-level interval)
     pred = {}
     for resp, _, _ in RESP:
@@ -765,15 +857,65 @@ def ccd_analysis() -> None:
         pred[resp] = dict(mean=float(sf["mean"].mean()), pi_low=float(sf["obs_ci_lower"].mean()),
                           pi_high=float(sf["obs_ci_upper"].mean()))
     coded = {**dict(zip(fs, map(float, z_opt))), **fixed}
-    prm = decode(coded, SAParams())
+    prm = decode(coded, SAParams(), CODING)
     prm.to_json(RESULTS / "recommended_params.json")
     summ.update(optimum_coded=coded, optimum_desirability=float(d_overall(z_opt[None])[0]), predictions=pred,
-                optimum_by_size=by_n, desirability_bounds=dict(log_gap=[lq, uq], ttb_frac=[lt, ut]))
+                optimum_by_size=by_n, optimum_by_class=by_g, desirability_bounds=dict(log_gap=[lq, uq], ttb_frac=[lt, ut]))
     (out / "ccd_summary.json").write_text(json.dumps(summ, indent=1, default=float))
     df.to_csv(out / "runs_with_responses.csv", index=False)
     print(json.dumps({"optimum_coded": coded, "desirability": float(d_overall(z_opt[None])[0]),
                       "predictions": pred}, indent=1))
     print(f"recommended parameters: {RESULTS / 'recommended_params.json'}")
+    print(f"plots and tables: {out}")
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Check of the fixed factors at the optimum
+# ─────────────────────────────────────────────────────────────────────────────
+
+def check_analysis() -> None:
+    """Each variant (a factor moved away from its fixed level at the CCD optimum) against the optimum X01, paired
+    by instance (mean over seeds), t-test over instances."""
+    x = load_phase("check")
+    if x is None:
+        raise SystemExit("no check records found")
+    rec, cur = x
+    df = responses(rec, cur, references(TUNE_PHASES))
+    df["log_wall"] = np.log(df["wall_s"])
+    out = outdir("check")
+    pl = out / "plots"
+    keys = ["log_gap", "ttb_frac", "desir", "log_wall"]
+    pi = df.groupby(["config", "instance"])[keys].mean()
+    pts = df.drop_duplicates("config").set_index("config")["point"]
+    base = pi.loc["X01"]
+    cfgs = sorted(set(df["config"]) - {"X01"})
+    rows = []
+    for cfg in cfgs:
+        for k in keys:
+            d = (pi.loc[cfg][k] - base[k]).dropna()
+            se = d.std(ddof=1) / np.sqrt(len(d))
+            t = d.mean() / se if se > 0 else float("nan")
+            rows.append(dict(config=cfg, variant=pts[cfg], response=k, mean_difference=d.mean(), se=se, t=t,
+                             p=float(2 * stats.t.sf(abs(t), len(d) - 1)) if se > 0 else float("nan"),
+                             n_instances=len(d), n_better=int((d > 0).sum() if k == "desir" else (d < 0).sum())))
+    tab = pd.DataFrame(rows)
+    tab.to_csv(out / "check_vs_optimum.csv", index=False)
+    fig, axes = plt.subplots(1, len(keys), figsize=(4.0 * len(keys), 0.9 * len(cfgs) + 2.2), sharey=True)
+    for ax, k in zip(np.atleast_1d(axes), keys):
+        s = tab[tab["response"] == k].set_index("config").loc[cfgs]
+        yy = np.arange(len(cfgs))[::-1]
+        ax.errorbar(s["mean_difference"], yy, xerr=1.96 * s["se"], fmt="none", ecolor=P.GRAY, capsize=3)
+        ax.scatter(s["mean_difference"], yy, color=np.where(s["p"] < 0.05, P.BLUE, P.GRAY), s=44, zorder=3)
+        ax.axvline(0, color=P.INK2, lw=0.8)
+        ax.set_yticks(yy)
+        ax.set_yticklabels([f"{c}  {pts[c]}" for c in cfgs], fontsize=8)
+        ax.set_title(RESP_LABEL.get(k, "ln(wall-clock seconds)"), fontsize=9)
+        ax.set_xlabel("variant - optimum (paired by instance, +-1.96 se)")
+    fig.suptitle("Is the F / G choice neutral at the optimum?  (blue = p < 0.05)", x=0.01, ha="left", fontweight="bold")
+    fig.tight_layout()
+    _save(fig, pl / "check_vs_optimum.png")
+    print(tab.round(4).to_string(index=False))
+    print("a variant is worth adopting only if log_gap improves (negative, p < 0.05) at an acceptable log_wall")
     print(f"plots and tables: {out}")
 
 
@@ -887,4 +1029,4 @@ def budget_analysis() -> None:
 
 if __name__ == "__main__":
     {"screening": screening_analysis, "ccd": ccd_analysis, "confirm": confirm_analysis,
-     "budget": budget_analysis}[ANALYSIS]()
+     "check": check_analysis, "budget": budget_analysis}[ANALYSIS]()

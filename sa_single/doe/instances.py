@@ -1,6 +1,9 @@
 """
 instances.py — generated instance sets for the DOE
 ===============================================================================
+The *_large sets (tune_large, holdout_large: 8 sizes 50 … 500 × 3 congestion × 2 window types = 48 instances) are
+read from their committed manifests; the two sets below can be regenerated.
+
 Two disjoint sets with the same 24 classes (4 sizes × 3 congestion levels × 2
 window types), one instance per class each:
 
@@ -15,6 +18,7 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
+from typing import List
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
@@ -56,14 +60,52 @@ def build(set_name: str) -> pd.DataFrame:
     return df
 
 
-def manifest(set_name: str) -> pd.DataFrame:
-    """Manifest of a set, generating the files if they do not exist yet."""
+DOE_DIR = INST_DIR.parent
+RESULTS_DIR = DOE_DIR / "results"
+
+
+def informative_instances(phase: str = "screening", tol: float = 1e-9) -> List[str]:
+    """Instances on which the runs of `phase` did not all end on the same cost.
+
+    On the others every configuration reaches the same best value, so they carry no information about the factors
+    (28 of the 48 tune_large instances in the screening).  Read from the committed records, so the list is fixed."""
+    rec = pd.read_csv(RESULTS_DIR / phase / "records.csv", usecols=["instance", "best_cost"])
+    g = rec.groupby("instance")["best_cost"]
+    spread = (g.max() - g.min()) / np.maximum(g.mean().abs(), 1.0)
+    return sorted(spread[spread > tol].index)
+
+
+def manifest(set_name: str, subset=None) -> pd.DataFrame:
+    """Manifest of a set (tune, holdout, tune_large, holdout_large).
+
+    subset: None for every instance, "informative" for the instances that discriminated in the screening, or an
+    explicit list of instance names."""
     path = INST_DIR / set_name / "manifest.csv"
-    return pd.read_csv(path) if path.exists() else build(set_name)
+    if path.exists():
+        df = pd.read_csv(path)
+    elif set_name in SET_SEED:
+        df = build(set_name)
+    else:
+        raise FileNotFoundError(f"no manifest for instance set {set_name!r}: {path}")
+    if subset is not None:
+        names = informative_instances() if subset == "informative" else list(subset)
+        missing = sorted(set(names) - set(df["instance"]))
+        if missing:
+            raise ValueError(f"subset instances not in set {set_name!r}: {missing}")
+        df = df[df["instance"].isin(names)].reset_index(drop=True)
+    return df
+
+
+def _resolve(file: str) -> Path:
+    """Manifest paths are relative to the repository root (tune, holdout) or to sa_single/doe (the *_large sets)."""
+    for base in (ROOT, DOE_DIR):
+        if (base / file).exists():
+            return base / file
+    raise FileNotFoundError(file)
 
 
 def load(row) -> Instance:
-    return load_instance(ROOT / row["file"], row["instance"])
+    return load_instance(_resolve(row["file"]), row["instance"])
 
 
 if __name__ == "__main__":

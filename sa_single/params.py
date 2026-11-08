@@ -95,13 +95,24 @@ FACTORS = [
 ]
 FACTOR_BY_CODE: Dict[str, Factor] = {f.code: f for f in FACTORS}
 
+# Coding of the response-surface phases.  The screening showed the best window at or beyond the top of 4–16,
+# so from the CCD on the window is coded over 8 … 24 (centre 16).  The other six factors keep their ranges.
+# Data coded one way must be decoded the same way: run_doe.py and analyze.py pick the coding by stage.
+FACTORS_CCD = [replace(f, low=8, high=24) if f.code == "D" else f for f in FACTORS]
+FACTOR_SETS: Dict[str, list] = {"screening": FACTORS, "ccd": FACTORS_CCD}
 
-def decode(coded: Dict[str, float], base: Optional[SAParams] = None) -> SAParams:
+
+def factor_by_code(coding: str = "screening") -> Dict[str, Factor]:
+    return {f.code: f for f in FACTOR_SETS[coding]}
+
+
+def decode(coded: Dict[str, float], base: Optional[SAParams] = None, coding: str = "screening") -> SAParams:
     """SAParams with each coded factor (letter → level) set; unspecified factors keep `base`."""
     p = base or SAParams()
-    return replace(p, **{FACTOR_BY_CODE[c].name: FACTOR_BY_CODE[c].natural(v) for c, v in coded.items()})
+    fb = factor_by_code(coding)
+    return replace(p, **{fb[c].name: fb[c].natural(v) for c, v in coded.items()})
 
 
-def encode(p: SAParams) -> Dict[str, float]:
+def encode(p: SAParams, coding: str = "screening") -> Dict[str, float]:
     """Coded levels of the seven factors in `p`."""
-    return {f.code: f.coded(getattr(p, f.name)) for f in FACTORS}
+    return {f.code: f.coded(getattr(p, f.name)) for f in FACTOR_SETS[coding]}
