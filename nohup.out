@@ -1,0 +1,60 @@
+stage ccd: Face-centred CCD on A-E (16 half-fraction corners, E = ABCD, + 10 axial + 6 centre = 32 configurations) with F = 4 and G = 1000 moves/aircraft fixed; window coded 8 / 16 / 24. 20 informative instances.
+coding ccd, instances tune_large (informative): 20, seeds 3
+config    A    B    C    D    E    F   G     point  hot_accept  cold_accept  exchange_per_aircraft  window  guide  mutation_size  stagnation_per_aircraft
+   R01 -1.0 -1.0 -1.0 -1.0  1.0 -1.0 1.0 factorial        0.30     0.001000               10.00000       8  0.950              4                   1000.0
+   R02  1.0 -1.0 -1.0 -1.0 -1.0 -1.0 1.0 factorial        0.80     0.001000               10.00000       8  0.500              4                   1000.0
+   R03 -1.0  1.0 -1.0 -1.0 -1.0 -1.0 1.0 factorial        0.30     0.050000               10.00000       8  0.500              4                   1000.0
+   R04  1.0  1.0 -1.0 -1.0  1.0 -1.0 1.0 factorial        0.80     0.050000               10.00000       8  0.950              4                   1000.0
+   R05 -1.0 -1.0  1.0 -1.0 -1.0 -1.0 1.0 factorial        0.30     0.001000              200.00000       8  0.500              4                   1000.0
+   R06  1.0 -1.0  1.0 -1.0  1.0 -1.0 1.0 factorial        0.80     0.001000              200.00000       8  0.950              4                   1000.0
+   R07 -1.0  1.0  1.0 -1.0  1.0 -1.0 1.0 factorial        0.30     0.050000              200.00000       8  0.950              4                   1000.0
+   R08  1.0  1.0  1.0 -1.0 -1.0 -1.0 1.0 factorial        0.80     0.050000              200.00000       8  0.500              4                   1000.0
+   R09 -1.0 -1.0 -1.0  1.0 -1.0 -1.0 1.0 factorial        0.30     0.001000               10.00000      24  0.500              4                   1000.0
+   R10  1.0 -1.0 -1.0  1.0  1.0 -1.0 1.0 factorial        0.80     0.001000               10.00000      24  0.950              4                   1000.0
+   R11 -1.0  1.0 -1.0  1.0  1.0 -1.0 1.0 factorial        0.30     0.050000               10.00000      24  0.950              4                   1000.0
+   R12  1.0  1.0 -1.0  1.0 -1.0 -1.0 1.0 factorial        0.80     0.050000               10.00000      24  0.500              4                   1000.0
+   R13 -1.0 -1.0  1.0  1.0  1.0 -1.0 1.0 factorial        0.30     0.001000              200.00000      24  0.950              4                   1000.0
+   R14  1.0 -1.0  1.0  1.0 -1.0 -1.0 1.0 factorial        0.80     0.001000              200.00000      24  0.500              4                   1000.0
+   R15 -1.0  1.0  1.0  1.0 -1.0 -1.0 1.0 factorial        0.30     0.050000              200.00000      24  0.500              4                   1000.0
+   R16  1.0  1.0  1.0  1.0  1.0 -1.0 1.0 factorial        0.80     0.050000              200.00000      24  0.950              4                   1000.0
+   R17 -1.0  0.0  0.0  0.0  0.0 -1.0 1.0     axial        0.30     0.007071               44.72136      16  0.725              4                   1000.0
+   R18  1.0  0.0  0.0  0.0  0.0 -1.0 1.0     axial        0.80     0.007071               44.72136      16  0.725              4                   1000.0
+   R19  0.0 -1.0  0.0  0.0  0.0 -1.0 1.0     axial        0.55     0.001000               44.72136      16  0.725              4                   1000.0
+   R20  0.0  1.0  0.0  0.0  0.0 -1.0 1.0     axial        0.55     0.050000               44.72136      16  0.725              4                   1000.0
+   R21  0.0  0.0 -1.0  0.0  0.0 -1.0 1.0     axial        0.55     0.007071               10.00000      16  0.725              4                   1000.0
+   R22  0.0  0.0  1.0  0.0  0.0 -1.0 1.0     axial        0.55     0.007071              200.00000      16  0.725              4                   1000.0
+   R23  0.0  0.0  0.0 -1.0  0.0 -1.0 1.0     axial        0.55     0.007071               44.72136       8  0.725              4                   1000.0
+   R24  0.0  0.0  0.0  1.0  0.0 -1.0 1.0     axial        0.55     0.007071               44.72136      24  0.725              4                   1000.0
+   R25  0.0  0.0  0.0  0.0 -1.0 -1.0 1.0     axial        0.55     0.007071               44.72136      16  0.500              4                   1000.0
+   R26  0.0  0.0  0.0  0.0  1.0 -1.0 1.0     axial        0.55     0.007071               44.72136      16  0.950              4                   1000.0
+   R27  0.0  0.0  0.0  0.0  0.0 -1.0 1.0    center        0.55     0.007071               44.72136      16  0.725              4                   1000.0
+   R28  0.0  0.0  0.0  0.0  0.0 -1.0 1.0    center        0.55     0.007071               44.72136      16  0.725              4                   1000.0
+   R29  0.0  0.0  0.0  0.0  0.0 -1.0 1.0    center        0.55     0.007071               44.72136      16  0.725              4                   1000.0
+   R30  0.0  0.0  0.0  0.0  0.0 -1.0 1.0    center        0.55     0.007071               44.72136      16  0.725              4                   1000.0
+   R31  0.0  0.0  0.0  0.0  0.0 -1.0 1.0    center        0.55     0.007071               44.72136      16  0.725              4                   1000.0
+   R32  0.0  0.0  0.0  0.0  0.0 -1.0 1.0    center        0.55     0.007071               44.72136      16  0.725              4                   1000.0
+32 configurations x 20 instances x 3 seeds = 1920 runs, about 32 h at the screening's seconds per run
+0 runs already done, 30 replicas per run
+[1/1920] ccd|R25|g250_c10_w_tune_large|2: best 30946.12  ttb 361028 it (5.8s)  wall 20.6s  audit PASS  [stage 0.02 h]
+[2/1920] ccd|R20|g400_c8_w_tune_large|2: best 29454.26  ttb 1059793 it (17.0s)  wall 31.7s  audit PASS  [stage 0.04 h]
+[3/1920] ccd|R02|g400_c10_t_tune_large|1: best 71451.49  ttb 501435 it (9.4s)  wall 40.4s  audit PASS  [stage 0.08 h]
+[4/1920] ccd|R26|g150_c10_t_tune_large|0: best 43869.78  ttb 239243 it (1.5s)  wall 4.9s  audit PASS  [stage 0.08 h]
+[5/1920] ccd|R09|g400_c10_w_tune_large|2: best 46550.17  ttb 552452 it (14.0s)  wall 52.7s  audit PASS  [stage 0.13 h]
+[6/1920] ccd|R23|g400_c10_w_tune_large|2: best 46569.34  ttb 1553832 it (44.0s)  wall 56.3s  audit PASS  [stage 0.14 h]
+[7/1920] ccd|R08|g100_c8_w_tune_large|0: best 9578.12  ttb 20331 it (0.1s)  wall 2.7s  audit PASS  [stage 0.14 h]
+[8/1920] ccd|R05|g200_c10_t_tune_large|2: best 48331.08  ttb 572795 it (6.0s)  wall 10.4s  audit PASS  [stage 0.15 h]
+[9/1920] ccd|R08|g250_c10_w_tune_large|0: best 30981.00  ttb 1167669 it (19.3s)  wall 20.8s  audit PASS  [stage 0.16 h]
+[10/1920] ccd|R32|g300_c10_w_tune_large|1: best 67794.67  ttb 1280142 it (36.2s)  wall 41.9s  audit PASS  [stage 0.20 h]
+[11/1920] ccd|R07|g100_c10_w_tune_large|2: best 10699.43  ttb 51962 it (0.3s)  wall 3.5s  audit PASS  [stage 0.20 h]
+[12/1920] ccd|R07|g500_c10_t_tune_large|2: best 135959.14  ttb 2473810 it (48.0s)  wall 48.5s  audit PASS  [stage 0.24 h]
+[13/1920] ccd|R21|g500_c10_t_tune_large|1: best 135631.29  ttb 1580484 it (32.9s)  wall 53.9s  audit PASS  [stage 0.26 h]
+[14/1920] ccd|R01|g400_c10_w_tune_large|0: best 46550.93  ttb 1987159 it (57.1s)  wall 57.5s  audit PASS  [stage 0.28 h]
+[15/1920] ccd|R03|g250_c10_t_tune_large|0: best 51948.78  ttb 172017 it (1.4s)  wall 11.0s  audit PASS  [stage 0.28 h]
+[16/1920] ccd|R08|g150_c10_w_tune_large|2: best 20859.77  ttb 690000 it (9.5s)  wall 10.3s  audit PASS  [stage 0.29 h]
+[17/1920] ccd|R18|g300_c8_w_tune_large|2: best 20009.26  ttb 852664 it (11.6s)  wall 20.2s  audit PASS  [stage 0.30 h]
+[18/1920] ccd|R32|g400_c10_t_tune_large|1: best 71451.49  ttb 1589691 it (26.4s)  wall 33.7s  audit PASS  [stage 0.31 h]
+[19/1920] ccd|R19|g400_c8_w_tune_large|1: best 29425.47  ttb 263136 it (4.2s)  wall 30.6s  audit PASS  [stage 0.32 h]
+[20/1920] ccd|R22|g250_c10_t_tune_large|2: best 51948.78  ttb 415018 it (3.2s)  wall 9.3s  audit PASS  [stage 0.32 h]
+[21/1920] ccd|R31|g150_c10_t_tune_large|0: best 43624.18  ttb 238945 it (1.5s)  wall 5.0s  audit PASS  [stage 0.33 h]
+[22/1920] ccd|R12|g500_c10_w_tune_large|1: best 83861.87  ttb 2210568 it (90.7s)  wall 104.9s  audit PASS  [stage 0.42 h]
+[23/1920] ccd|R24|g500_c10_w_tune_large|1: best 83472.44  ttb 409559 it (14.5s)  wall 89.1s  audit PASS  [stage 0.45 h]

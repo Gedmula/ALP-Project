@@ -1,0 +1,21 @@
+{
+ "phase": "ccd",
+ "out": "ccd",
+ "coding": "ccd",
+ "instance_set": "tune_large",
+ "subset": "informative",
+ "n_seeds": 3,
+ "ccd_factors": [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E"
+ ],
+ "ccd_fixed": {
+  "F": -1.0,
+  "G": 1.0
+ },
+ "n_center": 6,
+ "stage": "ccd"
+}
