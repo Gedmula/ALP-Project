@@ -1,0 +1,22 @@
+{
+ "hot_accept": 0.5496967928371037,
+ "cold_accept": 0.0013777656052279953,
+ "exchange_per_aircraft": 11.17215103163386,
+ "window": 22,
+ "guide": 0.6391839911780328,
+ "mutation_size": 4,
+ "stagnation_per_aircraft": 1000.0,
+ "budget_per_aircraft": 5000.0,
+ "budget_a": null,
+ "budget_b": 1.0,
+ "time_limit": 3600.0,
+ "replicas": null,
+ "p_insert": 0.45,
+ "p_swap": 0.35,
+ "hot_mutation_prob": 0.05,
+ "archive_size": 10,
+ "lp_checks": 16,
+ "calib_samples": 2000,
+ "hot_quantile": 0.5,
+ "cold_quantile": 0.05
+}

@@ -61,7 +61,7 @@ from sa_single.params import FACTOR_SETS, SAParams, decode, encode
 #   REPLICAS  replica processes per run (None = logical CPUs - 2; the screening used 10 on 12 logical CPUs)
 #   DRY_RUN   True = print the plan and stop
 # ═════════════════════════════════════════════════════════════════════════════
-STAGE    = "ccd"
+STAGE    = "anchor_tune"
 N_SEEDS  = None
 REPLICAS = None
 DRY_RUN  = False

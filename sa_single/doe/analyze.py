@@ -60,7 +60,7 @@ warnings.filterwarnings("ignore")
 # ═════════════════════════════════════════════════════════════════════════════
 #   CONFIGURE HERE
 # ═════════════════════════════════════════════════════════════════════════════
-ANALYSIS         = "screening"                     # "screening" | "ccd" | "check" | "confirm" | "budget"
+ANALYSIS         = "ccd"                     # "screening" | "ccd" | "check" | "confirm" | "budget"
 # the screening is coded with the window over 4–16, every later stage over 8–24 (params.FACTOR_SETS)
 CODING           = "screening" if ANALYSIS in ("screening", "foldover") else "ccd"
 FACTOR_BY_CODE   = {f.code: f for f in FACTOR_SETS[CODING]}
